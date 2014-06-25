@@ -413,7 +413,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
         cell.messageBubbleTopLabel.textInsets = UIEdgeInsetsMake(0.0f, bubbleTopLabelInset, 0.0f, 0.0f);
     }
     
-    cell.textView.dataDetectorTypes = UIDataDetectorTypeNone;
+    cell.textView.dataDetectorTypes = UIDataDetectorTypeNone; // Oana change
     
     return cell;
 }
