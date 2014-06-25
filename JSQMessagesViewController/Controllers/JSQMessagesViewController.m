@@ -1,4 +1,4 @@
-//
+    //
 //  Created by Jesse Squires
 //  http://www.hexedbits.com
 //
@@ -403,7 +403,8 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     
     cell.backgroundColor = [UIColor clearColor];
     
-    CGFloat bubbleTopLabelInset = 60.0f;
+    // Oana change
+    CGFloat bubbleTopLabelInset = cell.avatarImageView ? 60.0f : (60.0f - [JSQMessagesCollectionViewCell defaultAvatarViewSize].width);
     
     if (isOutgoingMessage) {
         cell.messageBubbleTopLabel.textInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, bubbleTopLabelInset);

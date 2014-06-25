@@ -119,4 +119,6 @@
  */
 + (NSString *)cellReuseIdentifier;
 
++ (CGSize)defaultAvatarViewSize; // Oana change
+
 @end
