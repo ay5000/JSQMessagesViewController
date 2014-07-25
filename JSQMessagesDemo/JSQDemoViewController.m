@@ -159,8 +159,9 @@ static NSString * const kJSQDemoAvatarNameWoz = @"Steve Wozniak";
     [super viewDidAppear:animated];
     
     /**
-     *  Enable/disable springy bubbles, default is YES.
-     *  For best results, toggle from `viewDidAppear:`
+     *  Enable/disable springy bubbles, default is NO.
+     *  You must set this from `viewDidAppear:`
+     *  Note: this feature is mostly stable, but still experimental
      */
     self.collectionView.collectionViewLayout.springinessEnabled = YES;
 }
@@ -178,9 +179,15 @@ static NSString * const kJSQDemoAvatarNameWoz = @"Steve Wozniak";
     
     
     /**
-     *  Show the tpying indicator
+     *  Set the typing indicator to be shown
      */
     self.showTypingIndicator = !self.showTypingIndicator;
+    
+    /**
+     *  Scroll to actually view the indicator
+     */
+    [self scrollToBottomAnimated:YES];
+    
     
     JSQMessage *copyMessage = [[self.messages lastObject] copy];
     
