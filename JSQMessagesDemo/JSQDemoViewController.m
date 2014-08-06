@@ -192,7 +192,7 @@ static NSString * const kJSQDemoAvatarNameWoz = @"Steve Wozniak";
     JSQMessage *copyMessage = [[self.messages lastObject] copy];
     
     if (!copyMessage) {
-        return;
+        copyMessage = [JSQMessage messageWithText:@"First received!" sender:kJSQDemoAvatarNameJobs];
     }
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -405,6 +405,8 @@ static NSString * const kJSQDemoAvatarNameWoz = @"Steve Wozniak";
 
 #pragma mark - JSQMessages collection view flow layout delegate
 
+#pragma mark - Adjusting cell label heights
+
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -452,10 +454,27 @@ static NSString * const kJSQDemoAvatarNameWoz = @"Steve Wozniak";
     return 0.0f;
 }
 
+#pragma mark - Responding to collection view tap events
+
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView
                 header:(JSQMessagesLoadEarlierHeaderView *)headerView didTapLoadEarlierMessagesButton:(UIButton *)sender
 {
     NSLog(@"Load earlier messages!");
+}
+
+- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapAvatarImageView:(UIImageView *)avatarImageView atIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"Tapped avatar!");
+}
+
+- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"Tapped message bubble!");
+}
+
+- (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapCellAtIndexPath:(NSIndexPath *)indexPath touchLocation:(CGPoint)touchLocation
+{
+    NSLog(@"Tapped cell at %@!", NSStringFromCGPoint(touchLocation));
 }
 
 @end
