@@ -54,6 +54,9 @@
 - (id<JSQMessageData>)collectionView:(JSQMessagesCollectionView *)collectionView
                       messageDataForItemAtIndexPath:(NSIndexPath *)indexPath;
 
+// Oana change
+- (CGSize)sizeOfBlurredCell;
+
 /**
  *  Asks the data source for the bubble image view that corresponds to the specified 
  *  message data item at indexPath in the collectionView.

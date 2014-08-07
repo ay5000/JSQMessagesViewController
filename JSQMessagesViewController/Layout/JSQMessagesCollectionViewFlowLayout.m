@@ -367,6 +367,15 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
     
     id<JSQMessageData> messageData = [self.collectionView.dataSource collectionView:self.collectionView messageDataForItemAtIndexPath:indexPath];
     
+    // Oana change
+    if (messageData.isBlurredMessage) {
+        CGSize blurredSize = [self.collectionView.dataSource sizeOfBlurredCell];
+        [self.messageBubbleSizes setObject:[NSValue valueWithCGSize:blurredSize] forKey:indexPath];
+        
+        return blurredSize;
+    }
+    //
+    
     CGSize avatarSize = [self jsq_avatarSizeForIndexPath:indexPath];
     
     CGFloat maximumTextWidth = self.itemWidth - avatarSize.width - self.messageBubbleLeftRightMargin;
