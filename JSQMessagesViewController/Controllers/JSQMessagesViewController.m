@@ -59,13 +59,13 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 @property (strong, nonatomic) JSQMessagesKeyboardController *keyboardController;
 
-@property (assign, nonatomic) CGFloat statusBarChangeInHeight;
-
 @property (assign, nonatomic) BOOL jsq_isObserving;
 
 - (void)jsq_configureMessagesViewController;
 
 - (NSString *)jsq_currentlyComposedMessageText;
+
+- (void)jsq_handleDidChangeStatusBarFrameNotification:(NSNotification *)notification;
 
 - (void)jsq_updateKeyboardTriggerPoint;
 - (void)jsq_setToolbarBottomLayoutGuideConstant:(CGFloat)constant;
@@ -609,13 +609,8 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 - (void)jsq_handleDidChangeStatusBarFrameNotification:(NSNotification *)notification
 {
-    CGRect previousStatusBarFrame = [[[notification userInfo] objectForKey:UIApplicationStatusBarFrameUserInfoKey] CGRectValue];
-    CGRect currentStatusBarFrame = [UIApplication sharedApplication].statusBarFrame;
-    CGFloat statusBarHeightDelta = CGRectGetHeight(currentStatusBarFrame) - CGRectGetHeight(previousStatusBarFrame);
-    self.statusBarChangeInHeight = MAX(statusBarHeightDelta, 0.0f);
-    
-    if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
-        self.statusBarChangeInHeight = 0.0f;
+    if (self.keyboardController.keyboardIsVisible) {
+        [self jsq_setToolbarBottomLayoutGuideConstant:CGRectGetHeight(self.keyboardController.currentKeyboardFrame)];
     }
 }
 
@@ -644,11 +639,11 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 #pragma mark - Keyboard controller delegate
 
-- (void)keyboardDidChangeFrame:(CGRect)keyboardFrame
+- (void)keyboardController:(JSQMessagesKeyboardController *)keyboardController keyboardDidChangeFrame:(CGRect)keyboardFrame
 {
     CGFloat heightFromBottom = CGRectGetHeight(self.collectionView.frame) - CGRectGetMinY(keyboardFrame);
     
-    heightFromBottom = MAX(0.0f, heightFromBottom + self.statusBarChangeInHeight);
+    heightFromBottom = MAX(0.0f, heightFromBottom);
     
     [self jsq_setToolbarBottomLayoutGuideConstant:heightFromBottom];
 }
