@@ -409,7 +409,7 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
     CGSize messageBubbleSize = [self messageBubbleSizeForItemAtIndexPath:indexPath];
     CGFloat remainingItemWidthForBubble = self.itemWidth - [self jsq_avatarSizeForIndexPath:indexPath].width;
     CGFloat textPadding = [self jsq_messageBubbleTextContainerInsetsTotal];
-    CGFloat messageBubblePadding = MAX(0,remainingItemWidthForBubble - messageBubbleSize.width - textPadding);
+    CGFloat messageBubblePadding = MAX(0,remainingItemWidthForBubble - messageBubbleSize.width - textPadding); // Oana change
     
     layoutAttributes.messageBubbleLeftRightMargin = messageBubblePadding;
     
