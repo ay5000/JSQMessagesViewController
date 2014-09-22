@@ -54,14 +54,9 @@
 
 @property (assign, nonatomic) CGSize avatarViewSize;
 
-@property (weak, nonatomic, readwrite) UILongPressGestureRecognizer *longPressGestureRecognizer;
 @property (weak, nonatomic, readwrite) UITapGestureRecognizer *tapGestureRecognizer;
 
-- (void)jsq_handleLongPressGesture:(UILongPressGestureRecognizer *)longPress;
 - (void)jsq_handleTapGesture:(UITapGestureRecognizer *)tap;
-
-- (void)jsq_didReceiveMenuWillHideNotification:(NSNotification *)notification;
-- (void)jsq_didReceiveMenuWillShowNotification:(NSNotification *)notification;
 
 - (void)jsq_updateConstraint:(NSLayoutConstraint *)constraint withConstant:(CGFloat)constant;
 
@@ -127,13 +122,10 @@
     self.textView.contentInset = UIEdgeInsetsZero;
     self.textView.scrollIndicatorInsets = UIEdgeInsetsZero;
     self.textView.contentOffset = CGPointZero;
+    self.textView.textContainerInset = UIEdgeInsetsZero;
+    self.textView.textContainer.lineFragmentPadding = 0;
     self.textView.linkTextAttributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor],
                                           NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle | NSUnderlinePatternSolid) };
-    
-    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(jsq_handleLongPressGesture:)];
-    longPress.minimumPressDuration = 0.4f;
-    [self addGestureRecognizer:longPress];
-    self.longPressGestureRecognizer = longPress;
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jsq_handleTapGesture:)];
     [self addGestureRecognizer:tap];
@@ -151,9 +143,6 @@
     _messageBubbleImageView = nil;
     _avatarImageView = nil;
     
-    [_longPressGestureRecognizer removeTarget:nil action:NULL];
-    _longPressGestureRecognizer = nil;
-    
     [_tapGestureRecognizer removeTarget:nil action:NULL];
     _tapGestureRecognizer = nil;
 }
@@ -167,6 +156,9 @@
     self.cellTopLabel.text = nil;
     self.messageBubbleTopLabel.text = nil;
     self.cellBottomLabel.text = nil;
+    self.textView.dataDetectorTypes = UIDataDetectorTypeNone;
+    self.textView.text = nil;
+    self.textView.attributedText = nil;
 }
 
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
@@ -203,6 +195,29 @@
     else if ([self isKindOfClass:[JSQMessagesCollectionViewCellOutgoing class]]) {
         self.avatarViewSize = customAttributes.outgoingAvatarViewSize;
     }
+}
+
+- (void)setHighlighted:(BOOL)highlighted
+{
+    [super setHighlighted:highlighted];
+    self.messageBubbleImageView.highlighted = highlighted;
+}
+
+- (void)setSelected:(BOOL)selected
+{
+    [super setSelected:selected];
+    self.messageBubbleImageView.highlighted = selected;
+}
+
+//  TODO: remove when fixed
+//        hack for Xcode6 / iOS 8 SDK rendering bug
+//        see issue #484
+//        https://github.com/jessesquires/JSQMessagesViewController/issues/484
+//
+- (void)setBounds:(CGRect)bounds
+{
+    [super setBounds:bounds];
+    self.contentView.frame = bounds;
 }
 
 #pragma mark - Setters
@@ -320,51 +335,7 @@
     [self setNeedsUpdateConstraints];
 }
 
-#pragma mark - UIResponder
-
-- (BOOL)canBecomeFirstResponder
-{
-    return YES;
-}
-
-- (BOOL)becomeFirstResponder
-{
-    return [super becomeFirstResponder];
-}
-
-- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
-{
-    return (action == @selector(copy:));
-}
-
-- (void)copy:(id)sender
-{
-    [[UIPasteboard generalPasteboard] setString:self.textView.text];
-    [self resignFirstResponder];
-}
-
 #pragma mark - Gesture recognizers
-
-- (void)jsq_handleLongPressGesture:(UILongPressGestureRecognizer *)longPress
-{
-    if (longPress.state != UIGestureRecognizerStateBegan || ![self becomeFirstResponder]) {
-        return;
-    }
-    
-    UIMenuController *menu = [UIMenuController sharedMenuController];
-    CGRect targetRect = [self convertRect:self.messageBubbleImageView.bounds fromView:self.messageBubbleImageView];
-    
-    [menu setTargetRect:CGRectInset(targetRect, 0.0f, 4.0f) inView:self];
-    
-    self.messageBubbleImageView.highlighted = YES;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(jsq_didReceiveMenuWillShowNotification:)
-                                                 name:UIMenuControllerWillShowMenuNotification
-                                               object:menu];
-    
-    [menu setMenuVisible:YES animated:YES];
-}
 
 - (void)jsq_handleTapGesture:(UITapGestureRecognizer *)tap
 {
@@ -379,29 +350,6 @@
     else {
         [self.delegate messagesCollectionViewCellDidTapCell:self atPosition:touchPt];
     }
-}
-
-#pragma mark - Notifications
-
-- (void)jsq_didReceiveMenuWillHideNotification:(NSNotification *)notification
-{
-    self.messageBubbleImageView.highlighted = NO;
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIMenuControllerWillHideMenuNotification
-                                                  object:nil];
-}
-
-- (void)jsq_didReceiveMenuWillShowNotification:(NSNotification *)notification
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIMenuControllerWillShowMenuNotification
-                                                  object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(jsq_didReceiveMenuWillHideNotification:)
-                                                 name:UIMenuControllerWillHideMenuNotification
-                                               object:[notification object]];
 }
 
 @end
