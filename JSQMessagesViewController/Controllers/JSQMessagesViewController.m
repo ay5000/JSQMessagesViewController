@@ -32,7 +32,6 @@
 #import "JSQMessagesLoadEarlierHeaderView.h"
 
 #import "JSQMessagesToolbarContentView.h"
-#import "JSQMessagesInputToolbar.h"
 #import "JSQMessagesComposerTextView.h"
 
 #import "JSQMessagesTimestampFormatter.h"
@@ -45,8 +44,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 
 
-@interface JSQMessagesViewController () <JSQMessagesInputToolbarDelegate,
-                                         JSQMessagesKeyboardControllerDelegate>
+@interface JSQMessagesViewController () <JSQMessagesKeyboardControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet JSQMessagesCollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet JSQMessagesInputToolbar *inputToolbar;

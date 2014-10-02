@@ -20,8 +20,7 @@
 
 #import "JSQMessagesCollectionView.h"
 #import "JSQMessagesCollectionViewFlowLayout.h"
-
-@class JSQMessagesInputToolbar;
+#import "JSQMessagesInputToolbar.h" //Oana change
 
 /**
  *  The `JSQMessagesViewController` class is an abstract class that represents a view controller whose content consists of
@@ -31,6 +30,7 @@
  */
 @interface JSQMessagesViewController : UIViewController <JSQMessagesCollectionViewDataSource,
                                                          JSQMessagesCollectionViewDelegateFlowLayout,
+                                                        JSQMessagesInputToolbarDelegate, //Oana change
                                                          UITextViewDelegate>
 
 /**
