@@ -1,6 +1,6 @@
 //
 //  Created by Jesse Squires
-//  http://www.hexedbits.com
+//  http://www.jessesquires.com
 //
 //
 //  Documentation
@@ -24,6 +24,8 @@
 
 #import "JSQMessagesTypingIndicatorFooterView.h"
 #import "JSQMessagesLoadEarlierHeaderView.h"
+
+#import "UIColor+JSQMessages.h"
 
 
 @interface JSQMessagesCollectionView () <JSQMessagesLoadEarlierHeaderViewDelegate>
@@ -52,6 +54,12 @@
     [self registerNib:[JSQMessagesCollectionViewCellOutgoing nib]
           forCellWithReuseIdentifier:[JSQMessagesCollectionViewCellOutgoing cellReuseIdentifier]];
     
+    [self registerNib:[JSQMessagesCollectionViewCellIncoming nib]
+          forCellWithReuseIdentifier:[JSQMessagesCollectionViewCellIncoming mediaCellReuseIdentifier]];
+    
+    [self registerNib:[JSQMessagesCollectionViewCellOutgoing nib]
+          forCellWithReuseIdentifier:[JSQMessagesCollectionViewCellOutgoing mediaCellReuseIdentifier]];
+    
     [self registerNib:[JSQMessagesTypingIndicatorFooterView nib]
           forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
           withReuseIdentifier:[JSQMessagesTypingIndicatorFooterView footerReuseIdentifier]];
@@ -59,6 +67,12 @@
     [self registerNib:[JSQMessagesLoadEarlierHeaderView nib]
           forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
           withReuseIdentifier:[JSQMessagesLoadEarlierHeaderView headerReuseIdentifier]];
+
+    _typingIndicatorDisplaysOnLeft = YES;
+    _typingIndicatorMessageBubbleColor = [UIColor jsq_messageBubbleLightGrayColor];
+    _typingIndicatorEllipsisColor = [_typingIndicatorMessageBubbleColor jsq_colorByDarkeningColorWithValue:0.3f];
+
+    _loadEarlierMessagesHeaderTextColor = [UIColor jsq_messageBubbleBlueColor];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame collectionViewLayout:(UICollectionViewLayout *)layout
@@ -78,20 +92,17 @@
 
 #pragma mark - Typing indicator
 
-- (JSQMessagesTypingIndicatorFooterView *)dequeueTypingIndicatorFooterViewIncoming:(BOOL)isIncoming
-                                                                withIndicatorColor:(UIColor *)indicatorColor
-                                                                       bubbleColor:(UIColor *)bubbleColor
-                                                                      forIndexPath:(NSIndexPath *)indexPath
+- (JSQMessagesTypingIndicatorFooterView *)dequeueTypingIndicatorFooterViewForIndexPath:(NSIndexPath *)indexPath
 {
     JSQMessagesTypingIndicatorFooterView *footerView = [super dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                                                                                  withReuseIdentifier:[JSQMessagesTypingIndicatorFooterView footerReuseIdentifier]
                                                                                         forIndexPath:indexPath];
-    
-    [footerView configureForIncoming:isIncoming
-                      indicatorColor:indicatorColor
-                         bubbleColor:bubbleColor
-                      collectionView:self];
-    
+
+    [footerView configureWithEllipsisColor:self.typingIndicatorEllipsisColor
+                        messageBubbleColor:self.typingIndicatorMessageBubbleColor
+                       shouldDisplayOnLeft:self.typingIndicatorDisplaysOnLeft
+                         forCollectionView:self];
+
     return footerView;
 }
 
@@ -102,7 +113,10 @@
     JSQMessagesLoadEarlierHeaderView *headerView = [super dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                                                                              withReuseIdentifier:[JSQMessagesLoadEarlierHeaderView headerReuseIdentifier]
                                                                                     forIndexPath:indexPath];
+
+    headerView.loadButton.tintColor = self.loadEarlierMessagesHeaderTextColor;
     headerView.delegate = self;
+
     return headerView;
 }
 

@@ -1,6 +1,6 @@
 //
 //  Created by Jesse Squires
-//  http://www.hexedbits.com
+//  http://www.jessesquires.com
 //
 //
 //  Documentation
@@ -31,7 +31,11 @@
 #import "JSQMessagesCollectionViewLayoutAttributes.h"
 #import "JSQMessagesCollectionViewFlowLayoutInvalidationContext.h"
 
+#import "UIImage+JSQMessages.h"
+
+
 const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
+const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 
 
 @interface JSQMessagesCollectionViewFlowLayout ()
@@ -43,21 +47,22 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
 
 @property (assign, nonatomic) CGFloat latestDelta;
 
+@property (assign, nonatomic, readonly) NSUInteger bubbleImageAssetWidth;
+
 - (void)jsq_configureFlowLayout;
 
 - (void)jsq_didReceiveApplicationMemoryWarningNotification:(NSNotification *)notification;
 - (void)jsq_didReceiveDeviceOrientationDidChangeNotification:(NSNotification *)notification;
 
-- (void)jsq_configureMessageCellLayoutAttributes:(JSQMessagesCollectionViewLayoutAttributes *)layoutAttributes;
+- (void)jsq_resetLayout;
+- (void)jsq_resetDynamicAnimator;
 
+- (void)jsq_configureMessageCellLayoutAttributes:(JSQMessagesCollectionViewLayoutAttributes *)layoutAttributes;
 - (CGSize)jsq_avatarSizeForIndexPath:(NSIndexPath *)indexPath;
 
 - (UIAttachmentBehavior *)jsq_springBehaviorWithLayoutAttributesItem:(UICollectionViewLayoutAttributes *)item;
-
 - (void)jsq_addNewlyVisibleBehaviorsFromVisibleItems:(NSArray *)visibleItems;
-
 - (void)jsq_removeNoLongerVisibleBehaviorsFromVisibleItemsIndexPaths:(NSSet *)visibleItemsIndexPaths;
-
 - (void)jsq_adjustSpringBehavior:(UIAttachmentBehavior *)springBehavior forTouchLocation:(CGPoint)touchLocation;
 
 @end
@@ -74,6 +79,8 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
     self.sectionInset = UIEdgeInsetsMake(10.0f, 4.0f, 10.0f, 4.0f);
     self.minimumLineSpacing = 4.0f;
     
+    _bubbleImageAssetWidth = [UIImage jsq_bubbleCompactImage].size.width;
+    
     _messageBubbleSizes = [NSMutableDictionary new];
     
     _messageBubbleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
@@ -89,7 +96,7 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
     _messageBubbleTextViewFrameInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 6.0f);
     _messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7.0f, 14.0f, 7.0f, 14.0f);
     
-    CGSize defaultAvatarSize = CGSizeMake(34.0f, 34.0f);
+    CGSize defaultAvatarSize = CGSizeMake(kJSQMessagesCollectionViewAvatarSizeDefault, kJSQMessagesCollectionViewAvatarSizeDefault);
     _incomingAvatarViewSize = defaultAvatarSize;
     _outgoingAvatarViewSize = defaultAvatarSize;
     
@@ -138,9 +145,13 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
     
     _messageBubbleFont = nil;
     
+    [_messageBubbleSizes removeAllObjects];
     _messageBubbleSizes = nil;
     
+    [_dynamicAnimator removeAllBehaviors];
     _dynamicAnimator = nil;
+    
+    [_visibleIndexPaths removeAllObjects];
     _visibleIndexPaths = nil;
 }
 
@@ -148,6 +159,10 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
 
 - (void)setSpringinessEnabled:(BOOL)springinessEnabled
 {
+    if (_springinessEnabled == springinessEnabled) {
+        return;
+    }
+    
     _springinessEnabled = springinessEnabled;
     
     if (!springinessEnabled) {
@@ -159,6 +174,10 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
 
 - (void)setMessageBubbleFont:(UIFont *)messageBubbleFont
 {
+    if ([_messageBubbleFont isEqual:messageBubbleFont]) {
+        return;
+    }
+    
     NSParameterAssert(messageBubbleFont != nil);
     _messageBubbleFont = messageBubbleFont;
     [self invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
@@ -167,24 +186,36 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
 - (void)setMessageBubbleLeftRightMargin:(CGFloat)messageBubbleLeftRightMargin
 {
     NSParameterAssert(messageBubbleLeftRightMargin >= 0.0f);
-    _messageBubbleLeftRightMargin = messageBubbleLeftRightMargin;
+    _messageBubbleLeftRightMargin = ceilf(messageBubbleLeftRightMargin);
     [self invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
 }
 
 - (void)setMessageBubbleTextViewTextContainerInsets:(UIEdgeInsets)messageBubbleTextContainerInsets
 {
+    if (UIEdgeInsetsEqualToEdgeInsets(_messageBubbleTextViewTextContainerInsets, messageBubbleTextContainerInsets)) {
+        return;
+    }
+    
     _messageBubbleTextViewTextContainerInsets = messageBubbleTextContainerInsets;
     [self invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
 }
 
 - (void)setIncomingAvatarViewSize:(CGSize)incomingAvatarViewSize
 {
+    if (CGSizeEqualToSize(_incomingAvatarViewSize, incomingAvatarViewSize)) {
+        return;
+    }
+    
     _incomingAvatarViewSize = incomingAvatarViewSize;
     [self invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
 }
 
 - (void)setOutgoingAvatarViewSize:(CGSize)outgoingAvatarViewSize
 {
+    if (CGSizeEqualToSize(_outgoingAvatarViewSize, outgoingAvatarViewSize)) {
+        return;
+    }
+    
     _outgoingAvatarViewSize = outgoingAvatarViewSize;
     [self invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
 }
@@ -216,15 +247,12 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
 
 - (void)jsq_didReceiveApplicationMemoryWarningNotification:(NSNotification *)notification
 {
-    [self.messageBubbleSizes removeAllObjects];
-    [self.dynamicAnimator removeAllBehaviors];
-    [self.visibleIndexPaths removeAllObjects];
+    [self jsq_resetLayout];
 }
 
 - (void)jsq_didReceiveDeviceOrientationDidChangeNotification:(NSNotification *)notification
 {
-    [self.dynamicAnimator removeAllBehaviors];
-    [self.visibleIndexPaths removeAllObjects];
+    [self jsq_resetLayout];
     [self invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
 }
 
@@ -239,7 +267,7 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
     
     if (context.invalidateFlowLayoutAttributes
         || context.invalidateFlowLayoutDelegateMetrics) {
-        [self.messageBubbleSizes removeAllObjects];
+        [self jsq_resetLayout];
     }
     
     [super invalidateLayoutWithContext:context];
@@ -340,30 +368,47 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
 {
     [super prepareForCollectionViewUpdates:updateItems];
     
-    if (self.springinessEnabled) {
-        [updateItems enumerateObjectsUsingBlock:^(UICollectionViewUpdateItem *updateItem, NSUInteger index, BOOL *stop) {
-            if (updateItem.updateAction == UICollectionUpdateActionInsert) {
-                
-                if ([self.dynamicAnimator layoutAttributesForCellAtIndexPath:updateItem.indexPathAfterUpdate]) {
-                    *stop = YES;
-                }
-                
-                CGSize size = self.collectionView.bounds.size;
-                JSQMessagesCollectionViewLayoutAttributes *attributes = [JSQMessagesCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:updateItem.indexPathAfterUpdate];
-                
-                if (attributes.representedElementCategory == UICollectionElementCategoryCell) {
-                    [self jsq_configureMessageCellLayoutAttributes:attributes];
-                }
-                
-                attributes.frame = CGRectMake(0.0f,
-                                              size.height - size.width,
-                                              size.width,
-                                              size.width);
-                
+    [updateItems enumerateObjectsUsingBlock:^(UICollectionViewUpdateItem *updateItem, NSUInteger index, BOOL *stop) {
+        if (updateItem.updateAction == UICollectionUpdateActionInsert) {
+            
+            if (self.springinessEnabled && [self.dynamicAnimator layoutAttributesForCellAtIndexPath:updateItem.indexPathAfterUpdate]) {
+                *stop = YES;
+            }
+            
+            CGFloat collectionViewHeight = CGRectGetHeight(self.collectionView.bounds);
+            
+            JSQMessagesCollectionViewLayoutAttributes *attributes = [JSQMessagesCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:updateItem.indexPathAfterUpdate];
+            
+            if (attributes.representedElementCategory == UICollectionElementCategoryCell) {
+                [self jsq_configureMessageCellLayoutAttributes:attributes];
+            }
+            
+            attributes.frame = CGRectMake(0.0f,
+                                          collectionViewHeight + CGRectGetHeight(attributes.frame),
+                                          CGRectGetWidth(attributes.frame),
+                                          CGRectGetHeight(attributes.frame));
+            
+            if (self.springinessEnabled) {
                 UIAttachmentBehavior *springBehaviour = [self jsq_springBehaviorWithLayoutAttributesItem:attributes];
                 [self.dynamicAnimator addBehavior:springBehaviour];
             }
-        }];
+        }
+    }];
+}
+
+#pragma mark - Invalidation utilities
+
+- (void)jsq_resetLayout
+{
+    [self.messageBubbleSizes removeAllObjects];
+    [self jsq_resetDynamicAnimator];
+}
+
+- (void)jsq_resetDynamicAnimator
+{
+    if (self.springinessEnabled) {
+        [self.dynamicAnimator removeAllBehaviors];
+        [self.visibleIndexPaths removeAllObjects];
     }
 }
 
@@ -376,48 +421,67 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
         return [cachedSize CGSizeValue];
     }
     
-    id<JSQMessageData> messageData = [self.collectionView.dataSource collectionView:self.collectionView messageDataForItemAtIndexPath:indexPath];
+    id<JSQMessageData> messageItem = [self.collectionView.dataSource collectionView:self.collectionView messageDataForItemAtIndexPath:indexPath];
+    CGSize finalSize = CGSizeZero;
     
-    // Oana change
-    if (messageData.isBlurredMessage) {
-        CGSize blurredSize = [self.collectionView.dataSource sizeOfBlurredCell];
-        [self.messageBubbleSizes setObject:[NSValue valueWithCGSize:blurredSize] forKey:indexPath];
-        
-        return blurredSize;
+    if ([messageItem isMediaMessage]) {
+        finalSize = [[messageItem media] mediaViewDisplaySize];
     }
-    //
-    
-    CGSize avatarSize = [self jsq_avatarSizeForIndexPath:indexPath];
-    
-    //  from the cell xibs, there is a 2 point space between avatar and bubble
-    CGFloat spacingBetweenAvatarAndBubble = 2.0f;
-    CGFloat horizontalContainerInsets = self.messageBubbleTextViewTextContainerInsets.left + self.messageBubbleTextViewTextContainerInsets.right;
-    CGFloat horizontalFrameInsets = self.messageBubbleTextViewFrameInsets.left + self.messageBubbleTextViewFrameInsets.right;
-    
-    CGFloat horizontalInsetsTotal = horizontalContainerInsets + horizontalFrameInsets + spacingBetweenAvatarAndBubble;
-    CGFloat maximumTextWidth = self.itemWidth - avatarSize.width - self.messageBubbleLeftRightMargin - horizontalInsetsTotal;
-    
-    CGRect stringRect = [[messageData text] boundingRectWithSize:CGSizeMake(maximumTextWidth, CGFLOAT_MAX)
-                                                         options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                                      attributes:@{ NSFontAttributeName : self.messageBubbleFont }
-                                                         context:nil];
-    
-    CGSize stringSize = CGRectIntegral(stringRect).size;
-    
-    CGFloat verticalContainerInsets = self.messageBubbleTextViewTextContainerInsets.top + self.messageBubbleTextViewTextContainerInsets.bottom;
-    CGFloat verticalFrameInsets = self.messageBubbleTextViewFrameInsets.top + self.messageBubbleTextViewFrameInsets.bottom;
-    
-    //  add extra 2 points of space, because `boundingRectWithSize:` is slightly off
-    //  not sure why. magix. (shrug) if you know, submit a PR
-    CGFloat verticalInsets = verticalContainerInsets + verticalFrameInsets + 2.0f;
-    
-    CGFloat finalWidth = MAX(stringSize.width + horizontalInsetsTotal, [UIImage imageNamed:@"bubble_min"].size.width);
-    
-    CGSize finalSize = CGSizeMake(finalWidth, stringSize.height + verticalInsets);
+    else {
+        // Oana change
+        if (messageItem.isBlurredMessage) {
+            CGSize blurredSize = [self.collectionView.dataSource sizeOfBlurredCell];
+            [self.messageBubbleSizes setObject:[NSValue valueWithCGSize:blurredSize] forKey:indexPath];
+            
+            return blurredSize;
+        }
+        
+        CGSize avatarSize = [self jsq_avatarSizeForIndexPath:indexPath];
+        
+        //  from the cell xibs, there is a 2 point space between avatar and bubble
+        CGFloat spacingBetweenAvatarAndBubble = 2.0f;
+        CGFloat horizontalContainerInsets = self.messageBubbleTextViewTextContainerInsets.left + self.messageBubbleTextViewTextContainerInsets.right;
+        CGFloat horizontalFrameInsets = self.messageBubbleTextViewFrameInsets.left + self.messageBubbleTextViewFrameInsets.right;
+        
+        CGFloat horizontalInsetsTotal = horizontalContainerInsets + horizontalFrameInsets + spacingBetweenAvatarAndBubble;
+        CGFloat maximumTextWidth = self.itemWidth - avatarSize.width - self.messageBubbleLeftRightMargin - horizontalInsetsTotal;
+        
+        CGRect stringRect = [[messageItem text] boundingRectWithSize:CGSizeMake(maximumTextWidth, CGFLOAT_MAX)
+                                                             options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                                          attributes:@{ NSFontAttributeName : self.messageBubbleFont }
+                                                             context:nil];
+        
+        CGSize stringSize = CGRectIntegral(stringRect).size;
+        
+        CGFloat verticalContainerInsets = self.messageBubbleTextViewTextContainerInsets.top + self.messageBubbleTextViewTextContainerInsets.bottom;
+        CGFloat verticalFrameInsets = self.messageBubbleTextViewFrameInsets.top + self.messageBubbleTextViewFrameInsets.bottom;
+        
+        //  add extra 2 points of space, because `boundingRectWithSize:` is slightly off
+        //  not sure why. magix. (shrug) if you know, submit a PR
+        CGFloat verticalInsets = verticalContainerInsets + verticalFrameInsets + 2.0f;
+        
+        //  same as above, an extra 2 points of magix
+        CGFloat finalWidth = MAX(stringSize.width + horizontalInsetsTotal, self.bubbleImageAssetWidth) + 2.0f;
+        
+        finalSize = CGSizeMake(finalWidth, stringSize.height + verticalInsets);
+    }
     
     [self.messageBubbleSizes setObject:[NSValue valueWithCGSize:finalSize] forKey:indexPath];
     
     return finalSize;
+}
+
+- (CGSize)sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGSize messageBubbleSize = [self messageBubbleSizeForItemAtIndexPath:indexPath];
+    JSQMessagesCollectionViewLayoutAttributes *attributes = (JSQMessagesCollectionViewLayoutAttributes *)[self layoutAttributesForItemAtIndexPath:indexPath];
+    
+    CGFloat finalHeight = messageBubbleSize.height;
+    finalHeight += attributes.cellTopLabelHeight;
+    finalHeight += attributes.messageBubbleTopLabelHeight;
+    finalHeight += attributes.cellBottomLabelHeight;
+    
+    return CGSizeMake(self.itemWidth, ceilf(finalHeight));
 }
 
 - (void)jsq_configureMessageCellLayoutAttributes:(JSQMessagesCollectionViewLayoutAttributes *)layoutAttributes
@@ -458,9 +522,9 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
 - (CGSize)jsq_avatarSizeForIndexPath:(NSIndexPath *)indexPath
 {
     id<JSQMessageData> messageData = [self.collectionView.dataSource collectionView:self.collectionView messageDataForItemAtIndexPath:indexPath];
-    NSString *messageSender = [messageData sender];
-    
-    if ([messageSender isEqualToString:[self.collectionView.dataSource sender]]) {
+    NSString *messageSender = [messageData senderId];
+   
+    if ([messageSender isEqualToString:[self.collectionView.dataSource senderId]]) {
         return self.outgoingAvatarViewSize;
     }
     

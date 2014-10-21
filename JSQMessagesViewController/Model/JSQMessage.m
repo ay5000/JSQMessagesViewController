@@ -1,6 +1,6 @@
 //
 //  Created by Jesse Squires
-//  http://www.hexedbits.com
+//  http://www.jessesquires.com
 //
 //
 //  Documentation
@@ -22,53 +22,37 @@
 
 #pragma mark - Initialization
 
-+ (instancetype)messageWithText:(NSString *)text sender:(NSString *)sender
+- (instancetype)initWithSenderId:(NSString *)senderId
+               senderDisplayName:(NSString *)senderDisplayName
+                            date:(NSDate *)date
+                         isMedia:(BOOL)isMedia
 {
-    return [[JSQMessage alloc] initWithText:text sender:sender date:[NSDate date]];
-}
-
-- (instancetype)initWithText:(NSString *)text
-                      sender:(NSString *)sender
-                        date:(NSDate *)date
-{
-    NSParameterAssert(text != nil);
-    NSParameterAssert(sender != nil);
+    NSParameterAssert(senderId != nil);
+    NSParameterAssert(senderDisplayName != nil);
     NSParameterAssert(date != nil);
     
-    self = [self init];
+    self = [super init];
     if (self) {
-        _text = text;
-        _sender = sender;
-        _date = date;
+        _senderId = [senderId copy];
+        _senderDisplayName = [senderDisplayName copy];
+        _date = [date copy];
+        _isMediaMessage = isMedia;
     }
     return self;
 }
 
-- (instancetype)init
+- (id)init
 {
-    self = [super init];
-    if (self) {
-        _text = @"";
-        _sender = @"";
-        _date = [NSDate date];
-    }
-    return self;
+    NSAssert(NO, @"%s is not a valid initializer for %@. Use %@ instead.",
+             __PRETTY_FUNCTION__, [self class], NSStringFromSelector(@selector(initWithSenderId:senderDisplayName:date:isMedia:)));
+    return nil;
 }
 
 - (void)dealloc
 {
-    _text = nil;
-    _sender = nil;
+    _senderId = nil;
+    _senderDisplayName = nil;
     _date = nil;
-}
-
-#pragma mark - JSQMessage
-
-- (BOOL)isEqualToMessage:(JSQMessage *)aMessage
-{
-    return [self.text isEqualToString:aMessage.text]
-            && [self.sender isEqualToString:aMessage.sender]
-            && ([self.date compare:aMessage.date] == NSOrderedSame);
 }
 
 #pragma mark - NSObject
@@ -83,17 +67,23 @@
         return NO;
     }
     
-    return [self isEqualToMessage:(JSQMessage *)object];
+    JSQMessage *aMessage = (JSQMessage *)object;
+    
+    return [self.senderId isEqualToString:aMessage.senderId]
+            && [self.senderDisplayName isEqualToString:aMessage.senderDisplayName]
+            && ([self.date compare:aMessage.date] == NSOrderedSame)
+            && self.isMediaMessage == aMessage.isMediaMessage;
 }
 
 - (NSUInteger)hash
 {
-    return [self.text hash] ^ [self.sender hash] ^ [self.date hash];
+    return self.senderId.hash ^ self.date.hash;
 }
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@>[ %@, %@, %@ ]", [self class], self.sender, self.date, self.text];
+    return [NSString stringWithFormat:@"<%@: senderId=%@, senderDisplayName=%@, date=%@, isMediaMessage=%@>",
+            [self class], self.senderId, self.senderDisplayName, self.date, @(self.isMediaMessage)];
 }
 
 #pragma mark - NSCoding
@@ -102,27 +92,30 @@
 {
     self = [super init];
     if (self) {
-        _text = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(text))];
-        _sender = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(sender))];
+        _senderId = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(senderId))];
+        _senderDisplayName = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(senderDisplayName))];
         _date = [aDecoder decodeObjectForKey:NSStringFromSelector(@selector(date))];
+        _isMediaMessage = [aDecoder decodeBoolForKey:NSStringFromSelector(@selector(isMediaMessage))];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:self.text forKey:NSStringFromSelector(@selector(text))];
-    [aCoder encodeObject:self.sender forKey:NSStringFromSelector(@selector(sender))];
+    [aCoder encodeObject:self.senderId forKey:NSStringFromSelector(@selector(senderId))];
+    [aCoder encodeObject:self.senderDisplayName forKey:NSStringFromSelector(@selector(senderDisplayName))];
     [aCoder encodeObject:self.date forKey:NSStringFromSelector(@selector(date))];
+    [aCoder encodeBool:self.isMediaMessage forKey:NSStringFromSelector(@selector(isMediaMessage))];
 }
 
 #pragma mark - NSCopying
 
 - (instancetype)copyWithZone:(NSZone *)zone
 {
-    return [[[self class] allocWithZone:zone] initWithText:[self.text copy]
-                                                    sender:[self.sender copy]
-                                                      date:[self.date copy]];
+    return [[[self class] allocWithZone:zone] initWithSenderId:self.senderId
+                                             senderDisplayName:self.senderDisplayName
+                                                          date:self.date
+                                                       isMedia:self.isMediaMessage];
 }
 
 @end
