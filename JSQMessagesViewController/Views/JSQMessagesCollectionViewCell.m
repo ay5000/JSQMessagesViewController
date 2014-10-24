@@ -80,6 +80,11 @@
     return nil;
 }
 
+// Oana change
++ (CGSize)defaultAvatarViewSize {
+    return CGSizeMake(34.0f, 34.0f);
+}
+
 #pragma mark - Initialization
 
 - (void)awakeFromNib

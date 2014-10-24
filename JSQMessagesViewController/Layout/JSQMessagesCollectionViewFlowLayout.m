@@ -77,6 +77,7 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
     _messageBubbleSizes = [NSMutableDictionary new];
     
     _messageBubbleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    _messageBubbleLeftRightMargin = 5.0f;  //Oana change;
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         _messageBubbleLeftRightMargin = 240.0f;
@@ -377,6 +378,15 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
     
     id<JSQMessageData> messageData = [self.collectionView.dataSource collectionView:self.collectionView messageDataForItemAtIndexPath:indexPath];
     
+    // Oana change
+    if (messageData.isBlurredMessage) {
+        CGSize blurredSize = [self.collectionView.dataSource sizeOfBlurredCell];
+        [self.messageBubbleSizes setObject:[NSValue valueWithCGSize:blurredSize] forKey:indexPath];
+        
+        return blurredSize;
+    }
+    //
+    
     CGSize avatarSize = [self jsq_avatarSizeForIndexPath:indexPath];
     
     //  from the cell xibs, there is a 2 point space between avatar and bubble
@@ -417,7 +427,8 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
     CGSize messageBubbleSize = [self messageBubbleSizeForItemAtIndexPath:indexPath];
     CGFloat remainingItemWidthForBubble = self.itemWidth - [self jsq_avatarSizeForIndexPath:indexPath].width;
     
-    CGFloat messageBubblePadding = remainingItemWidthForBubble - messageBubbleSize.width;
+    CGFloat textPadding = _messageBubbleTextViewTextContainerInsets.top +  _messageBubbleTextViewTextContainerInsets.bottom + _messageBubbleTextViewTextContainerInsets.right + _messageBubbleTextViewTextContainerInsets.left;
+    CGFloat messageBubblePadding = MAX(0,remainingItemWidthForBubble - messageBubbleSize.width - textPadding); // Oana change
     
     layoutAttributes.messageBubbleLeftRightMargin = MAX(messageBubblePadding, 0.0f);
     

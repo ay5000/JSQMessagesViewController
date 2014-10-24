@@ -20,6 +20,7 @@
 
 #import "JSQMessagesCollectionView.h"
 #import "JSQMessagesCollectionViewFlowLayout.h"
+#import "JSQMessagesInputToolbar.h" //Oana change
 
 @class JSQMessagesInputToolbar;
 
@@ -31,6 +32,7 @@
  */
 @interface JSQMessagesViewController : UIViewController <JSQMessagesCollectionViewDataSource,
                                                          JSQMessagesCollectionViewDelegateFlowLayout,
+                                                        JSQMessagesInputToolbarDelegate, //Oana change
                                                          UITextViewDelegate>
 
 /**

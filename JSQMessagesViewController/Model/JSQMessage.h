@@ -42,6 +42,12 @@
  */
 @property (copy, nonatomic) NSDate *date;
 
+// Oana change
+/**
+ *  @return Yes if the message have to be blurred, otherwise No
+ */
+@property (nonatomic, assign) BOOL isBlurredMessage;
+
 #pragma mark - Initialization
 
 /**

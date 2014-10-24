@@ -50,6 +50,12 @@
  */
 - (NSDate *)date;
 
+// Oana change
+/**
+ *  @return Yes if the message have to be blurred, otherwise No
+ */
+- (BOOL)isBlurredMessage;
+
 @end
 
 #endif
