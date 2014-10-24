@@ -45,8 +45,9 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 
 
-@interface JSQMessagesViewController () <JSQMessagesInputToolbarDelegate,
-                                         JSQMessagesKeyboardControllerDelegate>
+@interface JSQMessagesViewController () <JSQMessagesKeyboardControllerDelegate> {
+    float _currentKeyboardHeightFromBottom; // Oana change
+}
 
 @property (weak, nonatomic) IBOutlet JSQMessagesCollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet JSQMessagesInputToolbar *inputToolbar;
@@ -116,6 +117,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 {
     self.view.backgroundColor = [UIColor whiteColor];
     
+    _currentKeyboardHeightFromBottom = 0; // Oana change
     self.jsq_isObserving = NO;
     
     self.toolbarHeightConstraint.constant = kJSQMessagesInputToolbarHeightDefault;
@@ -214,10 +216,10 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     [self.collectionView.collectionViewLayout invalidateLayout];
     
     if (self.automaticallyScrollsToMostRecentMessage) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self scrollToBottomAnimated:NO];
-            [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
-        });
+        //        dispatch_async(dispatch_get_main_queue(), ^{ // Oana change: I commented this to fix a UI bug: for 1 sec the first meesages were shown after that it was scrolling to the bottom
+        [self scrollToBottomAnimated:NO];
+        [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
+        //        });
     }
     
     [self jsq_updateKeyboardTriggerPoint];
@@ -329,7 +331,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     
     NSInteger items = [self.collectionView numberOfItemsInSection:0];
     
-    if (items > 0) {
+    if (items > 0 && items != NSIntegerMax) { // Oana change: added rows != NSIntegerMax
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:items - 1 inSection:0]
                                     atScrollPosition:UICollectionViewScrollPositionTop
                                             animated:animated];
@@ -431,7 +433,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
         cell.messageBubbleTopLabel.textInsets = UIEdgeInsetsMake(0.0f, bubbleTopLabelInset, 0.0f, 0.0f);
     }
     
-    cell.textView.dataDetectorTypes = UIDataDetectorTypeAll;
+    cell.textView.dataDetectorTypes = UIDataDetectorTypeNone; // Oana change
     
     return cell;
 }
@@ -678,7 +680,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
             CGSize newContentSize = [[change objectForKey:NSKeyValueChangeNewKey] CGSizeValue];
             
             CGFloat dy = newContentSize.height - oldContentSize.height;
-        
+            
             [self jsq_adjustInputToolbarForComposerTextViewContentSizeChange:dy];
             [self jsq_updateCollectionViewInsets];
             if (self.automaticallyScrollsToMostRecentMessage) {
@@ -693,10 +695,9 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 - (void)keyboardController:(JSQMessagesKeyboardController *)keyboardController keyboardDidChangeFrame:(CGRect)keyboardFrame
 {
     CGFloat heightFromBottom = CGRectGetHeight(self.collectionView.frame) - CGRectGetMinY(keyboardFrame);
+    _currentKeyboardHeightFromBottom = MAX(0.0f, heightFromBottom); // Oana new change
     
-    heightFromBottom = MAX(0.0f, heightFromBottom);
-    
-    [self jsq_setToolbarBottomLayoutGuideConstant:heightFromBottom];
+    [self jsq_setToolbarBottomLayoutGuideConstant:_currentKeyboardHeightFromBottom]; // Oana new change
 }
 
 - (void)jsq_setToolbarBottomLayoutGuideConstant:(CGFloat)constant
@@ -706,6 +707,16 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     [self.view layoutIfNeeded];
     
     [self jsq_updateCollectionViewInsets];
+    
+    // Oana change
+    //  attempted to increase origin.Y above topLayoutGuide
+    if (self.inputToolbar.frame.origin.y <= [self toolbarMinYConstraint]) {
+        float dy = self.inputToolbar.frame.origin.y - [self toolbarMinYConstraint]; // new Oana change
+        [self jsq_scrollComposerTextViewToBottomAnimated:YES];
+        
+        [self jsq_adjustInputToolbarHeightConstraintByDelta:dy];
+    }
+    //
 }
 
 - (void)jsq_updateKeyboardTriggerPoint
@@ -751,9 +762,20 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 #pragma mark - Input toolbar utilities
 
+// Oana change
+- (float)toolbarMinYConstraint {
+    if (_currentKeyboardHeightFromBottom > 0) {
+        // keyboard on
+        return self.topLayoutGuide.length + 50.0f;
+    }
+    
+    return self.topLayoutGuide.length + self.collectionView.frame.size.height / 2;
+}
+///
+
 - (BOOL)jsq_inputToolbarHasReachedMaximumHeight
 {
-    return (CGRectGetMinY(self.inputToolbar.frame) == self.topLayoutGuide.length);
+    return (CGRectGetMinY(self.inputToolbar.frame) <=  [self toolbarMinYConstraint]); // Oana change
 }
 
 - (void)jsq_adjustInputToolbarForComposerTextViewContentSizeChange:(CGFloat)dy
@@ -773,8 +795,8 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     CGFloat newToolbarOriginY = toolbarOriginY - dy;
     
     //  attempted to increase origin.Y above topLayoutGuide
-    if (newToolbarOriginY <= self.topLayoutGuide.length) {
-        dy = toolbarOriginY - self.topLayoutGuide.length;
+    if (newToolbarOriginY <= [self toolbarMinYConstraint]) { // Oana change
+        dy = toolbarOriginY - [self toolbarMinYConstraint]; // Oana change
         [self jsq_scrollComposerTextViewToBottomAnimated:YES];
     }
     
