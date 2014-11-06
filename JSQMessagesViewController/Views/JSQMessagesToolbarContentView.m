@@ -40,7 +40,7 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 4.0f;
 
 @end
 
-
+// Oana change - JSQMessagesToolbarContentView.xib - added a top turquize line
 
 @implementation JSQMessagesToolbarContentView
 
