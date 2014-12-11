@@ -201,6 +201,12 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     [self.collectionView reloadData];
 }
 
+- (void)setTopContentAdditionalInset:(CGFloat)topContentAdditionalInset
+{
+    _topContentAdditionalInset = topContentAdditionalInset;
+    [self jsq_updateCollectionViewInsets];
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -253,6 +259,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     [super viewDidDisappear:animated];
     [self jsq_removeObservers];
     [self.keyboardController endListeningForKeyboard];
+    [self jsq_setToolbarBottomLayoutGuideConstant:0.0f];
 }
 
 - (void)didReceiveMemoryWarning
@@ -345,6 +352,22 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
                                     atScrollPosition:UICollectionViewScrollPositionTop
                                             animated:animated];
     }
+    
+    CGFloat collectionViewContentHeight = [self.collectionView.collectionViewLayout collectionViewContentSize].height;
+    BOOL isContentTooSmall = (collectionViewContentHeight < self.collectionView.bounds.size.height);
+    
+    if (isContentTooSmall) {
+        //  workaround for the first few messages not scrolling
+        //  when the collection view content size is too small, `scrollToItemAtIndexPath:` doesn't work properly
+        //  this seems to be a UIKit bug, see #256 on GitHub
+        [self.collectionView scrollRectToVisible:CGRectMake(0.0, collectionViewContentHeight - 1.0f, 1.0f, 1.0f)
+                                        animated:animated];
+        return;
+    }
+    
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:items - 1 inSection:0]
+                                atScrollPosition:UICollectionViewScrollPositionTop
+                                        animated:animated];
 }
 
 #pragma mark - JSQMessages collection view data source
@@ -444,8 +467,16 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     if (needsAvatar) {
         avatarImageDataSource = [collectionView.dataSource collectionView:collectionView avatarImageDataForItemAtIndexPath:indexPath];
         if (avatarImageDataSource != nil) {
-            cell.avatarImageView.image = [avatarImageDataSource avatarImage] ?: [avatarImageDataSource avatarPlaceholderImage];
-            cell.avatarImageView.highlightedImage = [avatarImageDataSource avatarHighlightedImage];
+            
+            UIImage *avatarImage = [avatarImageDataSource avatarImage];
+            if (avatarImage == nil) {
+                cell.avatarImageView.image = [avatarImageDataSource avatarPlaceholderImage];
+                cell.avatarImageView.highlightedImage = nil;
+            }
+            else {
+                cell.avatarImageView.image = avatarImage;
+                cell.avatarImageView.highlightedImage = [avatarImageDataSource avatarHighlightedImage];
+            }
         }
     }
     
@@ -453,10 +484,8 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     cell.messageBubbleTopLabel.attributedText = [collectionView.dataSource collectionView:collectionView attributedTextForMessageBubbleTopLabelAtIndexPath:indexPath];
     cell.cellBottomLabel.attributedText = [collectionView.dataSource collectionView:collectionView attributedTextForCellBottomLabelAtIndexPath:indexPath];
     
-    cell.backgroundColor = [UIColor whiteColor];
-    
     // Oana change
-    CGFloat bubbleTopLabelInset = cell.avatarImageView ? 60.0f : (60.0f - [JSQMessagesCollectionViewCell defaultAvatarViewSize].width);
+    CGFloat bubbleTopLabelInset = (avatarImageDataSource != nil) ? 60.0f : (60.0f - [JSQMessagesCollectionViewCell defaultAvatarViewSize].width);
     
     if (isOutgoingMessage) {
         cell.messageBubbleTopLabel.textInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, bubbleTopLabelInset);
@@ -466,6 +495,9 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     }
     
     cell.textView.dataDetectorTypes = UIDataDetectorTypeNone; // Oana change
+    
+    cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    cell.layer.shouldRasterize = YES;
     
     return cell;
 }
