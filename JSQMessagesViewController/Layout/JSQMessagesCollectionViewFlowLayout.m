@@ -448,7 +448,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         // Oana change
         if (messageItem.isBlurredMessage) {
             CGSize blurredSize = [self.collectionView.dataSource sizeOfBlurredCell];
-            [self.messageBubbleSizes setObject:[NSValue valueWithCGSize:blurredSize] forKey:indexPath];
+            [self.messageBubbleCache setObject:[NSValue valueWithCGSize:blurredSize] forKey:indexPath];
             
             return blurredSize;
         }
