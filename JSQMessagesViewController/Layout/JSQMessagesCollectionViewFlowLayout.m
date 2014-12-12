@@ -89,9 +89,6 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     _messageBubbleLeftRightMargin = 5.0f;  //Oana change;
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        _messageBubbleLeftRightMargin = 240.0f;
-    }
-    else {
         _messageBubbleLeftRightMargin = 50.0f;
     }
     
