@@ -397,9 +397,11 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
     CGFloat horizontalInsetsTotal = horizontalContainerInsets + horizontalFrameInsets + spacingBetweenAvatarAndBubble;
     CGFloat maximumTextWidth = self.itemWidth - avatarSize.width - self.messageBubbleLeftRightMargin - horizontalInsetsTotal;
     
+    UIFont *textFont = [self.collectionView.dataSource customTextFontForItemAtIndexPath:indexPath]; // Oana change
+    
     CGRect stringRect = [[messageData text] boundingRectWithSize:CGSizeMake(maximumTextWidth, CGFLOAT_MAX)
                                                          options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                                      attributes:@{ NSFontAttributeName : self.messageBubbleFont }
+                                                      attributes:@{ NSFontAttributeName : textFont ? textFont : self.messageBubbleFont} // Oana change
                                                          context:nil];
     
     CGSize stringSize = CGRectIntegral(stringRect).size;
@@ -445,6 +447,11 @@ const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
     layoutAttributes.cellTopLabelHeight = [self.collectionView.delegate collectionView:self.collectionView
                                                                                 layout:self
                                                       heightForCellTopLabelAtIndexPath:indexPath];
+    
+    // Oana change
+    if (layoutAttributes.cellTopLabelHeight == 0) {
+        layoutAttributes.textViewFrameInsets = UIEdgeInsetsMake(layoutAttributes.textViewFrameInsets.top, layoutAttributes.textViewFrameInsets.left, layoutAttributes.textViewFrameInsets.bottom, 0);
+    }
     
     layoutAttributes.messageBubbleTopLabelHeight = [self.collectionView.delegate collectionView:self.collectionView
                                                                                          layout:self
