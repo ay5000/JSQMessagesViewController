@@ -695,10 +695,12 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 - (void)keyboardController:(JSQMessagesKeyboardController *)keyboardController keyboardDidChangeFrame:(CGRect)keyboardFrame
 {
-    CGFloat heightFromBottom = CGRectGetHeight(self.collectionView.frame) - CGRectGetMinY(keyboardFrame);
-    _currentKeyboardHeightFromBottom = MAX(0.0f, heightFromBottom); // Oana new change
+    if (self.isViewLoaded && self.view.window) { // Oana new change
+        CGFloat heightFromBottom = CGRectGetHeight(self.collectionView.frame) - CGRectGetMinY(keyboardFrame);
+        _currentKeyboardHeightFromBottom = MAX(0.0f, heightFromBottom); // Oana new change
     
-    [self jsq_setToolbarBottomLayoutGuideConstant:_currentKeyboardHeightFromBottom]; // Oana new change
+        [self jsq_setToolbarBottomLayoutGuideConstant:_currentKeyboardHeightFromBottom]; // Oana new change
+    }
 }
 
 - (void)jsq_setToolbarBottomLayoutGuideConstant:(CGFloat)constant
