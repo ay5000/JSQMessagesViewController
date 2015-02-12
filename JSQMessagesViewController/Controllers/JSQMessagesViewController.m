@@ -46,7 +46,9 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 
 
-@interface JSQMessagesViewController () <JSQMessagesKeyboardControllerDelegate>
+@interface JSQMessagesViewController () <JSQMessagesKeyboardControllerDelegate> {
+    float _currentKeyboardHeightFromBottom; // Oana change
+}
 
 @property (weak, nonatomic) IBOutlet JSQMessagesCollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet JSQMessagesInputToolbar *inputToolbar;
@@ -118,6 +120,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 {
     self.view.backgroundColor = [UIColor whiteColor];
     
+    _currentKeyboardHeightFromBottom = 0; // Oana change
     self.jsq_isObserving = NO;
     
     self.toolbarHeightConstraint.constant = kJSQMessagesInputToolbarHeightDefault;
@@ -759,9 +762,9 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 {
     if (self.isViewLoaded && self.view.window) { // Oana new change
         CGFloat heightFromBottom = CGRectGetMaxY(self.collectionView.frame) - CGRectGetMinY(keyboardFrame);
-        heightFromBottom = MAX(0.0f, heightFromBottom);
+        _currentKeyboardHeightFromBottom = MAX(0.0f, heightFromBottom); // Oana new change
         
-        [self jsq_setToolbarBottomLayoutGuideConstant:heightFromBottom];
+        [self jsq_setToolbarBottomLayoutGuideConstant:_currentKeyboardHeightFromBottom]; // Oana new change
     }
 }
 
@@ -772,6 +775,16 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     [self.view layoutIfNeeded];
     
     [self jsq_updateCollectionViewInsets];
+    
+    // Oana change
+    //  attempted to increase origin.Y above topLayoutGuide
+    if (self.inputToolbar.frame.origin.y <= [self toolbarMinYConstraint]) {
+        float dy = self.inputToolbar.frame.origin.y - [self toolbarMinYConstraint]; // new Oana change
+        [self jsq_scrollComposerTextViewToBottomAnimated:YES];
+        
+        [self jsq_adjustInputToolbarHeightConstraintByDelta:dy];
+    }
+    //
 }
 
 - (void)jsq_updateKeyboardTriggerPoint
@@ -823,9 +836,20 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 #pragma mark - Input toolbar utilities
 
+// Oana change
+- (float)toolbarMinYConstraint {
+    if (_currentKeyboardHeightFromBottom > 0) {
+        // keyboard on
+        return self.topLayoutGuide.length + 50.0f;
+    }
+    
+    return self.topLayoutGuide.length + self.collectionView.frame.size.height / 2;
+}
+///
+
 - (BOOL)jsq_inputToolbarHasReachedMaximumHeight
 {
-    return (CGRectGetMinY(self.inputToolbar.frame) == self.topLayoutGuide.length);
+    return (CGRectGetMinY(self.inputToolbar.frame) <=  [self toolbarMinYConstraint]); // Oana change
 }
 
 - (void)jsq_adjustInputToolbarForComposerTextViewContentSizeChange:(CGFloat)dy
@@ -845,8 +869,8 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     CGFloat newToolbarOriginY = toolbarOriginY - dy;
     
     //  attempted to increase origin.Y above topLayoutGuide
-    if (newToolbarOriginY <= self.topLayoutGuide.length) {
-        dy = toolbarOriginY - self.topLayoutGuide.length;
+    if (newToolbarOriginY <= [self toolbarMinYConstraint]) { // Oana change
+        dy = toolbarOriginY - [self toolbarMinYConstraint]; // Oana change
         [self jsq_scrollComposerTextViewToBottomAnimated:YES];
     }
     
