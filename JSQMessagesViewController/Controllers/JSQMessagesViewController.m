@@ -835,7 +835,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     if ([self jsq_inputToolbarHasReachedMaximumHeight]) {
         BOOL contentOffsetIsPositive = (self.inputToolbar.contentView.textView.contentOffset.y > 0);
         
-        if (contentSizeIsIncreasing || contentOffsetIsPositive) {
+        if (contentSizeIsIncreasing || contentOffsetIsPositive || self.inputToolbar.contentView.textView.contentSize.height > self.inputToolbar.contentView.textView.frame.size.height) { // oana change
             [self jsq_scrollComposerTextViewToBottomAnimated:YES];
             return;
         }
