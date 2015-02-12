@@ -48,9 +48,9 @@
     CGFloat cornerRadius = 6.0f;
     
     self.backgroundColor = [UIColor whiteColor];
-    self.layer.borderWidth = 0.5f;
-    self.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    self.layer.cornerRadius = cornerRadius;
+    //    self.layer.borderWidth = 0.5f; // Oana change
+    //    self.layer.borderColor = [UIColor lightGrayColor].CGColor; // Oana change
+    //    self.layer.cornerRadius = cornerRadius; // Oana change
     
     self.scrollIndicatorInsets = UIEdgeInsetsMake(cornerRadius, 0.0f, cornerRadius, 0.0f);
     
