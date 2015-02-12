@@ -52,8 +52,11 @@
  */
 - (NSString *)senderId;
 
-// Oana change
+//// Oana change
 - (CGSize)sizeOfBlurredCell;
+- (UIFont *)customTextFontForItemAtIndexPath:(NSIndexPath *)indexPath;
+////
+
 
 /**
  *  Asks the data source for the message data that corresponds to the specified item at indexPath in the collectionView.
