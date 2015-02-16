@@ -505,10 +505,10 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     NSIndexPath *indexPath = layoutAttributes.indexPath;
     
     CGSize messageBubbleSize = [self messageBubbleSizeForItemAtIndexPath:indexPath];
-//    CGFloat remainingItemWidthForBubble = self.itemWidth - [self jsq_avatarSizeForIndexPath:indexPath].width;
-//    
-//    CGFloat textPadding = _messageBubbleTextViewTextContainerInsets.top +  _messageBubbleTextViewTextContainerInsets.bottom + _messageBubbleTextViewTextContainerInsets.right + _messageBubbleTextViewTextContainerInsets.left;
-//    CGFloat messageBubblePadding = MAX(0,remainingItemWidthForBubble - messageBubbleSize.width - textPadding); // Oana change
+    //    CGFloat remainingItemWidthForBubble = self.itemWidth - [self jsq_avatarSizeForIndexPath:indexPath].width;
+    //
+    //    CGFloat textPadding = _messageBubbleTextViewTextContainerInsets.top +  _messageBubbleTextViewTextContainerInsets.bottom + _messageBubbleTextViewTextContainerInsets.right + _messageBubbleTextViewTextContainerInsets.left;
+    //    CGFloat messageBubblePadding = MAX(0,remainingItemWidthForBubble - messageBubbleSize.width - textPadding); // Oana change
     
     layoutAttributes.messageBubbleContainerViewWidth = messageBubbleSize.width;
     
@@ -520,7 +520,13 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     
     layoutAttributes.incomingAvatarViewSize = self.incomingAvatarViewSize;
     
-    layoutAttributes.outgoingAvatarViewSize = self.outgoingAvatarViewSize;
+    id<JSQMessageAvatarImageDataSource> avatarImageDataSource = [self.collectionView.dataSource collectionView:self.collectionView avatarImageDataForItemAtIndexPath:indexPath];
+    
+    if (avatarImageDataSource) {
+        layoutAttributes.outgoingAvatarViewSize = self.outgoingAvatarViewSize;
+    } else {
+        layoutAttributes.outgoingAvatarViewSize = CGSizeZero;
+    }
     
     layoutAttributes.cellTopLabelHeight = [self.collectionView.delegate collectionView:self.collectionView
                                                                                 layout:self
@@ -530,7 +536,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     if (layoutAttributes.cellTopLabelHeight == 0) {
         layoutAttributes.textViewFrameInsets = UIEdgeInsetsMake(layoutAttributes.textViewFrameInsets.top, layoutAttributes.textViewFrameInsets.left, layoutAttributes.textViewFrameInsets.bottom, 0);
     }
-
+    
     layoutAttributes.messageBubbleTopLabelHeight = [self.collectionView.delegate collectionView:self.collectionView
                                                                                          layout:self
                                                       heightForMessageBubbleTopLabelAtIndexPath:indexPath];
