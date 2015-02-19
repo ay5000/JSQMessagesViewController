@@ -431,10 +431,10 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 {
     id<JSQMessageData> messageItem = [self.collectionView.dataSource collectionView:self.collectionView messageDataForItemAtIndexPath:indexPath];
     
-    NSValue *cachedSize = [self.messageBubbleCache objectForKey:@(messageItem.hash)];
-    if (cachedSize != nil) {
-        return [cachedSize CGSizeValue];
-    }
+//    NSValue *cachedSize = [self.messageBubbleCache objectForKey:@(messageItem.hash)];
+//    if (cachedSize != nil) {
+//        return [cachedSize CGSizeValue];
+//    }
     
     CGSize finalSize = CGSizeZero;
     
