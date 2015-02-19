@@ -63,7 +63,7 @@
     
     self.font = [UIFont systemFontOfSize:16.0f];
     self.textColor = [UIColor blackColor];
-    self.textAlignment = NSTextAlignmentNatural;
+    self.textAlignment = NSTextAlignmentLeft;
     
     self.contentMode = UIViewContentModeRedraw;
     self.dataDetectorTypes = UIDataDetectorTypeNone;
