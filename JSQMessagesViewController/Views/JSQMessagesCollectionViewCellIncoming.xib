@@ -49,13 +49,13 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="KYU-B8-cUW" secondAttribute="trailing" id="4qS-03-PFO"/>
+                            <constraint firstAttribute="right" secondItem="KYU-B8-cUW" secondAttribute="right" id="4qS-03-PFO"/>
                             <constraint firstAttribute="bottom" secondItem="KYU-B8-cUW" secondAttribute="bottom" id="B2v-Gq-Y1L"/>
-                            <constraint firstAttribute="trailing" secondItem="OCS-Fu-acq" secondAttribute="trailing" id="TdB-8V-aUc"/>
-                            <constraint firstItem="KYU-B8-cUW" firstAttribute="leading" secondItem="btS-p8-B7Z" secondAttribute="leading" constant="6" id="Tg9-9l-vr8"/>
+                            <constraint firstAttribute="right" secondItem="OCS-Fu-acq" secondAttribute="right" id="TdB-8V-aUc"/>
+                            <constraint firstItem="KYU-B8-cUW" firstAttribute="left" secondItem="btS-p8-B7Z" secondAttribute="left" constant="6" id="Tg9-9l-vr8"/>
                             <constraint firstItem="KYU-B8-cUW" firstAttribute="top" secondItem="btS-p8-B7Z" secondAttribute="top" id="aEL-yH-N1p"/>
                             <constraint firstAttribute="bottom" secondItem="OCS-Fu-acq" secondAttribute="bottom" id="aJ4-ZD-tk9"/>
-                            <constraint firstItem="OCS-Fu-acq" firstAttribute="leading" secondItem="btS-p8-B7Z" secondAttribute="leading" id="qpQ-dc-2V5"/>
+                            <constraint firstItem="OCS-Fu-acq" firstAttribute="left" secondItem="btS-p8-B7Z" secondAttribute="left" id="qpQ-dc-2V5"/>
                             <constraint firstAttribute="width" constant="244" id="stE-iz-VHo"/>
                             <constraint firstItem="OCS-Fu-acq" firstAttribute="top" secondItem="btS-p8-B7Z" secondAttribute="top" id="zTa-8g-VY4"/>
                         </constraints>
@@ -69,8 +69,8 @@
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="w23-sL-0Rh" firstAttribute="leading" secondItem="Da1-09-wR4" secondAttribute="leading" id="6zm-sH-cOT"/>
-                            <constraint firstAttribute="trailing" secondItem="w23-sL-0Rh" secondAttribute="trailing" id="JgK-7W-L10"/>
+                            <constraint firstItem="w23-sL-0Rh" firstAttribute="left" secondItem="Da1-09-wR4" secondAttribute="left" id="6zm-sH-cOT"/>
+                            <constraint firstAttribute="right" secondItem="w23-sL-0Rh" secondAttribute="right" id="JgK-7W-L10"/>
                             <constraint firstAttribute="bottom" secondItem="w23-sL-0Rh" secondAttribute="bottom" id="U39-Ze-JZ6"/>
                             <constraint firstAttribute="width" constant="34" id="YwX-fW-Me6"/>
                             <constraint firstItem="w23-sL-0Rh" firstAttribute="top" secondItem="Da1-09-wR4" secondAttribute="top" id="hxb-KR-hNK"/>
@@ -91,18 +91,18 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstItem="UPz-5x-c1T" firstAttribute="leading" secondItem="4lh-CK-yVn" secondAttribute="leading" id="54r-MX-MGW"/>
-                <constraint firstAttribute="trailing" secondItem="UPz-5x-c1T" secondAttribute="trailing" id="G3U-h0-DWS"/>
-                <constraint firstAttribute="trailing" secondItem="afj-rd-iNv" secondAttribute="trailing" id="Ka4-Dy-jCS"/>
-                <constraint firstItem="afj-rd-iNv" firstAttribute="leading" secondItem="4lh-CK-yVn" secondAttribute="leading" id="OnD-mZ-QtR"/>
-                <constraint firstItem="Ufa-bF-l1Y" firstAttribute="leading" secondItem="4lh-CK-yVn" secondAttribute="leading" id="Z5z-m3-8Ne"/>
+                <constraint firstItem="UPz-5x-c1T" firstAttribute="left" secondItem="4lh-CK-yVn" secondAttribute="left" id="54r-MX-MGW"/>
+                <constraint firstAttribute="right" secondItem="UPz-5x-c1T" secondAttribute="right" id="G3U-h0-DWS"/>
+                <constraint firstAttribute="right" secondItem="afj-rd-iNv" secondAttribute="right" id="Ka4-Dy-jCS"/>
+                <constraint firstItem="afj-rd-iNv" firstAttribute="left" secondItem="4lh-CK-yVn" secondAttribute="left" id="OnD-mZ-QtR"/>
+                <constraint firstItem="Ufa-bF-l1Y" firstAttribute="left" secondItem="4lh-CK-yVn" secondAttribute="left" id="Z5z-m3-8Ne"/>
                 <constraint firstItem="afj-rd-iNv" firstAttribute="top" secondItem="4lh-CK-yVn" secondAttribute="top" id="ZG9-2M-N52"/>
-                <constraint firstAttribute="trailing" secondItem="Ufa-bF-l1Y" secondAttribute="trailing" id="cWQ-1Q-xOA"/>
+                <constraint firstAttribute="right" secondItem="Ufa-bF-l1Y" secondAttribute="right" id="cWQ-1Q-xOA"/>
                 <constraint firstItem="UPz-5x-c1T" firstAttribute="top" secondItem="Da1-09-wR4" secondAttribute="bottom" id="dDB-B0-c6J"/>
                 <constraint firstItem="Ufa-bF-l1Y" firstAttribute="top" secondItem="afj-rd-iNv" secondAttribute="bottom" id="i9Y-sV-v6b"/>
-                <constraint firstItem="btS-p8-B7Z" firstAttribute="leading" secondItem="Da1-09-wR4" secondAttribute="trailing" constant="2" id="j0I-pm-eex"/>
+                <constraint firstItem="btS-p8-B7Z" firstAttribute="left" secondItem="Da1-09-wR4" secondAttribute="right" constant="2" id="j0I-pm-eex"/>
                 <constraint firstItem="btS-p8-B7Z" firstAttribute="top" secondItem="Ufa-bF-l1Y" secondAttribute="bottom" id="jAu-Dn-7rN"/>
-                <constraint firstItem="Da1-09-wR4" firstAttribute="leading" secondItem="4lh-CK-yVn" secondAttribute="leading" id="jiu-B4-TSD"/>
+                <constraint firstItem="Da1-09-wR4" firstAttribute="left" secondItem="4lh-CK-yVn" secondAttribute="left" id="jiu-B4-TSD"/>
                 <constraint firstAttribute="bottom" secondItem="UPz-5x-c1T" secondAttribute="bottom" id="nsK-Gh-M3Z"/>
                 <constraint firstItem="UPz-5x-c1T" firstAttribute="top" secondItem="btS-p8-B7Z" secondAttribute="bottom" id="s8G-Je-7GA"/>
             </constraints>

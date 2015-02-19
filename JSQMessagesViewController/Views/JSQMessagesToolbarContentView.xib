@@ -43,16 +43,16 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Myo-1S-Vg1" firstAttribute="leading" secondItem="dm4-NT-mvr" secondAttribute="trailing" constant="8" id="7Ld-5r-Hp3"/>
+                <constraint firstItem="Myo-1S-Vg1" firstAttribute="left" secondItem="dm4-NT-mvr" secondAttribute="right" constant="8" id="7Ld-5r-Hp3"/>
                 <constraint firstItem="dm4-NT-mvr" firstAttribute="top" secondItem="1" secondAttribute="top" constant="7" id="9Tz-Wq-xIf"/>
                 <constraint firstAttribute="bottom" secondItem="dm4-NT-mvr" secondAttribute="bottom" constant="7" id="CCb-V7-yek"/>
                 <constraint firstAttribute="bottom" secondItem="Myo-1S-Vg1" secondAttribute="bottom" constant="6" id="EaS-Oq-Qp5"/>
-                <constraint firstItem="LEq-G7-jGt" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="8" id="LAU-fo-GJJ"/>
-                <constraint firstAttribute="trailing" secondItem="wtS-kt-546" secondAttribute="trailing" id="UQN-N7-lBt"/>
-                <constraint firstAttribute="trailing" secondItem="Myo-1S-Vg1" secondAttribute="trailing" constant="8" id="ds6-61-GNv"/>
-                <constraint firstItem="wtS-kt-546" firstAttribute="leading" secondItem="1" secondAttribute="leading" id="kH9-ZJ-cyh"/>
+                <constraint firstItem="LEq-G7-jGt" firstAttribute="left" secondItem="1" secondAttribute="left" constant="8" id="LAU-fo-GJJ"/>
+                <constraint firstAttribute="right" secondItem="wtS-kt-546" secondAttribute="right" id="UQN-N7-lBt"/>
+                <constraint firstAttribute="right" secondItem="Myo-1S-Vg1" secondAttribute="right" constant="8" id="ds6-61-GNv"/>
+                <constraint firstItem="wtS-kt-546" firstAttribute="left" secondItem="1" secondAttribute="left" id="kH9-ZJ-cyh"/>
                 <constraint firstAttribute="bottom" secondItem="LEq-G7-jGt" secondAttribute="bottom" constant="6" id="oG2-YD-ZZI"/>
-                <constraint firstItem="dm4-NT-mvr" firstAttribute="leading" secondItem="LEq-G7-jGt" secondAttribute="trailing" constant="8" id="owo-gB-gyR"/>
+                <constraint firstItem="dm4-NT-mvr" firstAttribute="left" secondItem="LEq-G7-jGt" secondAttribute="right" constant="8" id="owo-gB-gyR"/>
                 <constraint firstItem="wtS-kt-546" firstAttribute="top" secondItem="1" secondAttribute="top" id="rOi-2W-Lyn"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
