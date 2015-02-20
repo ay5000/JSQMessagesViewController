@@ -1,0 +1,39 @@
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "2qz-Z2-GmT"; */
+"2qz-Z2-GmT.text" = "Title";
+
+/* Class = "IBUILabel"; text = "Springy bubbles"; ObjectID = "3d2-fZ-dx9"; */
+"3d2-fZ-dx9.text" = "Springy bubbles";
+
+/* Class = "IBUILabel"; text = "Outgoing avatars"; ObjectID = "9Rr-S8-Uae"; */
+"9Rr-S8-Uae.text" = "Outgoing avatars";
+
+/* Class = "IBUILabel"; text = "Empty view, no messages"; ObjectID = "DoU-SU-Nek"; */
+"DoU-SU-Nek.text" = "Empty view, no messages";
+
+/* Class = "IBUILabel"; text = "Incoming avatars"; ObjectID = "RUq-Pa-3nx"; */
+"RUq-Pa-3nx.text" = "Incoming avatars";
+
+/* Class = "IBUILabel"; text = "Load really long message"; ObjectID = "YV3-GH-Yul"; */
+"YV3-GH-Yul.text" = "Load really long message";
+
+/* Class = "IBUILabel"; text = "Load extra messages"; ObjectID = "bSS-CD-nfD"; */
+"bSS-CD-nfD.text" = "Load extra messages";
+
+/* Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "hrw-Dp-Tor"; */
+"hrw-Dp-Tor.title" = "Settings";
+
+/* Class = "IBUINavigationItem"; title = "Root View Controller"; ObjectID = "irr-Pn-9x5"; */
+"irr-Pn-9x5.title" = "Root View Controller";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Avatars"; ObjectID = "ns0-OO-PGu"; */
+"ns0-OO-PGu.headerTitle" = "Avatars";
+
+/* Class = "IBUITableViewSection"; footerTitle = "NOTE: This feature is experimental"; ObjectID = "o5m-OT-1Iw"; */
+"o5m-OT-1Iw.footerTitle" = "NOTE: This feature is experimental";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Dynamic Behaviors"; ObjectID = "o5m-OT-1Iw"; */
+"o5m-OT-1Iw.headerTitle" = "Dynamic Behaviors";
+
+/* Class = "IBUITableViewSection"; headerTitle = "Messages"; ObjectID = "ygb-Dp-o4r"; */
+"ygb-Dp-o4r.headerTitle" = "Messages";
