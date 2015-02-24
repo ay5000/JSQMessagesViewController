@@ -878,7 +878,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     
     [self jsq_updateKeyboardTriggerPoint];
     
-    if (dy < 0) {
+    if (dy < 0 && self.inputToolbar.contentView.textView.text.length > 0) { // Oana change
         [self jsq_scrollComposerTextViewToBottomAnimated:NO];
     }
 }
