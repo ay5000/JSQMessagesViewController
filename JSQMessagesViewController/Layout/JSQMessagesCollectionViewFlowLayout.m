@@ -37,7 +37,7 @@
 const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
 const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 
-#define MESSAGES_CONTENT_BUTTON_MIN_WIDTH 260 // Oana change
+#define MESSAGES_CONTENT_BUTTON_MIN_WIDTH 290 // Oana change
 
 
 @interface JSQMessagesCollectionViewFlowLayout ()
