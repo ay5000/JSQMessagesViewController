@@ -37,6 +37,8 @@
 const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
 const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 
+#define MESSAGES_CONTENT_BUTTON_MIN_WIDTH 260 // Oana change
+
 
 @interface JSQMessagesCollectionViewFlowLayout ()
 
@@ -449,6 +451,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
             
             return blurredSize;
         }
+        //////
         
         CGSize avatarSize = [self jsq_avatarSizeForIndexPath:indexPath];
         
@@ -478,6 +481,11 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         
         //  same as above, an extra 2 points of magix
         CGFloat finalWidth = MAX(stringSize.width + horizontalInsetsTotal, self.bubbleImageAssetWidth) + 2.0f;
+        
+        // Oana change
+        if (messageItem.hasMessageButton && finalWidth < MESSAGES_CONTENT_BUTTON_MIN_WIDTH) {
+            finalWidth = MESSAGES_CONTENT_BUTTON_MIN_WIDTH;
+        }
         
         finalSize = CGSizeMake(finalWidth, stringSize.height + verticalInsets);
     }

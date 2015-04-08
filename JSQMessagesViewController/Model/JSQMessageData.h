@@ -67,6 +67,12 @@
  */
 - (BOOL)isBlurredMessage;
 
+// Oana change
+/**
+ *  @return Yes if the message has button inside, otherwise No
+ */
+- (BOOL)hasMessageButton;
+
 /**
  *  This method is used to determine if the message data item contains text or media.
  *  If this method returns `YES`, an instance of `JSQMessagesViewController` will ignore 

@@ -52,6 +52,12 @@
  */
 @property (nonatomic, assign) BOOL isBlurredMessage;
 
+// Oana change
+/**
+ *  @return Yes if the message has button inside, otherwise No
+ */
+@property (nonatomic, assign) BOOL hasMessageButton;
+
 /**
  *  Returns a boolean value specifying whether or not the message contains media.
  *  If `NO`, the message contains text. If `YES`, the message contains media.
