@@ -19,11 +19,15 @@
 #import "JSQMessagesToolbarContentView.h"
 
 #import "UIView+JSQMessages.h"
+#import "UIView+TSJSQConstraintsAdditions.h"
 
 const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
 
 
-@interface JSQMessagesToolbarContentView ()
+@interface JSQMessagesToolbarContentView () {
+    NSLayoutConstraint *_lastRightBarButtonItemWidthConstraint;
+    int _lastRightBarButtonItemWidth;
+}
 
 @property (weak, nonatomic) IBOutlet JSQMessagesComposerTextView *textView;
 
@@ -170,6 +174,62 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
 {
     [super setNeedsDisplay];
     [self.textView setNeedsDisplay];
+}
+
+// Oana new change
+#pragma mark - Public methods
+
+- (void)setRightBarButtonItems:(NSArray *)rightBarButtonItems {
+    for (UIButton *button in self.rightBarButtonContainerView.subviews) {
+        [button removeFromSuperview];
+    }
+    
+    if (!rightBarButtonItems) {
+        _rightBarButtonItem = nil;
+        self.rightHorizontalSpacingConstraint.constant = 0.0f;
+        self.rightBarButtonItemWidth = 0.0f;
+        self.rightBarButtonContainerView.hidden = YES;
+        return;
+    }
+    
+    self.rightBarButtonContainerView.hidden = NO;
+    self.rightHorizontalSpacingConstraint.constant = kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
+    float width = 0;
+    
+    if (rightBarButtonItems.count >= 2) {
+        UIButton *leftButton = rightBarButtonItems[0];
+        UIButton *rightButton = rightBarButtonItems[1];
+        width += CGRectGetWidth(leftButton.frame);
+        width += CGRectGetWidth(rightButton.frame);
+        [self.rightBarButtonContainerView addSubview:leftButton];
+        [self.rightBarButtonContainerView addSubview:rightButton];
+        leftButton.translatesAutoresizingMaskIntoConstraints = NO;
+        rightButton.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        [leftButton addDimensions:ALViewDimentionHeight value:leftButton.frame.size.height];
+        [leftButton addDimensions:ALViewDimensionWidth value:leftButton.frame.size.width];
+        [rightButton addDimensions:ALViewDimentionHeight value:rightButton.frame.size.height];
+        NSArray *constraints = [rightButton addDimensions:ALViewDimensionWidth value:rightButton.frame.size.width];
+        _lastRightBarButtonItemWidthConstraint = [constraints lastObject];
+        _lastRightBarButtonItemWidth = _lastRightBarButtonItemWidthConstraint.constant;
+        
+        [leftButton alignToView:self.rightBarButtonContainerView alignProperties:ALAlignPropertyTop spacing:0];
+        [rightButton alignToView:self.rightBarButtonContainerView alignProperties:ALAlignPropertyTop spacing:0];
+        [leftButton alignToView:self.rightBarButtonContainerView alignProperties:ALAlignPropertyLeft spacing:0];
+        [rightButton alignToView:self.rightBarButtonContainerView alignProperties:ALAlignPropertyRight spacing:0];
+    }
+    
+    self.rightBarButtonItemWidth = width;
+    [self setNeedsUpdateConstraints];
+    
+    _rightBarButtonItem = (rightBarButtonItems.count > 0) ? rightBarButtonItems[0] : nil;
+    _lastRightBarButtonItem = (rightBarButtonItems.count > 1) ? rightBarButtonItems[1] : nil;
+}
+
+- (void)shouldHideLastRightBarButtonItem:(BOOL)shouldHide {
+    _lastRightBarButtonItemWidthConstraint.constant = shouldHide ? 0 : _lastRightBarButtonItemWidth;
+    self.rightBarButtonItemWidth =  _rightBarButtonItem.frame.size.width + _lastRightBarButtonItemWidthConstraint.constant;
+    [self layoutIfNeeded];
 }
 
 @end
