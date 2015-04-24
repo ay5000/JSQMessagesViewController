@@ -451,6 +451,14 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
             
             return blurredSize;
         }
+        
+        if (messageItem.isAudioMessage) {
+            CGSize blurredSize = [self.collectionView.dataSource sizeOfAudioMessageCell];
+            [self.messageBubbleCache setObject:[NSValue valueWithCGSize:blurredSize] forKey:indexPath];
+            
+            return blurredSize;
+        }
+        
         //////
         
         CGSize avatarSize = [self jsq_avatarSizeForIndexPath:indexPath];

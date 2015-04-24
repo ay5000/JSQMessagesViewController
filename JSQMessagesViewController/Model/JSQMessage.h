@@ -51,6 +51,7 @@
  *  @return Yes if the message have to be blurred, otherwise No
  */
 @property (nonatomic, assign) BOOL isBlurredMessage;
+@property (nonatomic, assign) BOOL isAudioMessage;
 
 // Oana change
 /**

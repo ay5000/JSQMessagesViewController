@@ -54,6 +54,7 @@
 
 //// Oana change
 - (CGSize)sizeOfBlurredCell;
+- (CGSize)sizeOfAudioMessageCell;
 - (UIFont *)customTextFontForItemAtIndexPath:(NSIndexPath *)indexPath;
 ////
 
