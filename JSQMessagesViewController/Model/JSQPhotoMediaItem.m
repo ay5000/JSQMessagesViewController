@@ -37,7 +37,7 @@
 {
     self = [super init];
     if (self) {
-        _image = [UIImage imageWithCGImage:image.CGImage];
+        _image = [image copy];
         _cachedImageView = nil;
     }
     return self;
@@ -53,7 +53,7 @@
 
 - (void)setImage:(UIImage *)image
 {
-    _image = [UIImage imageWithCGImage:image.CGImage];
+    _image = [image copy];
     _cachedImageView = nil;
 }
 
@@ -84,22 +84,16 @@
     return self.cachedImageView;
 }
 
-#pragma mark - NSObject
-
-- (BOOL)isEqual:(id)object
+- (NSUInteger)mediaHash
 {
-    if (![super isEqual:object]) {
-        return NO;
-    }
-    
-    JSQPhotoMediaItem *photoItem = (JSQPhotoMediaItem *)object;
-    
-    return [self.image isEqual:photoItem.image];
+    return self.hash;
 }
+
+#pragma mark - NSObject
 
 - (NSUInteger)hash
 {
-    return self.image.hash;
+    return super.hash ^ self.image.hash;
 }
 
 - (NSString *)description

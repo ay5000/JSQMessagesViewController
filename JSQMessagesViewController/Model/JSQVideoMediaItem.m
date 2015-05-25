@@ -96,6 +96,11 @@
     return self.cachedVideoImageView;
 }
 
+- (NSUInteger)mediaHash
+{
+    return self.hash;
+}
+
 #pragma mark - NSObject
 
 - (BOOL)isEqual:(id)object
@@ -112,7 +117,7 @@
 
 - (NSUInteger)hash
 {
-    return self.fileURL.hash;
+    return super.hash ^ self.fileURL.hash;
 }
 
 - (NSString *)description

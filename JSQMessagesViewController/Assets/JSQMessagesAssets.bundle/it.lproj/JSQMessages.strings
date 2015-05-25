@@ -16,14 +16,14 @@
 //  Released under an MIT license: http://opensource.org/licenses/MIT
 //
 
-#import "UIDevice+JSQMessages.h"
+//  ********************************
+//  Special thanks to the localization contributors!
+//
+//  https://github.com/jessesquires/JSQMessagesViewController/issues/237
+//  ********************************
 
-@implementation UIDevice (JSQMessages)
+"load_earlier_messages" = "Carica messaggi precedenti";
 
-+ (BOOL)jsq_isCurrentDeviceBeforeiOS8
-{
-    // iOS < 8.0
-    return [[UIDevice currentDevice].systemVersion compare:@"8.0" options:NSNumericSearch] == NSOrderedAscending;
-}
+"send" = "Invia";
 
-@end
+"new_message" = "Nuovo Messaggio";
