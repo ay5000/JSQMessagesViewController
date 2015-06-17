@@ -143,14 +143,14 @@
                       atIndexPath:indexPath];
 }
 
-- (void)messagesCollectionViewCellDidTapMessageBubble:(JSQMessagesCollectionViewCell *)cell
+- (void)messagesCollectionViewCellDidTapMessageBubble:(JSQMessagesCollectionViewCell *)cell atPosition:(CGPoint)touchPt // Oana changed
 {
     NSIndexPath *indexPath = [self indexPathForCell:cell];
     if (indexPath == nil) {
         return;
     }
     
-    [self.delegate collectionView:self didTapMessageBubbleAtIndexPath:indexPath];
+    [self.delegate collectionView:self didTapMessageBubbleAtIndexPath:indexPath atPosition:(CGPoint)touchPt]; // Oana change
 }
 
 - (void)messagesCollectionViewCellDidTapCell:(JSQMessagesCollectionViewCell *)cell atPosition:(CGPoint)position

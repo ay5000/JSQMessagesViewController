@@ -325,7 +325,7 @@
         [self.delegate messagesCollectionViewCellDidTapAvatar:self];
     }
     else if (CGRectContainsPoint(self.messageBubbleContainerView.frame, touchPt)) {
-        [self.delegate messagesCollectionViewCellDidTapMessageBubble:self];
+        [self.delegate messagesCollectionViewCellDidTapMessageBubble:self atPosition:touchPt]; // Oana changed
     }
     else {
         [self.delegate messagesCollectionViewCellDidTapCell:self atPosition:touchPt];
