@@ -45,6 +45,8 @@
  */
 - (void)messagesCollectionViewCellDidTapMessageBubble:(JSQMessagesCollectionViewCell *)cell;
 
+- (void)messagesCollectionViewCellDidTapMessageBubble:(JSQMessagesCollectionViewCell *)cell atPosition:(CGPoint)touchPt; // Oana changed
+
 /**
  *  Tells the delegate that the cell has been tapped at the point specified by position.
  *
