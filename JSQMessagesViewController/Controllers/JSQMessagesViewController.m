@@ -225,7 +225,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.view layoutIfNeeded];
+//    [self.view layoutIfNeeded]; // Oana change: I had to remove it because of an UI issue with audio cell on iPad when entering in message screen
     [self.collectionView.collectionViewLayout invalidateLayout];
     
     if (self.automaticallyScrollsToMostRecentMessage) {
