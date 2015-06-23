@@ -13,7 +13,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *rightMicImageView;
 @property (weak, nonatomic) IBOutlet UILabel *timerLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *trashImageView;
-@property (weak, nonatomic) IBOutlet UILabel *slideToCancelLabel;
 
 @end
 
@@ -25,11 +24,6 @@
     self.timerLabel.text = @"";
     self.rightMicImageView.image = [self.rightMicImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     self.leftRedMicImageView.image = [self.leftRedMicImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    
-    if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPhone) {
-        self.slideToCancelLabel.font = [UIFont fontWithName:self.slideToCancelLabel.font.fontName size:(self.slideToCancelLabel.font.pointSize + 2)];
-        self.timerLabel.font = [UIFont fontWithName:self.timerLabel.font.fontName size:(self.timerLabel.font.pointSize + 2)];
-    }
 }
 
 #pragma mark - Public methods

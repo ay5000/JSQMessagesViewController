@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -17,7 +17,7 @@
                         <constraint firstAttribute="height" constant="21" id="3aC-B4-7tO"/>
                         <constraint firstAttribute="width" constant="92" id="PZU-v7-fQ4"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                     <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -27,12 +27,12 @@
                         <constraint firstAttribute="height" constant="21" id="P2f-ke-CU3"/>
                         <constraint firstAttribute="width" constant="40" id="yme-9D-nym"/>
                     </constraints>
-                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                     <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Back_arrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="YWj-ux-r3x">
-                    <rect key="frame" x="203" y="11" width="15" height="15"/>
+                    <rect key="frame" x="205" y="11" width="15" height="15"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="15" id="Ker-oE-8kK"/>
                         <constraint firstAttribute="width" constant="15" id="hRv-W4-XdV"/>
@@ -86,7 +86,7 @@
                 <constraint firstItem="7cv-oC-tfh" firstAttribute="centerY" secondItem="Y6e-g6-Ap6" secondAttribute="centerY" id="hoy-3F-gkR"/>
                 <constraint firstItem="Sig-oH-AA7" firstAttribute="centerY" secondItem="gjm-g5-ZsL" secondAttribute="centerY" id="kc6-Rw-SCR"/>
                 <constraint firstItem="gjm-g5-ZsL" firstAttribute="leading" secondItem="Sig-oH-AA7" secondAttribute="trailing" constant="1" id="mUS-Bx-iPR"/>
-                <constraint firstItem="YWj-ux-r3x" firstAttribute="leading" secondItem="7cv-oC-tfh" secondAttribute="trailing" constant="-3" id="r0f-OV-CE3"/>
+                <constraint firstItem="YWj-ux-r3x" firstAttribute="leading" secondItem="7cv-oC-tfh" secondAttribute="trailing" constant="-1" id="r0f-OV-CE3"/>
                 <constraint firstItem="Y6e-g6-Ap6" firstAttribute="top" secondItem="TzO-Qh-pCc" secondAttribute="top" constant="7" id="utT-JP-7ST"/>
                 <constraint firstItem="Sig-oH-AA7" firstAttribute="centerY" secondItem="7cv-oC-tfh" secondAttribute="centerY" id="v0Y-rx-JHE"/>
                 <constraint firstItem="YWj-ux-r3x" firstAttribute="centerY" secondItem="7cv-oC-tfh" secondAttribute="centerY" id="wOl-eg-RwT"/>
@@ -103,7 +103,6 @@
             <connections>
                 <outlet property="leftRedMicImageView" destination="Sig-oH-AA7" id="hf5-zC-aBY"/>
                 <outlet property="rightMicImageView" destination="TQx-ut-I6e" id="ngA-Rm-oIb"/>
-                <outlet property="slideToCancelLabel" destination="7cv-oC-tfh" id="Sx3-K8-KNV"/>
                 <outlet property="timerLabel" destination="gjm-g5-ZsL" id="BPJ-03-I2k"/>
                 <outlet property="trashImageView" destination="Y6e-g6-Ap6" id="AQp-7F-UHu"/>
             </connections>
