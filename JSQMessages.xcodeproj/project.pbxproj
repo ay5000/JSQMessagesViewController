@@ -11,6 +11,24 @@
 		692548CD1AE13E9100C001DD /* UIView+TSJSQConstraintsAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 692548CC1AE13E9100C001DD /* UIView+TSJSQConstraintsAdditions.m */; };
 		69D07E9C1B394B4B00613A90 /* TSRecordingToolbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D07E9A1B394B4B00613A90 /* TSRecordingToolbarView.m */; };
 		69D07E9D1B394B4B00613A90 /* TSRecordingToolbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69D07E9B1B394B4B00613A90 /* TSRecordingToolbarView.xib */; };
+		69D07EDF1B39823800613A90 /* Back_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07EA91B39823800613A90 /* Back_arrow.png */; };
+		69D07EE01B39823800613A90 /* Back_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07EAA1B39823800613A90 /* Back_arrow@2x.png */; };
+		69D07EE11B39823800613A90 /* Back_arrow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07EAB1B39823800613A90 /* Back_arrow@3x.png */; };
+		69D07EE21B39823800613A90 /* Grey_message.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07EAC1B39823800613A90 /* Grey_message.png */; };
+		69D07EE31B39823800613A90 /* Grey_message@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07EAD1B39823800613A90 /* Grey_message@2x.png */; };
+		69D07EE41B39823800613A90 /* Grey_message@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07EAE1B39823800613A90 /* Grey_message@3x.png */; };
+		69D07EFD1B39823800613A90 /* Mic_Grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07EC71B39823800613A90 /* Mic_Grey@2x.png */; };
+		69D07EFE1B39823800613A90 /* Mic_Grey@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07EC81B39823800613A90 /* Mic_Grey@3x.png */; };
+		69D07EFF1B39823800613A90 /* Mic_Red.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07EC91B39823800613A90 /* Mic_Red.png */; };
+		69D07F001B39823800613A90 /* Mic_Red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07ECA1B39823800613A90 /* Mic_Red@2x.png */; };
+		69D07F011B39823800613A90 /* Mic_Red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07ECB1B39823800613A90 /* Mic_Red@3x.png */; };
+		69D07F021B39823800613A90 /* MicGrey.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07ECC1B39823800613A90 /* MicGrey.png */; };
+		69D07F0F1B39823800613A90 /* Trash.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07ED91B39823800613A90 /* Trash.png */; };
+		69D07F101B39823800613A90 /* Trash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07EDA1B39823800613A90 /* Trash@2x.png */; };
+		69D07F111B39823800613A90 /* Trash@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07EDB1B39823800613A90 /* Trash@3x.png */; };
+		69D07F121B39823800613A90 /* x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07EDC1B39823800613A90 /* x.png */; };
+		69D07F131B39823800613A90 /* x@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07EDD1B39823800613A90 /* x@2x.png */; };
+		69D07F141B39823800613A90 /* x@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07EDE1B39823800613A90 /* x@3x.png */; };
 		77CC17A895E6E12BC9CB549A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97E6750B77E8A7042BA0754B /* libPods.a */; };
 		88078A9D19D8FEB5005B4595 /* JSQMessagesMediaPlaceholderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88078A9C19D8FEB5005B4595 /* JSQMessagesMediaPlaceholderView.m */; };
 		88324C3419F6301C00BC732D /* JSQMessagesMediaViewBubbleImageMaskerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 88324C3319F6301C00BC732D /* JSQMessagesMediaViewBubbleImageMaskerTests.m */; };
@@ -126,6 +144,24 @@
 		69D07E991B394B4B00613A90 /* TSRecordingToolbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSRecordingToolbarView.h; sourceTree = "<group>"; };
 		69D07E9A1B394B4B00613A90 /* TSRecordingToolbarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSRecordingToolbarView.m; sourceTree = "<group>"; };
 		69D07E9B1B394B4B00613A90 /* TSRecordingToolbarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSRecordingToolbarView.xib; sourceTree = "<group>"; };
+		69D07EA91B39823800613A90 /* Back_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Back_arrow.png; path = Assets/recording/Back_arrow.png; sourceTree = SOURCE_ROOT; };
+		69D07EAA1B39823800613A90 /* Back_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Back_arrow@2x.png"; path = "Assets/recording/Back_arrow@2x.png"; sourceTree = SOURCE_ROOT; };
+		69D07EAB1B39823800613A90 /* Back_arrow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Back_arrow@3x.png"; path = "Assets/recording/Back_arrow@3x.png"; sourceTree = SOURCE_ROOT; };
+		69D07EAC1B39823800613A90 /* Grey_message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Grey_message.png; path = Assets/recording/Grey_message.png; sourceTree = SOURCE_ROOT; };
+		69D07EAD1B39823800613A90 /* Grey_message@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Grey_message@2x.png"; path = "Assets/recording/Grey_message@2x.png"; sourceTree = SOURCE_ROOT; };
+		69D07EAE1B39823800613A90 /* Grey_message@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Grey_message@3x.png"; path = "Assets/recording/Grey_message@3x.png"; sourceTree = SOURCE_ROOT; };
+		69D07EC71B39823800613A90 /* Mic_Grey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Mic_Grey@2x.png"; path = "Assets/recording/Mic_Grey@2x.png"; sourceTree = SOURCE_ROOT; };
+		69D07EC81B39823800613A90 /* Mic_Grey@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Mic_Grey@3x.png"; path = "Assets/recording/Mic_Grey@3x.png"; sourceTree = SOURCE_ROOT; };
+		69D07EC91B39823800613A90 /* Mic_Red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Mic_Red.png; path = Assets/recording/Mic_Red.png; sourceTree = SOURCE_ROOT; };
+		69D07ECA1B39823800613A90 /* Mic_Red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Mic_Red@2x.png"; path = "Assets/recording/Mic_Red@2x.png"; sourceTree = SOURCE_ROOT; };
+		69D07ECB1B39823800613A90 /* Mic_Red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Mic_Red@3x.png"; path = "Assets/recording/Mic_Red@3x.png"; sourceTree = SOURCE_ROOT; };
+		69D07ECC1B39823800613A90 /* MicGrey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MicGrey.png; path = Assets/recording/MicGrey.png; sourceTree = SOURCE_ROOT; };
+		69D07ED91B39823800613A90 /* Trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Trash.png; path = Assets/recording/Trash.png; sourceTree = SOURCE_ROOT; };
+		69D07EDA1B39823800613A90 /* Trash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Trash@2x.png"; path = "Assets/recording/Trash@2x.png"; sourceTree = SOURCE_ROOT; };
+		69D07EDB1B39823800613A90 /* Trash@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Trash@3x.png"; path = "Assets/recording/Trash@3x.png"; sourceTree = SOURCE_ROOT; };
+		69D07EDC1B39823800613A90 /* x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = x.png; path = Assets/recording/x.png; sourceTree = SOURCE_ROOT; };
+		69D07EDD1B39823800613A90 /* x@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "x@2x.png"; path = "Assets/recording/x@2x.png"; sourceTree = SOURCE_ROOT; };
+		69D07EDE1B39823800613A90 /* x@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "x@3x.png"; path = "Assets/recording/x@3x.png"; sourceTree = SOURCE_ROOT; };
 		782026E9E518622532ED474D /* libPods-JSQMessagesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-JSQMessagesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		88078A9B19D8FEB5005B4595 /* JSQMessagesMediaPlaceholderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesMediaPlaceholderView.h; sourceTree = "<group>"; };
 		88078A9C19D8FEB5005B4595 /* JSQMessagesMediaPlaceholderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesMediaPlaceholderView.m; sourceTree = "<group>"; };
@@ -330,6 +366,31 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		69D07EA81B39821D00613A90 /* Audio Recording */ = {
+			isa = PBXGroup;
+			children = (
+				69D07EA91B39823800613A90 /* Back_arrow.png */,
+				69D07EAA1B39823800613A90 /* Back_arrow@2x.png */,
+				69D07EAB1B39823800613A90 /* Back_arrow@3x.png */,
+				69D07EAC1B39823800613A90 /* Grey_message.png */,
+				69D07EAD1B39823800613A90 /* Grey_message@2x.png */,
+				69D07EAE1B39823800613A90 /* Grey_message@3x.png */,
+				69D07EC71B39823800613A90 /* Mic_Grey@2x.png */,
+				69D07EC81B39823800613A90 /* Mic_Grey@3x.png */,
+				69D07EC91B39823800613A90 /* Mic_Red.png */,
+				69D07ECA1B39823800613A90 /* Mic_Red@2x.png */,
+				69D07ECB1B39823800613A90 /* Mic_Red@3x.png */,
+				69D07ECC1B39823800613A90 /* MicGrey.png */,
+				69D07ED91B39823800613A90 /* Trash.png */,
+				69D07EDA1B39823800613A90 /* Trash@2x.png */,
+				69D07EDB1B39823800613A90 /* Trash@3x.png */,
+				69D07EDC1B39823800613A90 /* x.png */,
+				69D07EDD1B39823800613A90 /* x@2x.png */,
+				69D07EDE1B39823800613A90 /* x@3x.png */,
+			);
+			name = "Audio Recording";
+			sourceTree = "<group>";
+		};
 		8841B88219F4983C00EA16B6 /* Strings */ = {
 			isa = PBXGroup;
 			children = (
@@ -423,6 +484,7 @@
 		88A25F3F19D8E01A00924534 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				69D07EA81B39821D00613A90 /* Audio Recording */,
 				8841B88219F4983C00EA16B6 /* Strings */,
 				8861666C19F492B70025B958 /* JSQMessagesAssets.bundle */,
 			);
@@ -709,18 +771,36 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69D07F111B39823800613A90 /* Trash@3x.png in Resources */,
+				69D07EE41B39823800613A90 /* Grey_message@3x.png in Resources */,
 				88E4D7131A0DBD6B000CC061 /* JSQMessages.strings in Resources */,
+				69D07EE11B39823800613A90 /* Back_arrow@3x.png in Resources */,
+				69D07F141B39823800613A90 /* x@3x.png in Resources */,
 				69D07E9D1B394B4B00613A90 /* TSRecordingToolbarView.xib in Resources */,
 				886C33FF19F45E30006B4997 /* JSQMessagesViewController.podspec in Resources */,
+				69D07EE01B39823800613A90 /* Back_arrow@2x.png in Resources */,
+				69D07EFF1B39823800613A90 /* Mic_Red.png in Resources */,
 				8861666D19F492B70025B958 /* JSQMessagesAssets.bundle in Resources */,
+				69D07F0F1B39823800613A90 /* Trash.png in Resources */,
+				69D07EE31B39823800613A90 /* Grey_message@2x.png in Resources */,
 				88A25FCF19D8E01A00924534 /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
+				69D07F101B39823800613A90 /* Trash@2x.png in Resources */,
+				69D07F001B39823800613A90 /* Mic_Red@2x.png in Resources */,
+				69D07EDF1B39823800613A90 /* Back_arrow.png in Resources */,
 				88A25FCD19D8E01A00924534 /* JSQMessagesCollectionViewCellIncoming.xib in Resources */,
+				69D07F021B39823800613A90 /* MicGrey.png in Resources */,
 				88A25FD619D8E01A00924534 /* JSQMessagesToolbarContentView.xib in Resources */,
+				69D07F121B39823800613A90 /* x.png in Resources */,
 				88A25F3A19D8DF2500924534 /* Images.xcassets in Resources */,
 				88A25FBC19D8E01A00924534 /* JSQMessagesViewController.xib in Resources */,
+				69D07F131B39823800613A90 /* x@2x.png in Resources */,
 				88A25FD819D8E01A00924534 /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
+				69D07EFD1B39823800613A90 /* Mic_Grey@2x.png in Resources */,
+				69D07EFE1B39823800613A90 /* Mic_Grey@3x.png in Resources */,
 				88A25F3919D8DF2500924534 /* Main.storyboard in Resources */,
+				69D07EE21B39823800613A90 /* Grey_message.png in Resources */,
 				88A25FD419D8E01A00924534 /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
+				69D07F011B39823800613A90 /* Mic_Red@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

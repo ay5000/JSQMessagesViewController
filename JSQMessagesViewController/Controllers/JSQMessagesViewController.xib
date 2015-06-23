@@ -8,8 +8,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JSQMessagesViewController">
             <connections>
                 <outlet property="collectionView" destination="l9u-2b-4LK" id="bLP-6g-CkO"/>
+                <outlet property="holdToRecordBackgroundImageView" destination="mCJ-7g-rkP" id="nZi-Ub-72C"/>
+                <outlet property="holdToRecordView" destination="4hg-Ac-520" id="6Qa-Ef-CQb"/>
                 <outlet property="inputToolbar" destination="BoD-Az-3DM" id="w74-g9-1qA"/>
-                <outlet property="recordingToolbarViewRightConstraint" destination="iMg-D6-Nwf" id="Otc-Lw-rQt"/>
+                <outlet property="recordingToolbarContainerView" destination="R6D-r4-zQi" id="jxI-AD-r4c"/>
+                <outlet property="recordingToolbarViewRightConstraint" destination="w7b-3J-evO" id="k7j-Fx-uUm"/>
                 <outlet property="toolbarBottomLayoutGuide" destination="rHs-6q-NX4" id="d6h-iu-VMX"/>
                 <outlet property="toolbarHeightConstraint" destination="HIk-02-qcW" id="jE8-xC-1eD"/>
                 <outlet property="view" destination="mUa-cS-ru4" id="nki-T1-RTI"/>
@@ -33,30 +36,94 @@
                     </constraints>
                     <items/>
                 </toolbar>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R6D-r4-zQi" customClass="TSRecordingToolbarView">
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R6D-r4-zQi">
                     <rect key="frame" x="0.0" y="525" width="320" height="43"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="43" id="fBB-KI-i2g"/>
                     </constraints>
+                </view>
+                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4hg-Ac-520" userLabel="Hold To Record View">
+                    <rect key="frame" x="115" y="491" width="200" height="30"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Grey_message.png" translatesAutoresizingMaskIntoConstraints="NO" id="mCJ-7g-rkP">
+                            <rect key="frame" x="0.0" y="0.0" width="200" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="200" id="C8O-96-6NX"/>
+                                <constraint firstAttribute="height" constant="30" id="Tw8-7u-qPf"/>
+                            </constraints>
+                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BaI-HK-krC">
+                            <rect key="frame" x="178" y="0.0" width="22" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="22" id="HAl-hr-T6R"/>
+                                <constraint firstAttribute="height" constant="30" id="fzN-az-GA7"/>
+                            </constraints>
+                            <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="6" maxY="2"/>
+                            <state key="normal" image="x.png">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="didTapHoldToRecordCloseButton:" destination="-1" eventType="touchUpInside" id="vAh-S7-msr"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hold to record, release to send" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bcc-2q-hW0">
+                            <rect key="frame" x="10" y="2" width="169" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="6dt-dS-e8l"/>
+                                <constraint firstAttribute="width" constant="169" id="NXU-kZ-cWE"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="BaI-HK-krC" firstAttribute="top" secondItem="4hg-Ac-520" secondAttribute="top" id="1cx-0B-Atn"/>
+                        <constraint firstAttribute="centerX" secondItem="mCJ-7g-rkP" secondAttribute="centerX" id="4TE-0w-bEs"/>
+                        <constraint firstAttribute="trailing" secondItem="mCJ-7g-rkP" secondAttribute="trailing" id="7XL-Ed-xEV"/>
+                        <constraint firstAttribute="centerY" secondItem="mCJ-7g-rkP" secondAttribute="centerY" id="9Ns-JF-RVE"/>
+                        <constraint firstAttribute="width" constant="200" id="LWv-dU-fgc"/>
+                        <constraint firstItem="bcc-2q-hW0" firstAttribute="leading" secondItem="4hg-Ac-520" secondAttribute="leading" constant="10" id="Qfk-jW-MuJ"/>
+                        <constraint firstAttribute="trailing" secondItem="BaI-HK-krC" secondAttribute="trailing" id="UJn-c7-rTd"/>
+                        <constraint firstItem="bcc-2q-hW0" firstAttribute="top" secondItem="4hg-Ac-520" secondAttribute="top" constant="2" id="Uwj-vZ-ZgZ"/>
+                        <constraint firstAttribute="height" constant="30" id="ZS6-5q-jgK"/>
+                        <constraint firstItem="mCJ-7g-rkP" firstAttribute="top" secondItem="4hg-Ac-520" secondAttribute="top" id="cHm-Xr-phO"/>
+                        <constraint firstItem="mCJ-7g-rkP" firstAttribute="leading" secondItem="4hg-Ac-520" secondAttribute="leading" id="gZz-lh-SXq"/>
+                        <constraint firstAttribute="bottom" secondItem="mCJ-7g-rkP" secondAttribute="bottom" id="oMe-rI-MXG"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="7XL-Ed-xEV"/>
+                            <exclude reference="cHm-Xr-phO"/>
+                            <exclude reference="gZz-lh-SXq"/>
+                            <exclude reference="oMe-rI-MXG"/>
+                        </mask>
+                    </variation>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="BoD-Az-3DM" secondAttribute="trailing" id="7xc-Ha-asg"/>
                 <constraint firstItem="R6D-r4-zQi" firstAttribute="width" secondItem="BoD-Az-3DM" secondAttribute="width" id="BNO-f7-nAm"/>
+                <constraint firstAttribute="trailing" secondItem="4hg-Ac-520" secondAttribute="trailing" constant="5" id="KJM-QR-mqK"/>
                 <constraint firstItem="l9u-2b-4LK" firstAttribute="leading" secondItem="mUa-cS-ru4" secondAttribute="leading" id="MmF-oh-Y75"/>
                 <constraint firstAttribute="trailing" secondItem="l9u-2b-4LK" secondAttribute="trailing" id="O9u-TA-A0e"/>
                 <constraint firstAttribute="bottom" secondItem="l9u-2b-4LK" secondAttribute="bottom" id="Re7-WW-UmS"/>
                 <constraint firstItem="l9u-2b-4LK" firstAttribute="top" secondItem="mUa-cS-ru4" secondAttribute="top" id="dCQ-DM-Wdj"/>
-                <constraint firstAttribute="trailing" secondItem="R6D-r4-zQi" secondAttribute="trailing" id="iMg-D6-Nwf"/>
                 <constraint firstAttribute="bottom" secondItem="BoD-Az-3DM" secondAttribute="bottom" id="rHs-6q-NX4"/>
                 <constraint firstItem="R6D-r4-zQi" firstAttribute="bottom" secondItem="BoD-Az-3DM" secondAttribute="bottom" id="tMW-PN-ynX"/>
                 <constraint firstItem="BoD-Az-3DM" firstAttribute="leading" secondItem="mUa-cS-ru4" secondAttribute="leading" id="ts7-8f-0lH"/>
+                <constraint firstItem="BoD-Az-3DM" firstAttribute="top" secondItem="4hg-Ac-520" secondAttribute="bottom" constant="3" id="uRr-ef-DoL"/>
+                <constraint firstAttribute="trailing" secondItem="R6D-r4-zQi" secondAttribute="trailing" id="w7b-3J-evO"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
+            <point key="canvasLocation" x="-301" y="316"/>
         </view>
     </objects>
+    <resources>
+        <image name="Grey_message.png" width="38" height="30"/>
+        <image name="x.png" width="15" height="15"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

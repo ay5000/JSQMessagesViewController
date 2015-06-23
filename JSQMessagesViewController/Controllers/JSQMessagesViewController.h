@@ -23,7 +23,7 @@
 #import "JSQMessagesInputToolbar.h"
 #import "TSRecordingToolbarView.h" // Oana change
 
-// Oana change in xib 
+// Oana change in xib - Added recordingToolbarContainerView and holdToRecord view
 
 /**
  *  The `JSQMessagesViewController` class is an abstract class that represents a view controller whose content consists of
@@ -32,21 +32,24 @@
  *  @warning This class is intended to be subclassed. You should not use it directly.
  */
 @interface JSQMessagesViewController : UIViewController <JSQMessagesCollectionViewDataSource,
-                                                         JSQMessagesCollectionViewDelegateFlowLayout,
-                                                        JSQMessagesInputToolbarDelegate, //Oana change
-                                                         UITextViewDelegate>
+JSQMessagesCollectionViewDelegateFlowLayout,
+JSQMessagesInputToolbarDelegate, //Oana change
+UITextViewDelegate>
 
-@property (weak, nonatomic) IBOutlet TSRecordingToolbarView *recordingToolbarView; // Oana change
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *recordingToolbarViewRightConstraint; // Oana change
+// Oana change - Audio Recording
+@property (strong, nonatomic) TSRecordingToolbarView *recordingToolbarView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *recordingToolbarViewRightConstraint;
+@property (weak, nonatomic) IBOutlet UIView *holdToRecordView;
+/////
 
 /**
- *  Returns the collection view object managed by this view controller. 
+ *  Returns the collection view object managed by this view controller.
  *  This view controller is the collection view's data source and delegate.
  */
 @property (weak, nonatomic, readonly) JSQMessagesCollectionView *collectionView;
 
 /**
- *  Returns the input toolbar view object managed by this view controller. 
+ *  Returns the input toolbar view object managed by this view controller.
  *  This view controller is the toolbar's delegate.
  */
 @property (weak, nonatomic, readonly) JSQMessagesInputToolbar *inputToolbar;
@@ -61,7 +64,7 @@
 
 /**
  *  The string identifier that uniquely identifies the current user sending messages.
- *  
+ *
  *  @discussion This property is used to determine if a message is incoming or outgoing.
  *  All message data objects returned by `collectionView:messageDataForItemAtIndexPath:` are
  *  checked against this identifier.
@@ -70,34 +73,34 @@
 @property (copy, nonatomic) NSString *senderId;
 
 /**
- *  Specifies whether or not the view controller should automatically scroll to the most recent message 
+ *  Specifies whether or not the view controller should automatically scroll to the most recent message
  *  when the view appears and when sending, receiving, and composing a new message.
  *
- *  @discussion The default value is `YES`, which allows the view controller to scroll automatically to the most recent message. 
+ *  @discussion The default value is `YES`, which allows the view controller to scroll automatically to the most recent message.
  *  Set to `NO` if you want to manage scrolling yourself.
  */
 @property (assign, nonatomic) BOOL automaticallyScrollsToMostRecentMessage;
 
 /**
- *  The collection view cell identifier to use for dequeuing outgoing message collection view cells 
+ *  The collection view cell identifier to use for dequeuing outgoing message collection view cells
  *  in the collectionView for text messages.
  *
  *  @discussion This cell identifier is used for outgoing text message data items.
  *  The default value is the string returned by `[JSQMessagesCollectionViewCellOutgoing cellReuseIdentifier]`.
  *  This value must not be `nil`.
- *  
+ *
  *  @see JSQMessagesCollectionViewCellOutgoing.
  *
- *  @warning Overriding this property's default value is *not* recommended. 
+ *  @warning Overriding this property's default value is *not* recommended.
  *  You should only override this property's default value if you are proividing your own cell prototypes.
- *  These prototypes must be registered with the collectionView for reuse and you are then responsible for 
- *  completely overriding many delegate and data source methods for the collectionView, 
+ *  These prototypes must be registered with the collectionView for reuse and you are then responsible for
+ *  completely overriding many delegate and data source methods for the collectionView,
  *  including `collectionView:cellForItemAtIndexPath:`.
  */
 @property (copy, nonatomic) NSString *outgoingCellIdentifier;
 
 /**
- *  The collection view cell identifier to use for dequeuing outgoing message collection view cells 
+ *  The collection view cell identifier to use for dequeuing outgoing message collection view cells
  *  in the collectionView for media messages.
  *
  *  @discussion This cell identifier is used for outgoing media message data items.
@@ -115,7 +118,7 @@
 @property (copy, nonatomic) NSString *outgoingMediaCellIdentifier;
 
 /**
- *  The collection view cell identifier to use for dequeuing incoming message collection view cells 
+ *  The collection view cell identifier to use for dequeuing incoming message collection view cells
  *  in the collectionView for text messages.
  *
  *  @discussion This cell identifier is used for incoming text message data items.
@@ -124,16 +127,16 @@
  *
  *  @see JSQMessagesCollectionViewCellIncoming.
  *
- *  @warning Overriding this property's default value is *not* recommended. 
- *  You should only override this property's default value if you are proividing your own cell prototypes. 
- *  These prototypes must be registered with the collectionView for reuse and you are then responsible for 
- *  completely overriding many delegate and data source methods for the collectionView, 
+ *  @warning Overriding this property's default value is *not* recommended.
+ *  You should only override this property's default value if you are proividing your own cell prototypes.
+ *  These prototypes must be registered with the collectionView for reuse and you are then responsible for
+ *  completely overriding many delegate and data source methods for the collectionView,
  *  including `collectionView:cellForItemAtIndexPath:`.
  */
 @property (copy, nonatomic) NSString *incomingCellIdentifier;
 
 /**
- *  The collection view cell identifier to use for dequeuing incoming message collection view cells 
+ *  The collection view cell identifier to use for dequeuing incoming message collection view cells
  *  in the collectionView for media messages.
  *
  *  @discussion This cell identifier is used for incoming media message data items.
@@ -180,7 +183,7 @@
 /**
  *  Returns the `UINib` object initialized for a `JSQMessagesViewController`.
  *
- *  @return The initialized `UINib` object or `nil` if there were errors during initialization 
+ *  @return The initialized `UINib` object or `nil` if there were errors during initialization
  *  or the nib file could not be located.
  *
  *  @discussion You may override this method to provide a customized nib. If you do,
@@ -191,7 +194,7 @@
 
 /**
  *  Creates and returns a new `JSQMessagesViewController` object.
- *  
+ *
  *  @discussion This is the designated initializer for programmatic instantiation.
  *
  *  @return An initialized `JSQMessagesViewController` object if successful, `nil` otherwise.
@@ -224,12 +227,12 @@
 - (void)didPressAccessoryButton:(UIButton *)sender;
 
 /**
- *  Completes the "sending" of a new message by animating and resetting the `inputToolbar`, 
+ *  Completes the "sending" of a new message by animating and resetting the `inputToolbar`,
  *  animating the addition of a new collection view cell in the collection view,
- *  reloading the collection view, and scrolling to the newly sent message 
+ *  reloading the collection view, and scrolling to the newly sent message
  *  as specified by `automaticallyScrollsToMostRecentMessage`.
  *
- *  @discussion You should call this method at the end of `didPressSendButton:withMessage:` 
+ *  @discussion You should call this method at the end of `didPressSendButton:withMessage:`
  *  after adding the new message to your data source and performing any related tasks.
  *
  *  @see `automaticallyScrollsToMostRecentMessage`.

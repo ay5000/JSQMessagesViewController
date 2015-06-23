@@ -1,4 +1,4 @@
-    //
+//
 //  Created by Jesse Squires
 //  http://www.jessesquires.com
 //
@@ -40,7 +40,7 @@
 #import "NSString+JSQMessages.h"
 #import "UIColor+JSQMessages.h"
 #import "UIDevice+JSQMessages.h"
-
+#import "UIView+TSJSQConstraintsAdditions.h" // Oana change
 
 static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObservingContext;
 
@@ -49,6 +49,12 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 @interface JSQMessagesViewController () <JSQMessagesKeyboardControllerDelegate> {
     float _currentKeyboardHeightFromBottom; // Oana change
 }
+
+// Oana change - Audio Recording
+@property (unsafe_unretained, nonatomic) IBOutlet UIImageView *holdToRecordBackgroundImageView;
+@property (unsafe_unretained, nonatomic) IBOutlet UIView *recordingToolbarContainerView;
+- (IBAction)didTapHoldToRecordCloseButton:(id)sender;
+////
 
 @property (weak, nonatomic) IBOutlet JSQMessagesCollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet JSQMessagesInputToolbar *inputToolbar;
@@ -217,7 +223,9 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     [super viewDidLoad];
     
     [[[self class] nib] instantiateWithOwner:self options:nil];
-
+    
+    [self configureAudioRecordingElements];
+    
     [self jsq_configureMessagesViewController];
     [self jsq_registerForNotifications:YES];
 }
@@ -225,14 +233,14 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-//    [self.view layoutIfNeeded]; // Oana change: I had to remove it because of an UI issue with audio cell on iPad when entering in message screen
+    //    [self.view layoutIfNeeded]; // Oana change: I had to remove it because of an UI issue with audio cell on iPad when entering in message screen
     [self.collectionView.collectionViewLayout invalidateLayout];
     
     if (self.automaticallyScrollsToMostRecentMessage) {
-//        dispatch_async(dispatch_get_main_queue(), ^{ // Oana change: I commented this to fix a UI bug: for 1 sec the first meesages were shown after that it was scrolling to the bottom
-            [self scrollToBottomAnimated:NO];
-            [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
-//        });
+        //        dispatch_async(dispatch_get_main_queue(), ^{ // Oana change: I commented this to fix a UI bug: for 1 sec the first meesages were shown after that it was scrolling to the bottom
+        [self scrollToBottomAnimated:NO];
+        [self.collectionView.collectionViewLayout invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
+        //        });
     }
     
     [self jsq_updateKeyboardTriggerPoint];
@@ -269,6 +277,27 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 {
     [super didReceiveMemoryWarning];
     NSLog(@"MEMORY WARNING: %s", __PRETTY_FUNCTION__);
+}
+
+#pragma mark - Oana change - Audio Recording
+
+- (void)configureAudioRecordingElements {
+    self.holdToRecordBackgroundImageView.image = [self.holdToRecordBackgroundImageView.image resizableImageWithCapInsets:UIEdgeInsetsMake(8, 8, 12, 21)];
+    
+    NSArray *nibViews = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([TSRecordingToolbarView class]) owner:nil options:nil];
+    self.recordingToolbarView = [nibViews firstObject];
+    [self.recordingToolbarContainerView addSubview:self.recordingToolbarView];
+    [self.recordingToolbarView alignToView:self.recordingToolbarContainerView alignProperties:(ALAlignPropertyTop|ALAlignPropertyLeft|ALAlignPropertyBottom|ALAlignPropertyRight) spacing:0];
+    [self.recordingToolbarContainerView setNeedsUpdateConstraints];
+    self.recordingToolbarView.alpha = 0;
+}
+
+- (IBAction)didTapHoldToRecordCloseButton:(id)sender {
+    [UIView animateWithDuration:0.3f animations:^{
+        self.holdToRecordView.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.holdToRecordView.alpha = 0;
+    }];
 }
 
 #pragma mark - View rotation
@@ -746,7 +775,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
             CGSize newContentSize = [[change objectForKey:NSKeyValueChangeNewKey] CGSizeValue];
             
             CGFloat dy = newContentSize.height - oldContentSize.height;
-        
+            
             [self jsq_adjustInputToolbarForComposerTextViewContentSizeChange:dy];
             [self jsq_updateCollectionViewInsets];
             if (self.automaticallyScrollsToMostRecentMessage) {
