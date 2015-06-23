@@ -21,6 +21,9 @@
 #import "JSQMessagesCollectionView.h"
 #import "JSQMessagesCollectionViewFlowLayout.h"
 #import "JSQMessagesInputToolbar.h"
+#import "TSRecordingToolbarView.h" // Oana change
+
+// Oana change in xib 
 
 /**
  *  The `JSQMessagesViewController` class is an abstract class that represents a view controller whose content consists of
@@ -32,6 +35,9 @@
                                                          JSQMessagesCollectionViewDelegateFlowLayout,
                                                         JSQMessagesInputToolbarDelegate, //Oana change
                                                          UITextViewDelegate>
+
+@property (weak, nonatomic) IBOutlet TSRecordingToolbarView *recordingToolbarView; // Oana change
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *recordingToolbarViewRightConstraint; // Oana change
 
 /**
  *  Returns the collection view object managed by this view controller. 
