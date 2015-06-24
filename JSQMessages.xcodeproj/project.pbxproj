@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		36CF33BD29CF36EB06D0CCFD /* libPods-JSQMessagesTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 782026E9E518622532ED474D /* libPods-JSQMessagesTests.a */; };
 		692548CD1AE13E9100C001DD /* UIView+TSJSQConstraintsAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 692548CC1AE13E9100C001DD /* UIView+TSJSQConstraintsAdditions.m */; };
+		693A13861B3A7DFE008E5D23 /* TSRecordingToolbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 693A13851B3A7DFE008E5D23 /* TSRecordingToolbarView.xib */; };
 		69D07E9C1B394B4B00613A90 /* TSRecordingToolbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 69D07E9A1B394B4B00613A90 /* TSRecordingToolbarView.m */; };
-		69D07E9D1B394B4B00613A90 /* TSRecordingToolbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 69D07E9B1B394B4B00613A90 /* TSRecordingToolbarView.xib */; };
 		69D07FC41B39973400613A90 /* Back_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07FB21B39973400613A90 /* Back_arrow.png */; };
 		69D07FC51B39973400613A90 /* Back_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07FB31B39973400613A90 /* Back_arrow@2x.png */; };
 		69D07FC61B39973400613A90 /* Back_arrow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 69D07FB41B39973400613A90 /* Back_arrow@3x.png */; };
@@ -141,9 +141,9 @@
 		27B7FD1B722B36B26CB3460B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		692548CB1AE13E9100C001DD /* UIView+TSJSQConstraintsAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TSJSQConstraintsAdditions.h"; sourceTree = "<group>"; };
 		692548CC1AE13E9100C001DD /* UIView+TSJSQConstraintsAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TSJSQConstraintsAdditions.m"; sourceTree = "<group>"; };
+		693A13851B3A7DFE008E5D23 /* TSRecordingToolbarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSRecordingToolbarView.xib; sourceTree = "<group>"; };
 		69D07E991B394B4B00613A90 /* TSRecordingToolbarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSRecordingToolbarView.h; sourceTree = "<group>"; };
 		69D07E9A1B394B4B00613A90 /* TSRecordingToolbarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSRecordingToolbarView.m; sourceTree = "<group>"; };
-		69D07E9B1B394B4B00613A90 /* TSRecordingToolbarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSRecordingToolbarView.xib; sourceTree = "<group>"; };
 		69D07FB21B39973400613A90 /* Back_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Back_arrow.png; path = AudioRecording/Back_arrow.png; sourceTree = "<group>"; };
 		69D07FB31B39973400613A90 /* Back_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Back_arrow@2x.png"; path = "AudioRecording/Back_arrow@2x.png"; sourceTree = "<group>"; };
 		69D07FB41B39973400613A90 /* Back_arrow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Back_arrow@3x.png"; path = "AudioRecording/Back_arrow@3x.png"; sourceTree = "<group>"; };
@@ -586,7 +586,7 @@
 			children = (
 				69D07E991B394B4B00613A90 /* TSRecordingToolbarView.h */,
 				69D07E9A1B394B4B00613A90 /* TSRecordingToolbarView.m */,
-				69D07E9B1B394B4B00613A90 /* TSRecordingToolbarView.xib */,
+				693A13851B3A7DFE008E5D23 /* TSRecordingToolbarView.xib */,
 				883C11761A09FB100092A16D /* JSQMessagesCellTextView.h */,
 				883C11771A09FB100092A16D /* JSQMessagesCellTextView.m */,
 				88A25F8A19D8E01A00924534 /* JSQMessagesCollectionView.h */,
@@ -772,13 +772,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				69D07FD01B39973400613A90 /* Trash.png in Resources */,
+				693A13861B3A7DFE008E5D23 /* TSRecordingToolbarView.xib in Resources */,
 				69D07FD11B39973400613A90 /* Trash@2x.png in Resources */,
 				69D07FC91B39973400613A90 /* Grey_message@3x.png in Resources */,
 				69D07FCC1B39973400613A90 /* Mic_Red.png in Resources */,
 				88E4D7131A0DBD6B000CC061 /* JSQMessages.strings in Resources */,
 				69D07FC61B39973400613A90 /* Back_arrow@3x.png in Resources */,
 				69D07FCD1B39973400613A90 /* Mic_Red@2x.png in Resources */,
-				69D07E9D1B394B4B00613A90 /* TSRecordingToolbarView.xib in Resources */,
 				69D07FCF1B39973400613A90 /* MicGrey.png in Resources */,
 				69D07FCB1B39973400613A90 /* Mic_Grey@3x.png in Resources */,
 				69D07FD21B39973400613A90 /* Trash@3x.png in Resources */,
