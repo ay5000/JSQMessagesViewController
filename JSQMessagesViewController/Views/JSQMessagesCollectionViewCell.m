@@ -196,13 +196,13 @@
 
 - (void)setHighlighted:(BOOL)highlighted
 {
-    [super setHighlighted:highlighted];
+//    [super setHighlighted:highlighted]; // Oana change - commented for audio messages
     self.messageBubbleImageView.highlighted = highlighted;
 }
 
 - (void)setSelected:(BOOL)selected
 {
-    [super setSelected:selected];
+//    [super setSelected:selected]; // Oana change - commented for audio messages
     self.messageBubbleImageView.highlighted = selected;
 }
 

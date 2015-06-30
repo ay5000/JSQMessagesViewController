@@ -595,6 +595,14 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
 {
+    // Oana change - remove menu for audio message
+    id<JSQMessageData> messageData = [self collectionView:self.collectionView messageDataForItemAtIndexPath:indexPath];
+    
+    if ([messageData isAudioMessage]) {
+        return NO;
+    }
+    ///
+    
     if (action == @selector(copy:)) {
         return YES;
     }
