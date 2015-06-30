@@ -227,6 +227,7 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
 }
 
 - (void)shouldHideLastRightBarButtonItem:(BOOL)shouldHide {
+    _isLastRightBarButtonItemHidden = shouldHide;
     _lastRightBarButtonItemWidthConstraint.constant = shouldHide ? 0 : _lastRightBarButtonItemWidth;
     self.rightBarButtonItemWidth =  _rightBarButtonItem.frame.size.width + _lastRightBarButtonItemWidthConstraint.constant;
     [self layoutIfNeeded];

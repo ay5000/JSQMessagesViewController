@@ -99,6 +99,8 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingD
 
 @property (weak, nonatomic, readonly) UIButton *lastRightBarButtonItem; // Oana new change
 
+@property (assign, nonatomic, readonly) BOOL isLastRightBarButtonItemHidden; // Oana new change
+
 - (void)setRightBarButtonItems:(NSArray *)rightBarButtonItems; // Oana new change
 
 - (void)shouldHideLastRightBarButtonItem:(BOOL)shouldHide; // Oana new change
