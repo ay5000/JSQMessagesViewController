@@ -35,4 +35,10 @@
  */
 - (void)resetUIState;
 
+/**
+ * Checks if the delete animation is in progress
+ * @return YES if the delete animation is in progress, otherwise NO
+ */
+- (BOOL)isDeleteAnimationInProgress;
+
 @end

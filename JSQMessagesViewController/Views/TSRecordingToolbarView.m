@@ -67,4 +67,9 @@
     self.timerLabel.text = guaranteedTimeToReply;
 }
 
+
+- (BOOL)isDeleteAnimationInProgress {
+    return !self.trashImageView.hidden;
+}
+
 @end
