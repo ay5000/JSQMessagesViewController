@@ -22,7 +22,7 @@
 #import "JSQMessagesComposerTextView.h"
 
 /**
- *  A constant value representing the default spacing to use for the left and right edges 
+ *  A constant value representing the default spacing to use for the left and right edges
  *  of the toolbar content view.
  */
 FOUNDATION_EXPORT const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
@@ -90,7 +90,7 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingD
 /**
  *  The container view for the rightBarButtonItem.
  *
- *  @discussion 
+ *  @discussion
  *  You may use this property to add additional button items to the right side of the toolbar content view.
  *  However, you will be completely responsible for responding to all touch events for these buttons
  *  in your `JSQMessagesViewController` subclass.
@@ -100,10 +100,12 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingD
 @property (weak, nonatomic, readonly) UIButton *lastRightBarButtonItem; // Oana new change
 
 @property (assign, nonatomic, readonly) BOOL isLastRightBarButtonItemHidden; // Oana new change
+@property (assign, nonatomic, readonly) BOOL isFirstRightBarButtonItemHidden; // Oana new change
 
 - (void)setRightBarButtonItems:(NSArray *)rightBarButtonItems; // Oana new change
 
 - (void)shouldHideLastRightBarButtonItem:(BOOL)shouldHide; // Oana new change
+- (void)shouldHideFirstRightBarButtonItem:(BOOL)shouldHide; // Oana new change
 
 #pragma mark - Class methods
 

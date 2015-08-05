@@ -26,7 +26,8 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
 
 @interface JSQMessagesToolbarContentView () {
     NSLayoutConstraint *_lastRightBarButtonItemWidthConstraint;
-    int _lastRightBarButtonItemWidth;
+    int _defaultRightBarButtonItemWidth;
+    NSLayoutConstraint *_firstRightBarButtonItemWidthConstraint;
 }
 
 @property (weak, nonatomic) IBOutlet JSQMessagesComposerTextView *textView;
@@ -208,10 +209,13 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
         
         [leftButton addDimensions:ALViewDimentionHeight value:leftButton.frame.size.height];
         [leftButton addDimensions:ALViewDimensionWidth value:leftButton.frame.size.width];
+        NSArray *constraints = [leftButton addDimensions:ALViewDimensionWidth value:leftButton.frame.size.width];
+        _firstRightBarButtonItemWidthConstraint = [constraints lastObject];
+        
         [rightButton addDimensions:ALViewDimentionHeight value:rightButton.frame.size.height];
-        NSArray *constraints = [rightButton addDimensions:ALViewDimensionWidth value:rightButton.frame.size.width];
+        constraints = [rightButton addDimensions:ALViewDimensionWidth value:rightButton.frame.size.width];
         _lastRightBarButtonItemWidthConstraint = [constraints lastObject];
-        _lastRightBarButtonItemWidth = _lastRightBarButtonItemWidthConstraint.constant;
+        _defaultRightBarButtonItemWidth = _lastRightBarButtonItemWidthConstraint.constant;
         
         [leftButton alignToView:self.rightBarButtonContainerView alignProperties:ALAlignPropertyTop spacing:0];
         [rightButton alignToView:self.rightBarButtonContainerView alignProperties:ALAlignPropertyTop spacing:0];
@@ -228,8 +232,15 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
 
 - (void)shouldHideLastRightBarButtonItem:(BOOL)shouldHide {
     _isLastRightBarButtonItemHidden = shouldHide;
-    _lastRightBarButtonItemWidthConstraint.constant = shouldHide ? 0 : _lastRightBarButtonItemWidth;
-    self.rightBarButtonItemWidth =  _rightBarButtonItem.frame.size.width + _lastRightBarButtonItemWidthConstraint.constant;
+    _lastRightBarButtonItemWidthConstraint.constant = shouldHide ? 0 : _defaultRightBarButtonItemWidth;
+    self.rightBarButtonItemWidth = _rightBarButtonItem.frame.size.width + _lastRightBarButtonItemWidthConstraint.constant;
+    [self layoutIfNeeded];
+}
+
+- (void)shouldHideFirstRightBarButtonItem:(BOOL)shouldHide {
+    _isFirstRightBarButtonItemHidden = shouldHide;
+    _firstRightBarButtonItemWidthConstraint.constant = shouldHide ? 0 : _defaultRightBarButtonItemWidth;
+    self.rightBarButtonItemWidth = _rightBarButtonItem.frame.size.width + _lastRightBarButtonItemWidthConstraint.constant;
     [self layoutIfNeeded];
 }
 
