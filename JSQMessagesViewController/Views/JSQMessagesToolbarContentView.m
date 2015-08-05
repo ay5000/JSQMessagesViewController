@@ -208,7 +208,6 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
         rightButton.translatesAutoresizingMaskIntoConstraints = NO;
         
         [leftButton addDimensions:ALViewDimentionHeight value:leftButton.frame.size.height];
-        [leftButton addDimensions:ALViewDimensionWidth value:leftButton.frame.size.width];
         NSArray *constraints = [leftButton addDimensions:ALViewDimensionWidth value:leftButton.frame.size.width];
         _firstRightBarButtonItemWidthConstraint = [constraints lastObject];
         
