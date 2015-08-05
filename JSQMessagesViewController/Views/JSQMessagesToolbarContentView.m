@@ -230,17 +230,25 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
 }
 
 - (void)shouldHideLastRightBarButtonItem:(BOOL)shouldHide {
+    if (_isLastRightBarButtonItemHidden == shouldHide) {
+        return;
+    }
+    
     _isLastRightBarButtonItemHidden = shouldHide;
     _lastRightBarButtonItemWidthConstraint.constant = shouldHide ? 0 : _defaultRightBarButtonItemWidth;
-    self.rightBarButtonItemWidth = _rightBarButtonItem.frame.size.width + _lastRightBarButtonItemWidthConstraint.constant;
     [self layoutIfNeeded];
+    self.rightBarButtonItemWidth = _rightBarButtonItem.frame.size.width + _lastRightBarButtonItemWidthConstraint.constant;
 }
 
 - (void)shouldHideFirstRightBarButtonItem:(BOOL)shouldHide {
+    if (_isFirstRightBarButtonItemHidden == shouldHide) {
+        return;
+    }
+    
     _isFirstRightBarButtonItemHidden = shouldHide;
     _firstRightBarButtonItemWidthConstraint.constant = shouldHide ? 0 : _defaultRightBarButtonItemWidth;
-    self.rightBarButtonItemWidth = _rightBarButtonItem.frame.size.width + _lastRightBarButtonItemWidthConstraint.constant;
     [self layoutIfNeeded];
+    self.rightBarButtonItemWidth = _rightBarButtonItem.frame.size.width + _lastRightBarButtonItemWidthConstraint.constant;
 }
 
 @end
