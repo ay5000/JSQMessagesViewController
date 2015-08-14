@@ -519,7 +519,10 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
         if (bubbleImageDataSource != nil) {
             cell.messageBubbleImageView.image = [bubbleImageDataSource messageBubbleImage];
             cell.messageBubbleImageView.highlightedImage = [bubbleImageDataSource messageBubbleHighlightedImage];
-        }
+        } else { // Oana change - added this for welcome message & talkspace message
+            cell.messageBubbleImageView.image = nil;
+            cell.messageBubbleImageView.highlightedImage = nil;
+        } /////
     }
     else {
         id<JSQMessageMediaData> messageMedia = [messageItem media];
