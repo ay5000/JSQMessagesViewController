@@ -21,9 +21,11 @@
 #import "JSQMessagesCollectionView.h"
 #import "JSQMessagesCollectionViewFlowLayout.h"
 #import "JSQMessagesInputToolbar.h"
+#import "JSQMessagesKeyboardController.h"
 #import "TSRecordingToolbarView.h" // Oana change
 
 // Oana change in xib - Added recordingToolbarContainerView and holdToRecord view
+
 
 /**
  *  The `JSQMessagesViewController` class is an abstract class that represents a view controller whose content consists of
@@ -55,10 +57,14 @@ UITextViewDelegate>
 @property (weak, nonatomic, readonly) JSQMessagesInputToolbar *inputToolbar;
 
 /**
+ *  Returns the keyboard controller object used to manage the software keyboard.
+ */
+@property (strong, nonatomic) JSQMessagesKeyboardController *keyboardController;
+
+/**
  *  The display name of the current user who is sending messages.
- *  This value does not have to be unique.
  *
- *  @discussion This value must not be `nil`. The default value is `@"JSQDefaultSender"`.
+ *  @discussion This value does not have to be unique. This value must not be `nil`.
  */
 @property (copy, nonatomic) NSString *senderDisplayName;
 
@@ -67,8 +73,7 @@ UITextViewDelegate>
  *
  *  @discussion This property is used to determine if a message is incoming or outgoing.
  *  All message data objects returned by `collectionView:messageDataForItemAtIndexPath:` are
- *  checked against this identifier.
- *  This value must not be `nil`. The default value is `@"JSQDefaultSender"`.
+ *  checked against this identifier. This value must not be `nil`.
  */
 @property (copy, nonatomic) NSString *senderId;
 
@@ -227,31 +232,45 @@ UITextViewDelegate>
 - (void)didPressAccessoryButton:(UIButton *)sender;
 
 /**
- *  Completes the "sending" of a new message by animating and resetting the `inputToolbar`,
- *  animating the addition of a new collection view cell in the collection view,
- *  reloading the collection view, and scrolling to the newly sent message
- *  as specified by `automaticallyScrollsToMostRecentMessage`.
+ *  Animates the sending of a new message. See `finishSendingMessageAnimated:` for more details.
  *
- *  @discussion You should call this method at the end of `didPressSendButton:withMessage:`
- *  after adding the new message to your data source and performing any related tasks.
- *
- *  @see `automaticallyScrollsToMostRecentMessage`.
- *  @see `didPressSendButton: withMessage:`.
+ *  @see `finishSendingMessageAnimated:`.
  */
 - (void)finishSendingMessage;
 
 /**
- *  Completes the "receiving" of a new message by animating the typing indicator,
- *  animating the addition of a new collection view cell in the collection view,
- *  reloading the collection view, and scrolling to the newly sent message
- *  as specified by `automaticallyScrollsToMostRecentMessage`.
+ *  Completes the "sending" of a new message by resetting the `inputToolbar`, adding a new collection view cell in the collection view,
+ *  reloading the collection view, and scrolling to the newly sent message as specified by `automaticallyScrollsToMostRecentMessage`.
+ *  Scrolling to the new message can be animated as specified by the animated parameter.
  *
- *  @discussion You should call this method after adding a new "received" message
- *  to your data source and performing any related tasks.
+ *  @param animated Specifies whether the sending of a message should be animated or not. Pass `YES` to animate changes, `NO` otherwise.
+ *
+ *  @discussion You should call this method at the end of `didPressSendButton: withMessageText: senderId: senderDisplayName: date`
+ *  after adding the new message to your data source and performing any related tasks.
  *
  *  @see `automaticallyScrollsToMostRecentMessage`.
  */
+- (void)finishSendingMessageAnimated:(BOOL)animated;
+
+/**
+ *  Animates the receiving of a new message. See `finishReceivingMessageAnimated:` for more details.
+ *
+ *  @see `finishReceivingMessageAnimated:`.
+ */
 - (void)finishReceivingMessage;
+
+/**
+ *  Completes the "receiving" of a new message by showing the typing indicator, adding a new collection view cell in the collection view,
+ *  reloading the collection view, and scrolling to the newly sent message as specified by `automaticallyScrollsToMostRecentMessage`.
+ *  Scrolling to the new message can be animated as specified by the animated parameter.
+ *
+ *  @param animated Specifies whether the receiving of a message should be animated or not. Pass `YES` to animate changes, `NO` otherwise.
+ *
+ *  @discussion You should call this method after adding a new "received" message to your data source and performing any related tasks.
+ *
+ *  @see `automaticallyScrollsToMostRecentMessage`.
+ */
+- (void)finishReceivingMessageAnimated:(BOOL)animated;
 
 /**
  *  Scrolls the collection view such that the bottom most cell is completely visible, above the `inputToolbar`.

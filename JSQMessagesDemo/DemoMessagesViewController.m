@@ -68,6 +68,26 @@
                                                                               style:UIBarButtonItemStyleBordered
                                                                              target:self
                                                                              action:@selector(receiveMessagePressed:)];
+
+    /**
+     *  Register custom menu actions for cells.
+     */
+    [JSQMessagesCollectionViewCell registerMenuAction:@selector(customAction:)];
+    [UIMenuController sharedMenuController].menuItems = @[ [[UIMenuItem alloc] initWithTitle:@"Custom Action" action:@selector(customAction:)] ];
+
+
+    /**
+     *  Customize your toolbar buttons
+     *
+     *  self.inputToolbar.contentView.leftBarButtonItem = custom button or nil to remove
+     *  self.inputToolbar.contentView.rightBarButtonItem = custom button or nil to remove
+     */
+
+    /**
+     *  Set a maximum height for the input toolbar
+     *
+     *  self.inputToolbar.maximumHeight = 150;
+     */
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -93,6 +113,16 @@
     self.collectionView.collectionViewLayout.springinessEnabled = [NSUserDefaults springinessSetting];
 }
 
+
+
+#pragma mark - Testing
+
+- (void)pushMainViewController
+{
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UINavigationController *nc = [sb instantiateInitialViewController];
+    [self.navigationController pushViewController:nc.topViewController animated:YES];
+}
 
 
 #pragma mark - Actions
@@ -211,7 +241,7 @@
          */
         [JSQSystemSoundPlayer jsq_playMessageReceivedSound];
         [self.demoData.messages addObject:newMessage];
-        [self finishReceivingMessage];
+        [self finishReceivingMessageAnimated:YES];
         
         
         if (newMessage.isMediaMessage) {
@@ -282,7 +312,8 @@
                                                           text:text];
     
     [self.demoData.messages addObject:message];
-    [self finishSendingMessage];
+    
+    [self finishSendingMessageAnimated:YES];
 }
 
 - (void)didPressAccessoryButton:(UIButton *)sender
@@ -323,7 +354,8 @@
     }
     
     [JSQSystemSoundPlayer jsq_playMessageSentSound];
-    [self finishSendingMessage];
+    
+    [self finishSendingMessageAnimated:YES];
 }
 
 
@@ -481,6 +513,43 @@
     }
     
     return cell;
+}
+
+
+
+#pragma mark - UICollectionView Delegate
+
+#pragma mark - Custom menu items
+
+- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+{
+    if (action == @selector(customAction:)) {
+        return YES;
+    }
+
+    return [super collectionView:collectionView canPerformAction:action forItemAtIndexPath:indexPath withSender:sender];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+{
+    if (action == @selector(customAction:)) {
+        [self customAction:sender];
+        return;
+    }
+
+    [super collectionView:collectionView performAction:action forItemAtIndexPath:indexPath withSender:sender];
+}
+
+- (void)customAction:(id)sender
+{
+    NSLog(@"Custom action received! Sender: %@", sender);
+
+    [[[UIAlertView alloc] initWithTitle:@"Custom Action"
+                               message:nil
+                              delegate:nil
+                     cancelButtonTitle:@"OK"
+                      otherButtonTitles:nil]
+     show];
 }
 
 
