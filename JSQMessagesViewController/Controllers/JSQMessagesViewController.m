@@ -237,6 +237,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     
     // Oana change: I put it in front of layoutIfNeeded because of an UI issue with audio cell on iPad when entering in message screen. The collectionView frame was not updated to iPad size.
     [self.collectionView.collectionViewLayout invalidateLayout];
+    [self.view layoutIfNeeded]; // Oana change: added it back
 
     if (self.automaticallyScrollsToMostRecentMessage) {
         //        dispatch_async(dispatch_get_main_queue(), ^{ // Oana change: I commented this to fix a UI bug: for 1 sec the first meesages were shown after that it was scrolling to the bottom
