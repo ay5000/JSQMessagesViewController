@@ -10,9 +10,10 @@
 
 @interface TSRecordingToolbarView ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *rightMicImageView;
 @property (weak, nonatomic) IBOutlet UILabel *timerLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *trashImageView;
+- (IBAction)didTapCancelButton:(id)sender;
+- (IBAction)didTapSendButton:(id)sender;
 
 @end
 
@@ -22,7 +23,6 @@
     [super awakeFromNib];
     
     self.timerLabel.text = @"";
-    self.rightMicImageView.image = [self.rightMicImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     self.leftRedMicImageView.image = [self.leftRedMicImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
@@ -70,6 +70,18 @@
 
 - (BOOL)isDeleteAnimationInProgress {
     return !self.trashImageView.hidden;
+}
+
+- (IBAction)didTapCancelButton:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(cancelAudio)]) {
+        [self.delegate cancelAudio];
+    }
+}
+
+- (IBAction)didTapSendButton:(id)sender {
+    if ([self.delegate respondsToSelector:@selector(sendAudio)]) {
+        [self.delegate sendAudio];
+    }
 }
 
 @end

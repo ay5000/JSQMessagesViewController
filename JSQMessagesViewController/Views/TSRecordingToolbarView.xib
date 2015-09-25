@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,18 +11,22 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="slide to cancel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cv-oC-tfh">
-                    <rect key="frame" x="105" y="8" width="110" height="21"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oy6-z3-obG">
+                    <rect key="frame" x="105" y="0.0" width="110" height="41"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="21" id="3aC-B4-7tO"/>
-                        <constraint firstAttribute="width" constant="110" id="PZU-v7-fQ4"/>
+                        <constraint firstAttribute="width" constant="110" id="TIW-CE-xyz"/>
+                        <constraint firstAttribute="height" constant="41" id="u7X-zY-Tz4"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                    <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                    <state key="normal" title="cancel">
+                        <color key="titleColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="didTapCancelButton:" destination="TzO-Qh-pCc" eventType="touchUpInside" id="dcU-10-u9u"/>
+                    </connections>
+                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gjm-g5-ZsL">
-                    <rect key="frame" x="29" y="8" width="45" height="21"/>
+                    <rect key="frame" x="29" y="10" width="45" height="21"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="P2f-ke-CU3"/>
                         <constraint firstAttribute="width" constant="45" id="yme-9D-nym"/>
@@ -31,13 +35,6 @@
                     <color key="textColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Back_arrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="YWj-ux-r3x">
-                    <rect key="frame" x="214" y="11" width="15" height="15"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="15" id="Ker-oE-8kK"/>
-                        <constraint firstAttribute="width" constant="15" id="hRv-W4-XdV"/>
-                    </constraints>
-                </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Mic_Red.png" translatesAutoresizingMaskIntoConstraints="NO" id="Sig-oH-AA7">
                     <rect key="frame" x="3" y="7" width="25" height="25"/>
                     <color key="tintColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -54,64 +51,53 @@
                         <constraint firstAttribute="width" constant="25" id="64l-NI-dUw"/>
                     </constraints>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Mic_Grey.png" translatesAutoresizingMaskIntoConstraints="NO" id="TQx-ut-I6e">
-                    <rect key="frame" x="287" y="7" width="25" height="25"/>
-                    <color key="tintColor" red="0.39607843139999999" green="0.80000000000000004" blue="0.80784313730000001" alpha="1" colorSpace="calibratedRGB"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eCd-gQ-RUA" userLabel="Send Button">
+                    <rect key="frame" x="279" y="0.0" width="41" height="41"/>
                     <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="25" id="6Gr-OA-DEc"/>
-                        <constraint firstAttribute="height" constant="25" id="NeM-AO-6F9"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="aH0-cS-SmB"/>
-                        <constraint firstAttribute="width" constant="25" id="zhE-eO-CmH"/>
+                        <constraint firstAttribute="width" constant="41" id="9xh-LI-lBh"/>
+                        <constraint firstAttribute="height" constant="41" id="jvi-Lx-eID"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="6Gr-OA-DEc"/>
-                            <exclude reference="aH0-cS-SmB"/>
-                        </mask>
-                    </variation>
-                </imageView>
+                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                    <state key="normal" title="send">
+                        <color key="titleColor" red="0.33725490200000002" green="0.76470588240000004" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="didTapSendButton:" destination="TzO-Qh-pCc" eventType="touchUpInside" id="LHA-U1-hEc"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.95686274510000002" green="0.94901960780000005" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
             <gestureRecognizers/>
             <constraints>
-                <constraint firstItem="TQx-ut-I6e" firstAttribute="top" secondItem="TzO-Qh-pCc" secondAttribute="top" constant="7" id="19p-gf-IQW"/>
-                <constraint firstItem="TQx-ut-I6e" firstAttribute="centerY" secondItem="7cv-oC-tfh" secondAttribute="centerY" id="2ef-xx-aF8"/>
-                <constraint firstAttribute="centerY" secondItem="7cv-oC-tfh" secondAttribute="centerY" constant="3" id="4s9-Mg-qR4"/>
+                <constraint firstItem="oy6-z3-obG" firstAttribute="centerY" secondItem="gjm-g5-ZsL" secondAttribute="centerY" id="0XW-ox-eAx"/>
+                <constraint firstAttribute="trailing" secondItem="eCd-gQ-RUA" secondAttribute="trailing" id="FTG-VN-kxs"/>
+                <constraint firstItem="oy6-z3-obG" firstAttribute="centerY" secondItem="gjm-g5-ZsL" secondAttribute="centerY" id="JCf-Vm-p0g"/>
+                <constraint firstItem="oy6-z3-obG" firstAttribute="centerX" secondItem="TzO-Qh-pCc" secondAttribute="centerX" id="MmD-qF-OaJ"/>
                 <constraint firstItem="Y6e-g6-Ap6" firstAttribute="leading" secondItem="TzO-Qh-pCc" secondAttribute="leading" constant="3" id="PO1-63-Vjp"/>
-                <constraint firstAttribute="centerX" secondItem="7cv-oC-tfh" secondAttribute="centerX" id="QXu-Zn-Fei"/>
-                <constraint firstAttribute="trailing" secondItem="TQx-ut-I6e" secondAttribute="trailing" constant="8" id="c1X-PG-Kcv"/>
+                <constraint firstItem="eCd-gQ-RUA" firstAttribute="top" secondItem="TzO-Qh-pCc" secondAttribute="top" id="XKJ-ql-eO2"/>
                 <constraint firstItem="Sig-oH-AA7" firstAttribute="leading" secondItem="TzO-Qh-pCc" secondAttribute="leading" constant="3" id="f62-WM-x03"/>
                 <constraint firstItem="Sig-oH-AA7" firstAttribute="top" secondItem="TzO-Qh-pCc" secondAttribute="top" constant="7" id="f7T-pP-VSC"/>
-                <constraint firstItem="7cv-oC-tfh" firstAttribute="centerY" secondItem="gjm-g5-ZsL" secondAttribute="centerY" id="fj9-0b-INL"/>
-                <constraint firstItem="7cv-oC-tfh" firstAttribute="centerY" secondItem="Y6e-g6-Ap6" secondAttribute="centerY" id="hoy-3F-gkR"/>
                 <constraint firstItem="Sig-oH-AA7" firstAttribute="centerY" secondItem="gjm-g5-ZsL" secondAttribute="centerY" id="kc6-Rw-SCR"/>
+                <constraint firstItem="oy6-z3-obG" firstAttribute="centerY" secondItem="TzO-Qh-pCc" secondAttribute="centerY" constant="-1" id="l9e-8n-NQk"/>
                 <constraint firstItem="gjm-g5-ZsL" firstAttribute="leading" secondItem="Sig-oH-AA7" secondAttribute="trailing" constant="1" id="mUS-Bx-iPR"/>
-                <constraint firstItem="YWj-ux-r3x" firstAttribute="leading" secondItem="7cv-oC-tfh" secondAttribute="trailing" constant="-1" id="r0f-OV-CE3"/>
                 <constraint firstItem="Y6e-g6-Ap6" firstAttribute="top" secondItem="TzO-Qh-pCc" secondAttribute="top" constant="7" id="utT-JP-7ST"/>
-                <constraint firstItem="Sig-oH-AA7" firstAttribute="centerY" secondItem="7cv-oC-tfh" secondAttribute="centerY" id="v0Y-rx-JHE"/>
-                <constraint firstItem="YWj-ux-r3x" firstAttribute="centerY" secondItem="7cv-oC-tfh" secondAttribute="centerY" id="wOl-eg-RwT"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="kc6-Rw-SCR"/>
-                    <exclude reference="v0Y-rx-JHE"/>
-                    <exclude reference="hoy-3F-gkR"/>
-                    <exclude reference="2ef-xx-aF8"/>
+                    <exclude reference="0XW-ox-eAx"/>
                 </mask>
             </variation>
             <connections>
                 <outlet property="leftRedMicImageView" destination="Sig-oH-AA7" id="hf5-zC-aBY"/>
-                <outlet property="rightMicImageView" destination="TQx-ut-I6e" id="ngA-Rm-oIb"/>
                 <outlet property="timerLabel" destination="gjm-g5-ZsL" id="BPJ-03-I2k"/>
                 <outlet property="trashImageView" destination="Y6e-g6-Ap6" id="AQp-7F-UHu"/>
             </connections>
-            <point key="canvasLocation" x="410" y="367.5"/>
+            <point key="canvasLocation" x="153" y="426.5"/>
         </view>
     </objects>
     <resources>
-        <image name="Back_arrow.png" width="15" height="15"/>
-        <image name="Mic_Grey.png" width="25" height="25"/>
         <image name="Mic_Red.png" width="25" height="25"/>
         <image name="Trash.png" width="25" height="25"/>
     </resources>
