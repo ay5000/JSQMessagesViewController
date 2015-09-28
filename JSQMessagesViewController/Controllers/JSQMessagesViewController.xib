@@ -36,7 +36,7 @@
                     </constraints>
                     <items/>
                 </toolbar>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R6D-r4-zQi">
+                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R6D-r4-zQi">
                     <rect key="frame" x="0.0" y="525" width="320" height="43"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="43" id="fBB-KI-i2g"/>
