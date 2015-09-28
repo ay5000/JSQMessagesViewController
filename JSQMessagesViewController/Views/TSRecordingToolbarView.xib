@@ -21,9 +21,6 @@
                     <state key="normal" title="cancel">
                         <color key="titleColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
-                    <connections>
-                        <action selector="didTapCancelButton:" destination="TzO-Qh-pCc" eventType="touchUpInside" id="dcU-10-u9u"/>
-                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gjm-g5-ZsL">
                     <rect key="frame" x="29" y="10" width="45" height="21"/>
@@ -52,18 +49,15 @@
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eCd-gQ-RUA" userLabel="Send Button">
-                    <rect key="frame" x="273" y="0.0" width="41" height="41"/>
+                    <rect key="frame" x="263" y="0.0" width="51" height="41"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="41" id="9xh-LI-lBh"/>
+                        <constraint firstAttribute="width" constant="51" id="9xh-LI-lBh"/>
                         <constraint firstAttribute="height" constant="41" id="jvi-Lx-eID"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
                     <state key="normal" title="send">
                         <color key="titleColor" red="0.33725490200000002" green="0.76470588240000004" blue="0.76470588240000004" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
-                    <connections>
-                        <action selector="didTapSendButton:" destination="TzO-Qh-pCc" eventType="touchUpInside" id="LHA-U1-hEc"/>
-                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="0.95686274510000002" green="0.94901960780000005" blue="0.93725490199999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -90,7 +84,9 @@
                 </mask>
             </variation>
             <connections>
+                <outlet property="cancelButton" destination="oy6-z3-obG" id="2x4-3x-5ag"/>
                 <outlet property="leftRedMicImageView" destination="Sig-oH-AA7" id="hf5-zC-aBY"/>
+                <outlet property="sendButton" destination="eCd-gQ-RUA" id="3gk-iN-dVS"/>
                 <outlet property="timerLabel" destination="gjm-g5-ZsL" id="BPJ-03-I2k"/>
                 <outlet property="trashImageView" destination="Y6e-g6-Ap6" id="AQp-7F-UHu"/>
             </connections>

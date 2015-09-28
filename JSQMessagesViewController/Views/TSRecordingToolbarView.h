@@ -12,12 +12,12 @@
  *  \brief Custom View used for bottom recording toolbar
  */
 
-@protocol TSRecordingToolbarViewDelegate;
 
 @interface TSRecordingToolbarView : UIView
 
-@property (nonatomic, weak) id<TSRecordingToolbarViewDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UIImageView *leftRedMicImageView;
+@property (weak, nonatomic) IBOutlet UIButton *sendButton;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
 /**
  * Update UI elements with recording time
@@ -46,9 +46,3 @@
 
 @end
 
-@protocol TSRecordingToolbarViewDelegate <NSObject>
-
-- (void)sendAudio;
-- (void)cancelAudio;
-
-@end
