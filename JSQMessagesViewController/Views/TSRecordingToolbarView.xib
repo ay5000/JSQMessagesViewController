@@ -52,7 +52,7 @@
                     </constraints>
                 </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eCd-gQ-RUA" userLabel="Send Button">
-                    <rect key="frame" x="279" y="0.0" width="41" height="41"/>
+                    <rect key="frame" x="273" y="0.0" width="41" height="41"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="41" id="9xh-LI-lBh"/>
                         <constraint firstAttribute="height" constant="41" id="jvi-Lx-eID"/>
@@ -70,7 +70,7 @@
             <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="oy6-z3-obG" firstAttribute="centerY" secondItem="gjm-g5-ZsL" secondAttribute="centerY" id="0XW-ox-eAx"/>
-                <constraint firstAttribute="trailing" secondItem="eCd-gQ-RUA" secondAttribute="trailing" id="FTG-VN-kxs"/>
+                <constraint firstAttribute="trailing" secondItem="eCd-gQ-RUA" secondAttribute="trailing" constant="6" id="FTG-VN-kxs"/>
                 <constraint firstItem="oy6-z3-obG" firstAttribute="centerY" secondItem="gjm-g5-ZsL" secondAttribute="centerY" id="JCf-Vm-p0g"/>
                 <constraint firstItem="oy6-z3-obG" firstAttribute="centerX" secondItem="TzO-Qh-pCc" secondAttribute="centerX" id="MmD-qF-OaJ"/>
                 <constraint firstItem="Y6e-g6-Ap6" firstAttribute="leading" secondItem="TzO-Qh-pCc" secondAttribute="leading" constant="3" id="PO1-63-Vjp"/>
