@@ -12,9 +12,9 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oy6-z3-obG">
-                    <rect key="frame" x="105" y="0.0" width="110" height="41"/>
+                    <rect key="frame" x="130" y="0.0" width="60" height="41"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="110" id="TIW-CE-xyz"/>
+                        <constraint firstAttribute="width" constant="60" id="TIW-CE-xyz"/>
                         <constraint firstAttribute="height" constant="41" id="u7X-zY-Tz4"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>

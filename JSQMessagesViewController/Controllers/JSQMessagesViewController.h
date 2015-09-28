@@ -42,6 +42,7 @@ UITextViewDelegate>
 @property (strong, nonatomic) TSRecordingToolbarView *recordingToolbarView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *recordingToolbarViewRightConstraint;
 @property (weak, nonatomic) IBOutlet UIView *holdToRecordView;
+@property (unsafe_unretained, nonatomic) IBOutlet UIView *recordingToolbarContainerView;
 /////
 
 /**

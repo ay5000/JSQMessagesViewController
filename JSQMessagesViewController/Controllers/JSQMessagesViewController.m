@@ -51,7 +51,6 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 // Oana change - Audio Recording
 @property (unsafe_unretained, nonatomic) IBOutlet UIImageView *holdToRecordBackgroundImageView;
-@property (unsafe_unretained, nonatomic) IBOutlet UIView *recordingToolbarContainerView;
 - (IBAction)didTapHoldToRecordCloseButton:(id)sender;
 ////
 
