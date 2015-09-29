@@ -49,11 +49,6 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     float _currentKeyboardHeightFromBottom; // Oana change
 }
 
-// Oana change - Audio Recording
-@property (unsafe_unretained, nonatomic) IBOutlet UIImageView *holdToRecordBackgroundImageView;
-- (IBAction)didTapHoldToRecordCloseButton:(id)sender;
-////
-
 @property (weak, nonatomic) IBOutlet JSQMessagesCollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet JSQMessagesInputToolbar *inputToolbar;
 
@@ -283,22 +278,12 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 #pragma mark - Oana change - Audio Recording
 
 - (void)configureAudioRecordingElements {
-    self.holdToRecordBackgroundImageView.image = [self.holdToRecordBackgroundImageView.image resizableImageWithCapInsets:UIEdgeInsetsMake(8, 8, 12, 21)];
-    
     NSArray *nibViews = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([TSRecordingToolbarView class]) owner:nil options:nil];
     self.recordingToolbarView = [nibViews firstObject];
     [self.recordingToolbarContainerView addSubview:self.recordingToolbarView];
     [self.recordingToolbarView alignToView:self.recordingToolbarContainerView alignProperties:(ALAlignPropertyTop|ALAlignPropertyLeft|ALAlignPropertyBottom|ALAlignPropertyRight) spacing:0];
     [self.recordingToolbarContainerView setNeedsUpdateConstraints];
     self.recordingToolbarView.alpha = 0;
-}
-
-- (IBAction)didTapHoldToRecordCloseButton:(id)sender {
-    [UIView animateWithDuration:0.3f animations:^{
-        self.holdToRecordView.alpha = 0;
-    } completion:^(BOOL finished) {
-        self.holdToRecordView.alpha = 0;
-    }];
 }
 
 #pragma mark - View rotation
