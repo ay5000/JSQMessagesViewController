@@ -70,4 +70,42 @@
     return !self.trashImageView.hidden;
 }
 
+- (void)setCustomFontFamily:(NSString *)fontFamily {
+    UIFont *font = self.timerLabel.font;
+    NSString *finalFontName = [self customFontNameFromFontFamily:fontFamily initialFont:font];
+    self.timerLabel.font = [UIFont fontWithName:finalFontName size:font.pointSize];
+    
+    font = self.cancelButton.titleLabel.font;
+    finalFontName = [self customFontNameFromFontFamily:fontFamily initialFont:font];
+    self.cancelButton.titleLabel.font = [UIFont fontWithName:finalFontName size:font.pointSize];
+    
+    font = self.sendButton.titleLabel.font;
+    finalFontName = [self customFontNameFromFontFamily:fontFamily initialFont:font];
+    self.sendButton.titleLabel.font = [UIFont fontWithName:finalFontName size:font.pointSize];
+}
+
+#pragma mark - Private methods
+
+- (NSString *)customFontNameFromFontFamily:(NSString *)fontFamily initialFont:(UIFont *)initialFont {
+    NSArray *components = [initialFont.fontName componentsSeparatedByString:@"-"];
+    NSString *fontType = nil;
+    
+    if (components.count > 1) {
+        fontType = [components lastObject];
+        NSString *fontName = [NSString stringWithFormat:@"%@-%@", fontFamily, fontType];
+        
+        // check if font exists, otherwise return the fontName without any special type
+        if ([UIFont fontWithName:fontName size:10]) {
+            return fontName;
+        }
+    }
+    
+    if ([UIFont fontWithName:fontFamily size:10]) {
+        return fontFamily;
+    }
+    
+    // invalid font family
+    return initialFont.fontName;
+}
+
 @end

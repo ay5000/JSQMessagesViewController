@@ -44,5 +44,12 @@
  */
 - (BOOL)isDeleteAnimationInProgress;
 
+/**
+ * Sets the custom font family on all labels
+ * @param custom font family
+ * @return nothing
+ */
+- (void)setCustomFontFamily:(NSString *)fontFamily;
+
 @end
 
