@@ -184,10 +184,11 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 
     JSQMessagesCollectionViewLayoutAttributes *customAttributes = (JSQMessagesCollectionViewLayoutAttributes *)layoutAttributes;
 
-    if (self.textView.font != customAttributes.messageBubbleFont) {
+    if (self.textView.font != customAttributes.messageBubbleFont && self.textView.attributedText.length == 0) {
         self.textView.font = customAttributes.messageBubbleFont;
     }
 
+    // Oana change: added && self.textView.attributedText.length == 0 for fixing MAIN-6062
     if (!UIEdgeInsetsEqualToEdgeInsets(self.textView.textContainerInset, customAttributes.textViewTextContainerInsets)) {
         self.textView.textContainerInset = customAttributes.textViewTextContainerInsets;
     }
