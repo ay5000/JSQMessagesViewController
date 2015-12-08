@@ -384,7 +384,7 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
     //Hide keyboard if we get a touch event when keyboard is shown //AY change
-    [[self superview].superview endEditing:YES];
+    //[[self superview].superview endEditing:YES];
     
     CGPoint touchPt = [touch locationInView:self];
     
