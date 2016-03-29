@@ -59,6 +59,14 @@
  */
 @property (nonatomic, assign) BOOL hasMessageButton;
 
+
+// AY Change
+/**
+ * Returns yes if the message is a centered system style message
+ *
+ */
+@property (nonatomic, assign) BOOL isCenteredMessage;
+
 /**
  *  Returns a boolean value specifying whether or not the message contains media.
  *  If `NO`, the message contains text. If `YES`, the message contains media.

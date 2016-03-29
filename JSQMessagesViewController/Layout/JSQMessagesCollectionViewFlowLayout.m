@@ -445,8 +445,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     
     if ([messageItem isMediaMessage]) {
         finalSize = [[messageItem media] mediaViewDisplaySize];
-    }
-    else {
+    }  else {
         // Oana change
         if (messageItem.isBlurredMessage) {
             CGSize blurredSize = [self.collectionView.dataSource sizeOfBlurredCell];
@@ -498,7 +497,11 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
             finalWidth = MESSAGES_CONTENT_BUTTON_MIN_WIDTH;
         }
         
-        finalSize = CGSizeMake(finalWidth, stringSize.height + verticalInsets);
+        if([messageItem isCenteredMessage]) {
+            finalSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 20,stringSize.height + verticalInsets);
+        } else {
+            finalSize = CGSizeMake(finalWidth, stringSize.height + verticalInsets);
+        }
     }
     
     [self.messageBubbleCache setObject:[NSValue valueWithCGSize:finalSize] forKey:@([messageItem messageHash])];

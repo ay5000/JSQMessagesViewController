@@ -74,6 +74,13 @@
  */
 - (BOOL)hasMessageButton;
 
+// AY Change
+/**
+ * Returns yes if the message is a centered system style message
+ *
+ */
+- (BOOL)isCenteredMessage;
+
 /**
  *  This method is used to determine if the message data item contains text or media.
  *  If this method returns `YES`, an instance of `JSQMessagesViewController` will ignore 
