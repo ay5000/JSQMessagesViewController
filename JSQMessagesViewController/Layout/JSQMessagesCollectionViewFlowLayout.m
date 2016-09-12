@@ -67,6 +67,8 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 - (void)jsq_removeNoLongerVisibleBehaviorsFromVisibleItemsIndexPaths:(NSSet *)visibleItemsIndexPaths;
 - (void)jsq_adjustSpringBehavior:(UIAttachmentBehavior *)springBehavior forTouchLocation:(CGPoint)touchLocation;
 
+@property (nonatomic, assign) UIEdgeInsets messageBubbleTextViewTextContainerInsetsSystem;
+
 @end
 
 
@@ -98,6 +100,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     
     _messageBubbleTextViewFrameInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 6.0f);
     _messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7.0f, 14.0f, 7.0f, 14.0f);
+    _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, 14.0f, 7.0f, 14.0f);
     
     CGSize defaultAvatarSize = CGSizeMake(kJSQMessagesCollectionViewAvatarSizeDefault, kJSQMessagesCollectionViewAvatarSizeDefault);
     _incomingAvatarViewSize = defaultAvatarSize;
@@ -343,6 +346,27 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         }
     }];
     
+    ////
+    /*
+    CGFloat lineWidth = self.minimumLineSpacing;
+    NSMutableArray *decorationAttributes = [[NSMutableArray alloc] initWithCapacity:attributesInRect.count];
+    
+    for (UICollectionViewLayoutAttributes *layoutAttributes in attributesInRect) {
+        //Add separator for every row except the first
+        NSIndexPath *indexPath = layoutAttributes.indexPath;
+        if (indexPath.item > 0) {
+            UICollectionViewLayoutAttributes *separatorAttributes = [UICollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:kCellSeparatorKind withIndexPath:indexPath];
+            CGRect cellFrame = layoutAttributes.frame;
+            
+            //In my case I have a horizontal grid, where I need vertical separators, but the separator frame can be calculated as needed
+            //e.g. top, or both top and left
+            separatorAttributes.frame = CGRectMake(cellFrame.origin.x - lineWidth, cellFrame.origin.y, lineWidth, cellFrame.size.height);
+            separatorAttributes.zIndex = 1000;
+            [decorationAttributes addObject:separatorAttributes];
+        }
+    }
+    return [layoutAttributesArray arrayByAddingObjectsFromArray:decorationAttributes];*/
+    
     return attributesInRect;
 }
 
@@ -431,6 +455,17 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 
 #pragma mark - Message cell layout utilities
 
+-(UIEdgeInsets)getInsetsForIndexPath:(NSIndexPath*)indexPath {
+    
+    id<JSQMessageData> messageItem = [self.collectionView.dataSource collectionView:self.collectionView messageDataForItemAtIndexPath:indexPath];
+    
+    if([messageItem isCenteredMessage]) {
+        return _messageBubbleTextViewTextContainerInsetsSystem;
+    } else {
+        return _messageBubbleTextViewTextContainerInsets;
+    }
+}
+
 - (CGSize)messageBubbleSizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     id<JSQMessageData> messageItem = [self.collectionView.dataSource collectionView:self.collectionView messageDataForItemAtIndexPath:indexPath];
@@ -465,9 +500,11 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         
         CGSize avatarSize = [self jsq_avatarSizeForIndexPath:indexPath];
         
+        UIEdgeInsets textInsets = [self getInsetsForIndexPath:indexPath];
+        
         //  from the cell xibs, there is a 2 point space between avatar and bubble
         CGFloat spacingBetweenAvatarAndBubble = 2.0f;
-        CGFloat horizontalContainerInsets = self.messageBubbleTextViewTextContainerInsets.left + self.messageBubbleTextViewTextContainerInsets.right;
+        CGFloat horizontalContainerInsets = textInsets.left + textInsets.right;
         CGFloat horizontalFrameInsets = self.messageBubbleTextViewFrameInsets.left + self.messageBubbleTextViewFrameInsets.right;
         
         CGFloat horizontalInsetsTotal = horizontalContainerInsets + horizontalFrameInsets + spacingBetweenAvatarAndBubble;
@@ -482,7 +519,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         
         CGSize stringSize = CGRectIntegral(stringRect).size;
         
-        CGFloat verticalContainerInsets = self.messageBubbleTextViewTextContainerInsets.top + self.messageBubbleTextViewTextContainerInsets.bottom;
+        CGFloat verticalContainerInsets = textInsets.top + textInsets.bottom;
         CGFloat verticalFrameInsets = self.messageBubbleTextViewFrameInsets.top + self.messageBubbleTextViewFrameInsets.bottom;
         
         //  add extra 2 points of space, because `boundingRectWithSize:` is slightly off
@@ -502,12 +539,16 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         } else {
             finalSize = CGSizeMake(finalWidth, stringSize.height + verticalInsets);
         }
+        
+        
     }
     
     [self.messageBubbleCache setObject:[NSValue valueWithCGSize:finalSize] forKey:@([messageItem messageHash])];
     
     return finalSize;
 }
+
+
 
 - (CGSize)sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -536,7 +577,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     
     layoutAttributes.textViewFrameInsets = self.messageBubbleTextViewFrameInsets;
     
-    layoutAttributes.textViewTextContainerInsets = self.messageBubbleTextViewTextContainerInsets;
+    layoutAttributes.textViewTextContainerInsets = [self getInsetsForIndexPath:indexPath];
     
     layoutAttributes.messageBubbleFont = self.messageBubbleFont;
     
