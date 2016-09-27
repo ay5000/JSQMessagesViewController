@@ -908,6 +908,7 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 
 // Oana change
 - (float)toolbarMinYConstraint {
+    
     if (_currentKeyboardHeightFromBottom > 0) {
         // keyboard on
         return self.topLayoutGuide.length + 50.0f;
@@ -934,8 +935,9 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
             return;
         }
     }
-
-    CGFloat toolbarOriginY = CGRectGetMinY(self.inputToolbar.frame);
+    
+    CGFloat windowOffset = 0;//[UIScreen mainScreen].bounds.size.height - [UIScreen mainScreen].applicationFrame.size.height;
+    CGFloat toolbarOriginY = CGRectGetMinY(self.inputToolbar.frame) - windowOffset;
     CGFloat newToolbarOriginY = toolbarOriginY - dy;
 
     //  attempted to increase origin.Y above topLayoutGuide

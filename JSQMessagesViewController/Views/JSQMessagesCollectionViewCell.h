@@ -87,7 +87,7 @@
  *  @see JSQMessagesCollectionViewCellIncoming.
  *  @see JSQMessagesCollectionViewCellOutgoing.
  */
-@interface JSQMessagesCollectionViewCell : UICollectionViewCell
+@interface JSQMessagesCollectionViewCell : UICollectionViewCell //<UIGestureRecognizerDelegate>
 
 /**
  *  The object that acts as the delegate for the cell.

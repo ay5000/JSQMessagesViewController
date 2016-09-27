@@ -135,6 +135,7 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jsq_handleTapGesture:)];
     [self addGestureRecognizer:tap];
     self.tapGestureRecognizer = tap;
+
 }
 
 - (void)dealloc
@@ -369,6 +370,8 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 - (void)jsq_handleTapGesture:(UITapGestureRecognizer *)tap
 {
     CGPoint touchPt = [tap locationInView:self];
+    [[self superview].superview endEditing:YES];
+    
     
     if (CGRectContainsPoint(self.avatarContainerView.frame, touchPt)) {
         [self.delegate messagesCollectionViewCellDidTapAvatar:self];
@@ -384,7 +387,7 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
     //Hide keyboard if we get a touch event when keyboard is shown //AY change
-    [[self superview].superview endEditing:YES];
+    //[[self superview].superview endEditing:YES];
     
     CGPoint touchPt = [touch locationInView:self];
     
