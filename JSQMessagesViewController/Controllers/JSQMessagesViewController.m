@@ -278,7 +278,10 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
 #pragma mark - Oana change - Audio Recording
 
 - (void)configureAudioRecordingElements {
-    NSArray *nibViews = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([TSRecordingToolbarView class]) owner:nil options:nil];
+    
+    NSBundle *bundle = [NSBundle bundleForClass:TSRecordingToolbarView.class];
+    NSArray *nibViews = [bundle loadNibNamed:NSStringFromClass([TSRecordingToolbarView class]) owner:nil options:nil];
+    
     self.recordingToolbarView = [nibViews firstObject];
     [self.recordingToolbarContainerView addSubview:self.recordingToolbarView];
     [self.recordingToolbarView alignToView:self.recordingToolbarContainerView alignProperties:(ALAlignPropertyTop|ALAlignPropertyLeft|ALAlignPropertyBottom|ALAlignPropertyRight) spacing:0];
