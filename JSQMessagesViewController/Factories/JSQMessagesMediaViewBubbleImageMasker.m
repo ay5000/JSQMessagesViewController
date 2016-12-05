@@ -17,8 +17,8 @@
 //
 
 #import "JSQMessagesMediaViewBubbleImageMasker.h"
-
 #import "JSQMessagesBubbleImageFactory.h"
+#import "UIImage+JSQMessages.h"
 
 
 @interface JSQMessagesMediaViewBubbleImageMasker ()
@@ -34,7 +34,7 @@
 
 - (instancetype)init
 {
-    return [self initWithBubbleImageFactory:[[JSQMessagesBubbleImageFactory alloc] init]];
+    return [self initWithBubbleImageFactory:[[JSQMessagesBubbleImageFactory alloc] initWithBubbleImage:[UIImage jsq_bubbleCompactTaillessImage] capInsets:UIEdgeInsetsZero]];
 }
 
 - (instancetype)initWithBubbleImageFactory:(JSQMessagesBubbleImageFactory *)bubbleImageFactory
