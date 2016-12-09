@@ -17,6 +17,7 @@
 //
 
 #import "JSQMessageMediaData.h"
+#import "JSQGlobals.h"
 
 /**
  *  The `JSQMediaItem` class is an abstract base class for media item model objects that represents
@@ -40,6 +41,13 @@
  */
 @property (assign, nonatomic) BOOL appliesMediaViewMaskAsOutgoing;
 
+@property (assign, nonatomic) JSQBubbleClusterType clusterType;
+
+/**
+ *  The cluster type used for this media item
+ */
+//@property (assign, nonatomic)
+
 /**
  *  Initializes and returns a media item with the specified value for maskAsOutgoing.
  *
@@ -54,5 +62,7 @@
  *  Clears any media view or media placeholder view that the item has cached.
  */
 - (void)clearCachedMediaViews;
+
+
 
 @end

@@ -99,7 +99,7 @@
         CGSize size = [self mediaViewDisplaySize];
         UIView *view = [JSQMessagesMediaPlaceholderView viewWithActivityIndicator];
         view.frame = CGRectMake(0.0f, 0.0f, size.width, size.height);
-        [JSQMessagesMediaViewBubbleImageMasker applyBubbleImageMaskToMediaView:view isOutgoing:self.appliesMediaViewMaskAsOutgoing];
+        [JSQMessagesMediaViewBubbleImageMasker applyBubbleImageMaskToMediaView:view isOutgoing:self.appliesMediaViewMaskAsOutgoing clusterType:self.clusterType];
         self.cachedPlaceholderView = view;
     }
     

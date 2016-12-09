@@ -33,12 +33,17 @@
 
 #import "UIImage+JSQMessages.h"
 
+#import "JSQMessagesBorderView.h"
+
 
 const CGFloat kJSQMessagesCollectionViewCellLabelHeightDefault = 20.0f;
 const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 
 #define MESSAGES_CONTENT_BUTTON_MIN_WIDTH 290 // Oana change
+#define DECORATION_BORDER_IDENTIFIER @"JSQMessagesBorderView"
 
+#define SEPARATOR_COLOR_GRAY [UIColor colorWithRed:216.0/255.0 green:216.0/255.0 blue:216.0/255.0 alpha:1.0]
+#define SEPARATOR_COLOR_CLEAR [UIColor clearColor]
 
 @interface JSQMessagesCollectionViewFlowLayout ()
 
@@ -68,6 +73,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 - (void)jsq_adjustSpringBehavior:(UIAttachmentBehavior *)springBehavior forTouchLocation:(CGPoint)touchLocation;
 
 @property (nonatomic, assign) UIEdgeInsets messageBubbleTextViewTextContainerInsetsSystem;
+@property (nonatomic, assign) UIEdgeInsets messageBubbleTextViewTextContainerInsetsLiveVideo;
 
 @end
 
@@ -79,11 +85,12 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 
 #pragma mark - Initialization
 
+
 - (void)jsq_configureFlowLayout
 {
     self.scrollDirection = UICollectionViewScrollDirectionVertical;
     self.sectionInset = UIEdgeInsetsMake(10.0f, 4.0f, 10.0f, 4.0f);
-    self.minimumLineSpacing = 4.0f;
+    self.minimumLineSpacing = 3.0f;//1/[UIScreen mainScreen].scale;
     
     _bubbleImageAssetWidth = [UIImage jsq_bubbleCompactImage].size.width;
     
@@ -100,7 +107,8 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     
     _messageBubbleTextViewFrameInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 6.0f);
     _messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7.0f, 14.0f, 7.0f, 14.0f);
-    _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, 14.0f, 7.0f, 14.0f);
+    _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, 14.0f, 0.0f, 14.0f);
+    _messageBubbleTextViewTextContainerInsetsLiveVideo = UIEdgeInsetsMake(46.0f, 14.0f, 7.0f, 14.0f);
     
     CGSize defaultAvatarSize = CGSizeMake(kJSQMessagesCollectionViewAvatarSizeDefault, kJSQMessagesCollectionViewAvatarSizeDefault);
     _incomingAvatarViewSize = defaultAvatarSize;
@@ -108,6 +116,8 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     
     _springinessEnabled = NO;
     _springResistanceFactor = 1000;
+    
+    [self registerClass:[JSQMessagesBorderView class] forDecorationViewOfKind:DECORATION_BORDER_IDENTIFIER];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(jsq_didReceiveApplicationMemoryWarningNotification:)
@@ -279,6 +289,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     if (context.invalidateDataSourceCounts) {
         context.invalidateFlowLayoutAttributes = YES;
         context.invalidateFlowLayoutDelegateMetrics = YES;
+        
     }
     
     if (context.invalidateFlowLayoutAttributes
@@ -337,37 +348,68 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         attributesInRect = attributesInRectCopy;
     }
     
+    NSMutableArray *mutableAttributes = [NSMutableArray arrayWithArray:attributesInRect];
+    
     [attributesInRect enumerateObjectsUsingBlock:^(JSQMessagesCollectionViewLayoutAttributes *attributesItem, NSUInteger idx, BOOL *stop) {
         if (attributesItem.representedElementCategory == UICollectionElementCategoryCell) {
             [self jsq_configureMessageCellLayoutAttributes:attributesItem];
+            //[mutableAttributes addObjectsFromArray:[self jsq_addDecoratorViews:attributesItem]];
         }
         else {
             attributesItem.zIndex = -1;
         }
     }];
     
-    ////
-    /*
-    CGFloat lineWidth = self.minimumLineSpacing;
-    NSMutableArray *decorationAttributes = [[NSMutableArray alloc] initWithCapacity:attributesInRect.count];
+    ////// AY Testing
+    //Inspiration from https://github.com/ericchapman/ios_decoration_view/
     
-    for (UICollectionViewLayoutAttributes *layoutAttributes in attributesInRect) {
-        //Add separator for every row except the first
+    CGFloat sepHeight = 1/[UIScreen mainScreen].scale;
+    
+    for (UICollectionViewLayoutAttributes *layoutAttributes in attributesInRect)
+    {
         NSIndexPath *indexPath = layoutAttributes.indexPath;
-        if (indexPath.item > 0) {
-            UICollectionViewLayoutAttributes *separatorAttributes = [UICollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:kCellSeparatorKind withIndexPath:indexPath];
+        
+        id<JSQMessageData> messageItem = [self.collectionView.dataSource collectionView:self.collectionView messageDataForItemAtIndexPath:indexPath];
+
+        if (indexPath.item >= 0 && layoutAttributes.representedElementKind == UICollectionElementCategoryCell)
+        {
+            id <UICollectionViewDelegateFlowLayout> delegate = (id <UICollectionViewDelegateFlowLayout>)self.collectionView.delegate;
+            
+            JSQMessagesCollectionViewLayoutAttributes *separatorAttributes = [JSQMessagesCollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:DECORATION_BORDER_IDENTIFIER withIndexPath:indexPath];
+            
             CGRect cellFrame = layoutAttributes.frame;
             
-            //In my case I have a horizontal grid, where I need vertical separators, but the separator frame can be calculated as needed
-            //e.g. top, or both top and left
-            separatorAttributes.frame = CGRectMake(cellFrame.origin.x - lineWidth, cellFrame.origin.y, lineWidth, cellFrame.size.height);
+            separatorAttributes.frame = CGRectMake(cellFrame.origin.x-30, cellFrame.origin.y - sepHeight, cellFrame.size.width + 100, sepHeight);
             separatorAttributes.zIndex = 1000;
-            [decorationAttributes addObject:separatorAttributes];
+            
+            
+            BOOL lastMsgIsCenteredMessage = NO;
+            
+            if(indexPath.item > 0) {
+                
+                NSIndexPath *path = [NSIndexPath indexPathForItem:indexPath.item - 1 inSection:indexPath.section];
+                
+                //Last message was a centered message
+                if([[self.collectionView.dataSource collectionView:self.collectionView messageDataForItemAtIndexPath:path] isCenteredMessage]) {
+                    lastMsgIsCenteredMessage = YES;
+                }
+            }
+            
+            if([messageItem isCenteredMessage] || lastMsgIsCenteredMessage) {
+                separatorAttributes.color = SEPARATOR_COLOR_GRAY;
+            } else {
+                separatorAttributes.color = SEPARATOR_COLOR_CLEAR;
+            }
+            
+            //separatorAttributes.color = [UIColor blueColor];
+            
+            [mutableAttributes addObject:separatorAttributes];
         }
     }
-    return [layoutAttributesArray arrayByAddingObjectsFromArray:decorationAttributes];*/
     
-    return attributesInRect;
+    
+    
+    return mutableAttributes;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -378,11 +420,15 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         [self jsq_configureMessageCellLayoutAttributes:customAttributes];
     }
     
+    
     return customAttributes;
 }
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
 {
+    
+
+    
     if (self.springinessEnabled) {
         UIScrollView *scrollView = self.collectionView;
         CGFloat delta = newBounds.origin.y - scrollView.bounds.origin.y;
@@ -396,6 +442,8 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
             [self.dynamicAnimator updateItemUsingCurrentState:[springBehaviour.items firstObject]];
         }];
     }
+    
+    return YES;
     
     CGRect oldBounds = self.collectionView.bounds;
     if (CGRectGetWidth(newBounds) != CGRectGetWidth(oldBounds)) {
@@ -459,7 +507,9 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     
     id<JSQMessageData> messageItem = [self.collectionView.dataSource collectionView:self.collectionView messageDataForItemAtIndexPath:indexPath];
     
-    if([messageItem isCenteredMessage]) {
+    if([messageItem isLiveVideoMessage]) {
+        return _messageBubbleTextViewTextContainerInsetsLiveVideo;
+    } else if([messageItem isCenteredMessage]) {
         return _messageBubbleTextViewTextContainerInsetsSystem;
     } else {
         return _messageBubbleTextViewTextContainerInsets;
@@ -607,6 +657,27 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     layoutAttributes.cellBottomLabelHeight = [self.collectionView.delegate collectionView:self.collectionView
                                                                                    layout:self
                                                       heightForCellBottomLabelAtIndexPath:indexPath];
+    
+    
+
+}
+
+-(NSArray<UICollectionViewLayoutAttributes *> *)jsq_addDecoratorViews:(JSQMessagesCollectionViewLayoutAttributes *)layoutAttributes {
+    
+    NSMutableArray* attributes = [NSMutableArray array];
+    
+    NSIndexPath *indexPath = layoutAttributes.indexPath;
+    
+    id<JSQMessageData> messageItem = [self.collectionView.dataSource collectionView:self.collectionView messageDataForItemAtIndexPath:indexPath];
+    
+    if([messageItem isCenteredMessage]) {
+        
+        
+        [attributes addObject:[self layoutAttributesForDecorationViewOfKind:DECORATION_BORDER_IDENTIFIER atIndexPath:indexPath]];
+        [attributes addObject:[self layoutAttributesForDecorationViewOfKind:DECORATION_BORDER_IDENTIFIER atIndexPath:indexPath]];
+    }
+    
+    return attributes;
 }
 
 - (CGSize)jsq_avatarSizeForIndexPath:(NSIndexPath *)indexPath
@@ -693,5 +764,36 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         item.center = center;
     }
 }
+
+#pragma mark - Decoration views
+
+-(UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
+    
+
+    JSQMessagesCollectionViewLayoutAttributes *layoutAttributes = [JSQMessagesCollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:elementKind withIndexPath:indexPath];
+
+    return layoutAttributes;
+    
+}
+
+- (NSArray*)indexPathsOfSeparatorsInRect:(CGRect)rect {
+    NSInteger firstCellIndexToShow = floorf(rect.origin.y / self.itemSize.height);
+    NSInteger lastCellIndexToShow = floorf((rect.origin.y + CGRectGetHeight(rect)) / self.itemSize.height);
+    NSInteger countOfItems = [self.collectionView.dataSource collectionView:self.collectionView numberOfItemsInSection:0];
+    
+    NSMutableArray* indexPaths = [NSMutableArray new];
+    for (int i = MAX(firstCellIndexToShow, 0); i <= lastCellIndexToShow; i++) {
+        if (i < countOfItems) {
+            [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+        }
+    }
+    return indexPaths;
+}
+/*
+- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingDecorationElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)decorationIndexPath {
+    
+    UICollectionViewLayoutAttributes *layoutAttributes =  [self layoutAttributesForDecorationViewOfKind:elementKind atIndexPath:decorationIndexPath];
+    return layoutAttributes;
+}*/
 
 @end

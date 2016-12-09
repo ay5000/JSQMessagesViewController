@@ -18,6 +18,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "JSQGlobals.h"
 
 @class JSQMessagesBubbleImageFactory;
 
@@ -35,7 +36,14 @@
 /**
  *  Returns the bubble image factory that the masker uses to mask media views.
  */
+
+
 @property (strong, nonatomic, readonly) JSQMessagesBubbleImageFactory *bubbleImageFactory;
+
+/*
+ *  Array of bubble factories (used for clustering)
+ */
+@property (strong, nonatomic, readonly) NSMutableArray<JSQMessagesBubbleImageFactory*> *bubbleFactories;
 
 /**
  *  Creates and returns a new instance of `JSQMessagesMediaViewBubbleImageMasker`
@@ -61,7 +69,11 @@
  *  @see JSQMessagesBubbleImageFactory.
  *  @see JSQMessagesBubbleImage.
  */
-- (instancetype)initWithBubbleImageFactory:(JSQMessagesBubbleImageFactory *)bubbleImageFactory;
+
+// Unused due to clustering
+//- (instancetype)initWithBubbleImageFactory:(JSQMessagesBubbleImageFactory *)bubbleImageFactory;
+
+-(instancetype)initWithClusterBubbleImageFactories;
 
 /**
  *  Applies an outgoing bubble image mask to the specified mediaView.
@@ -86,5 +98,16 @@
  *  Specify `YES` for outgoing and `NO` for incoming.
  */
 + (void)applyBubbleImageMaskToMediaView:(UIView *)mediaView isOutgoing:(BOOL)isOutgoing;
+
+/**
+ *  A convenience method for applying a bubble image mask to the specified mediaView.
+ *  This method uses the default instance of `JSQMessagesBubbleImageFactory`.
+ *
+ *  @param mediaView  The media view to mask.
+ *  @param isOutgoing A boolean value specifiying whether or not the mask should be for an outgoing or incoming view.
+ *  @param clusterType - An enum representing the clustering for this message (none, start, middle, end)
+ *  Specify `YES` for outgoing and `NO` for incoming.
+ */
++ (void)applyBubbleImageMaskToMediaView:(UIView *)mediaView isOutgoing:(BOOL)isOutgoing clusterType:(JSQBubbleClusterType)clusterType;
 
 @end

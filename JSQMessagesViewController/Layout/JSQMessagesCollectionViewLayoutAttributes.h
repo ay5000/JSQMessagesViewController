@@ -103,4 +103,6 @@
  */
 @property (assign, nonatomic) CGFloat cellBottomLabelHeight;
 
+@property (strong, nonatomic) UIColor *color;
+
 @end
