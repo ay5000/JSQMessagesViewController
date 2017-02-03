@@ -82,7 +82,7 @@
 
 + (UIImage *)jsq_bubbleCompactTaillessImage
 {
-    return [UIImage jsq_bubbleImageFromBundleWithName:@"bubble_min_tailless"];
+    return [UIImage jsq_bubbleImageFromBundleWithName:@"bubble_cluster_default"];
 }
 
 + (UIImage *)jsq_defaultAccessoryImage
@@ -99,5 +99,23 @@
 {
     return [UIImage jsq_bubbleImageFromBundleWithName:@"play"];
 }
+
+//Bubble Clustering
+
++ (UIImage *)jsq_bubbleCompactTaillessClusterStartImage
+{
+    return [UIImage jsq_bubbleImageFromBundleWithName:@"bubble_cluster_first"];
+}
+
++ (UIImage *)jsq_bubbleCompactTaillessClusterMiddleImage
+{
+    return [UIImage jsq_bubbleImageFromBundleWithName:@"bubble_cluster_middle"];
+}
+
++ (UIImage *)jsq_bubbleCompactTaillessClusterEndImage
+{
+    return [UIImage jsq_bubbleImageFromBundleWithName:@"bubble_cluster_bottom"];
+}
+
 
 @end

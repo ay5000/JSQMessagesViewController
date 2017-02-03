@@ -68,6 +68,9 @@
 - (BOOL)isBlurredMessage;
 - (BOOL)isAudioMessage;
 
+- (BOOL)isLiveVideoMessage;
+- (BOOL)isOutgoingMessage;
+
 // Oana change
 /**
  *  @return Yes if the message has button inside, otherwise No

@@ -76,4 +76,11 @@
  */
 + (UIImage *)jsq_defaultPlayImage;
 
+//Bubble Clustering
+
++ (UIImage *)jsq_bubbleCompactTaillessClusterStartImage;
++ (UIImage *)jsq_bubbleCompactTaillessClusterMiddleImage;
++ (UIImage *)jsq_bubbleCompactTaillessClusterEndImage;
+
+
 @end
