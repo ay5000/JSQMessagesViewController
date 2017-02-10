@@ -71,6 +71,8 @@
 - (BOOL)isLiveVideoMessage;
 - (BOOL)isOutgoingMessage;
 
+- (BOOL)isWelcomeMessage;
+
 // Oana change
 /**
  *  @return Yes if the message has button inside, otherwise No

@@ -54,6 +54,7 @@
 @property (nonatomic, assign) BOOL isAudioMessage;
 @property (nonatomic, assign) BOOL isLiveVideoMessage;
 @property (nonatomic, assign) BOOL isOutgoingMessage;
+@property (nonatomic, assign) BOOL isWelcomeMessage;
 
 // Oana change
 /**

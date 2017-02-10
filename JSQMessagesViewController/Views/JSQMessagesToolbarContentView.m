@@ -41,6 +41,9 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *leftHorizontalSpacingConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightHorizontalSpacingConstraint;
 
+@property (weak, nonatomic) IBOutlet UIView *topLineView;
+
+
 @end
 
 // Oana change - JSQMessagesToolbarContentView.xib - added a top turquize line
@@ -67,6 +70,7 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
     self.rightHorizontalSpacingConstraint.constant = kJSQMessagesToolbarContentViewHorizontalSpacingDefault;
 
     self.backgroundColor = [UIColor clearColor];
+    
 }
 
 - (void)dealloc
@@ -85,6 +89,9 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
     [super setBackgroundColor:backgroundColor];
     self.leftBarButtonContainerView.backgroundColor = backgroundColor;
     self.rightBarButtonContainerView.backgroundColor = backgroundColor;
+    
+    
+    self.rightBarButtonContainerView.backgroundColor = [UIColor purpleColor];
 }
 
 - (void)setLeftBarButtonItem:(UIButton *)leftBarButtonItem

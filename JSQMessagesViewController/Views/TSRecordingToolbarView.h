@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *leftRedMicImageView;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic,readonly) IBOutlet UILabel *timerLabel;
 
 /**
  * Update UI elements with recording time

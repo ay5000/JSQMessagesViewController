@@ -10,8 +10,8 @@
 
 @interface TSRecordingToolbarView ()
 
-@property (weak, nonatomic) IBOutlet UILabel *timerLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *trashImageView;
+@property (weak, nonatomic,readwrite) IBOutlet UILabel *timerLabel;
+
 
 @end
 
@@ -20,29 +20,35 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    self.timerLabel.text = @"";
-    self.leftRedMicImageView.image = [self.leftRedMicImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    self.timerLabel.text = @"00:00";
+    self.timerLabel.alpha = 1.0;
+    
 }
 
 #pragma mark - Public methods
 
 - (void)startDeleteAnimation {
-    self.leftRedMicImageView.hidden = YES;
-    self.trashImageView.hidden = NO;
+
 }
 
 - (void)resetUIState {
-    self.leftRedMicImageView.hidden = NO;
-    self.trashImageView.hidden = YES;
+    self.timerLabel.textColor = [UIColor colorWithRed:219.0/255.0
+                                                green:219.0/255.0
+                                                 blue:219.0/255.0 alpha:1.0];
+    
+    self.timerLabel.alpha = 0.0;
 }
 
 - (void)didPassedSeconds:(int)sec {
+    
     if (sec < 0) {
-        self.leftRedMicImageView.tintColor = [UIColor colorWithRed:159.0f/255.0f green:159.0f/255.0f blue:159.0f/255.0f alpha:1.0f];
-        self.timerLabel.text = @"";
+        //self.timerLabel.text = @"";
         return;
     } else {
-        self.leftRedMicImageView.tintColor = [UIColor redColor];
+        /*
+        self.timerLabel.textColor = [UIColor colorWithRed:233.0/255.0
+                                                    green:0
+                                                     blue:107.0/255.0 alpha:1.0];*/
     }
     
     int min = (sec / 60) % 60;
@@ -65,47 +71,5 @@
     self.timerLabel.text = guaranteedTimeToReply;
 }
 
-
-- (BOOL)isDeleteAnimationInProgress {
-    return !self.trashImageView.hidden;
-}
-
-- (void)setCustomFontFamily:(NSString *)fontFamily {
-    UIFont *font = self.timerLabel.font;
-    NSString *finalFontName = [self customFontNameFromFontFamily:fontFamily initialFont:font];
-    self.timerLabel.font = [UIFont fontWithName:finalFontName size:font.pointSize];
-    
-    font = self.cancelButton.titleLabel.font;
-    finalFontName = [self customFontNameFromFontFamily:fontFamily initialFont:font];
-    self.cancelButton.titleLabel.font = [UIFont fontWithName:finalFontName size:font.pointSize];
-    
-    font = self.sendButton.titleLabel.font;
-    finalFontName = [self customFontNameFromFontFamily:fontFamily initialFont:font];
-    self.sendButton.titleLabel.font = [UIFont fontWithName:finalFontName size:font.pointSize];
-}
-
-#pragma mark - Private methods
-
-- (NSString *)customFontNameFromFontFamily:(NSString *)fontFamily initialFont:(UIFont *)initialFont {
-    NSArray *components = [initialFont.fontName componentsSeparatedByString:@"-"];
-    NSString *fontType = nil;
-    
-    if (components.count > 1) {
-        fontType = [components lastObject];
-        NSString *fontName = [NSString stringWithFormat:@"%@-%@", fontFamily, fontType];
-        
-        // check if font exists, otherwise return the fontName without any special type
-        if ([UIFont fontWithName:fontName size:10]) {
-            return fontName;
-        }
-    }
-    
-    if ([UIFont fontWithName:fontFamily size:10]) {
-        return fontFamily;
-    }
-    
-    // invalid font family
-    return initialFont.fontName;
-}
 
 @end

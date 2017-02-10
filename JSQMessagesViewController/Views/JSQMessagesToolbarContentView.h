@@ -97,15 +97,22 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingD
  */
 @property (weak, nonatomic, readonly) UIView *rightBarButtonContainerView;
 
+@property (weak, nonatomic) IBOutlet UIView *slidingPanelView;
+
+
 @property (weak, nonatomic, readonly) UIButton *lastRightBarButtonItem; // Oana new change
 
 @property (assign, nonatomic, readonly) BOOL isLastRightBarButtonItemHidden; // Oana new change
 @property (assign, nonatomic, readonly) BOOL isFirstRightBarButtonItemHidden; // Oana new change
 
+@property (weak, nonatomic, readonly) UIView *topLineView;
+
 - (void)setRightBarButtonItems:(NSArray *)rightBarButtonItems; // Oana new change
 
 - (void)shouldHideLastRightBarButtonItem:(BOOL)shouldHide; // Oana new change
 - (void)shouldHideFirstRightBarButtonItem:(BOOL)shouldHide; // Oana new change
+
+
 
 #pragma mark - Class methods
 

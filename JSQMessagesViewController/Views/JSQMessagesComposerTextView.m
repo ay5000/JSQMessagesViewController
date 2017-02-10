@@ -47,7 +47,7 @@
     
     CGFloat cornerRadius = 6.0f;
     
-    self.backgroundColor = [UIColor whiteColor];
+    //self.backgroundColor = [UIColor purpleColor];
     //    self.layer.borderWidth = 0.5f; // Oana change
     //    self.layer.borderColor = [UIColor lightGrayColor].CGColor; // Oana change
     //    self.layer.cornerRadius = cornerRadius; // Oana change
@@ -57,11 +57,12 @@
     self.textContainerInset = UIEdgeInsetsMake(4.0f, 2.0f, 4.0f, 2.0f);
     self.contentInset = UIEdgeInsetsMake(1.0f, 0.0f, 1.0f, 0.0f);
     
+    
     self.scrollEnabled = YES;
     self.scrollsToTop = NO;
     self.userInteractionEnabled = YES;
     
-    self.font = [UIFont systemFontOfSize:16.0f];
+    self.font = [UIFont systemFontOfSize:17.0f];
     self.textColor = [UIColor blackColor];
     self.textAlignment = NSTextAlignmentNatural;
     
@@ -73,8 +74,15 @@
     
     self.text = nil;
     
+    //self.textInputView.backgroundColor = [UIColor blueColor];
+    
+    
     _placeHolder = nil;
     _placeHolderTextColor = [UIColor lightGrayColor];
+    
+
+    
+    self.backgroundColor = [UIColor whiteColor];
     
     [self jsq_addTextViewNotificationObservers];
 }
@@ -92,6 +100,21 @@
 {
     [super awakeFromNib];
     [self jsq_configureTextView];
+    //[self addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
+
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    UITextView *tv = object;
+    //Center vertical alignment
+    //CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])/2.0;
+    //topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
+    //tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
+    
+    //Bottom vertical alignment
+    CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height);
+    topCorrect = (topCorrect <0.0 ? 0.0 : topCorrect);
+    tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect + 10};
 }
 
 - (void)dealloc
@@ -165,7 +188,7 @@
     if ([self.text length] == 0 && self.placeHolder) {
         [self.placeHolderTextColor set];
         
-        [self.placeHolder drawInRect:CGRectInset(rect, 7.0f, 5.0f)
+        [self.placeHolder drawInRect:CGRectInset(rect, 5.0f, 5.0f)
                       withAttributes:[self jsq_placeholderTextAttributes]];
     }
 }

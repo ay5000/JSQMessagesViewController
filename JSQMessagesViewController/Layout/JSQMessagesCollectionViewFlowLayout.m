@@ -74,6 +74,8 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 
 @property (nonatomic, assign) UIEdgeInsets messageBubbleTextViewTextContainerInsetsSystem;
 @property (nonatomic, assign) UIEdgeInsets messageBubbleTextViewTextContainerInsetsLiveVideo;
+@property (nonatomic, assign) UIEdgeInsets messageBubbleTextViewTextContainerInsetsWelcome;
+
 
 @end
 
@@ -109,6 +111,9 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     _messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7.0f, 14.0f, 7.0f, 14.0f);
     _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, 14.0f, 0.0f, 14.0f);
     _messageBubbleTextViewTextContainerInsetsLiveVideo = UIEdgeInsetsMake(46.0f, 14.0f, 7.0f, 14.0f);
+    
+    _messageBubbleTextViewTextContainerInsetsWelcome = UIEdgeInsetsMake(100.0f, 14.0f, 7.0f, 14.0f);
+
     
     CGSize defaultAvatarSize = CGSizeMake(kJSQMessagesCollectionViewAvatarSizeDefault, kJSQMessagesCollectionViewAvatarSizeDefault);
     _incomingAvatarViewSize = defaultAvatarSize;
@@ -509,6 +514,8 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     
     if([messageItem isLiveVideoMessage]) {
         return _messageBubbleTextViewTextContainerInsetsLiveVideo;
+    } else if([messageItem isWelcomeMessage]) {
+        return _messageBubbleTextViewTextContainerInsetsWelcome;
     } else if([messageItem isCenteredMessage]) {
         return _messageBubbleTextViewTextContainerInsetsSystem;
     } else {
