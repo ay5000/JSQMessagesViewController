@@ -92,7 +92,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 {
     self.scrollDirection = UICollectionViewScrollDirectionVertical;
     self.sectionInset = UIEdgeInsetsMake(10.0f, 4.0f, 10.0f, 4.0f);
-    self.minimumLineSpacing = 1.0f;//1/[UIScreen mainScreen].scale; 
+    self.minimumLineSpacing = 3.0f;//1/[UIScreen mainScreen].scale;
     
     _bubbleImageAssetWidth = [UIImage jsq_bubbleCompactImage].size.width;
     
@@ -101,7 +101,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     _messageBubbleCache.countLimit = 200;
     
     _messageBubbleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    _messageBubbleLeftRightMargin = 50.0f;  //Oana change;
+    _messageBubbleLeftRightMargin = 5.0f;  //Oana change;
     
     if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         _messageBubbleLeftRightMargin = 50.0f;
@@ -109,8 +109,9 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     
     _messageBubbleTextViewFrameInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 6.0f);
     _messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7.0f, 14.0f, 7.0f, 14.0f);
-    _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, 0.0f, 0.0f, 12.0f);
+    _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, 23.0f, 0.0f, 14.0f);
     _messageBubbleTextViewTextContainerInsetsLiveVideo = UIEdgeInsetsMake(46.0f, 14.0f, 7.0f, 14.0f);
+    
     _messageBubbleTextViewTextContainerInsetsWelcome = UIEdgeInsetsMake(100.0f, 14.0f, 7.0f, 14.0f);
 
     
@@ -399,7 +400,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
                 }
             }
             
-            if(([messageItem isCenteredMessage] || lastMsgIsCenteredMessage) && indexPath.row > 0) {
+            if(([messageItem isCenteredMessage] || lastMsgIsCenteredMessage) && indexPath.item > 0) {
                 separatorAttributes.color = SEPARATOR_COLOR_GRAY;
             } else {
                 separatorAttributes.color = SEPARATOR_COLOR_CLEAR;
@@ -591,7 +592,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         }
         
         if([messageItem isCenteredMessage]) {
-            finalSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width ,stringSize.height + verticalInsets);
+            finalSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 20,stringSize.height + verticalInsets);
         } else {
             finalSize = CGSizeMake(finalWidth, stringSize.height + verticalInsets);
         }
@@ -677,6 +678,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     id<JSQMessageData> messageItem = [self.collectionView.dataSource collectionView:self.collectionView messageDataForItemAtIndexPath:indexPath];
     
     if([messageItem isCenteredMessage]) {
+        
         
         [attributes addObject:[self layoutAttributesForDecorationViewOfKind:DECORATION_BORDER_IDENTIFIER atIndexPath:indexPath]];
         [attributes addObject:[self layoutAttributesForDecorationViewOfKind:DECORATION_BORDER_IDENTIFIER atIndexPath:indexPath]];

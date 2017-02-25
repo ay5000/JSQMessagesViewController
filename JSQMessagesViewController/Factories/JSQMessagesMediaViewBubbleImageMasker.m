@@ -160,7 +160,7 @@
     NSParameterAssert(image != nil);
     
     UIImageView *imageViewMask = [[UIImageView alloc] initWithImage:image];
-    imageViewMask.frame = CGRectInset(view.frame, 0 , 0);// 2.0f, 2.0f); AY SPACING CHANGE(F17)
+    imageViewMask.frame = CGRectInset(view.frame, 0 , 0);// 2.0f, 2.0f); AY Change
     
     view.layer.mask = imageViewMask.layer;
 }

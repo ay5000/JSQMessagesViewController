@@ -85,6 +85,7 @@
         imageView.clipsToBounds = YES;
         [JSQMessagesMediaViewBubbleImageMasker applyBubbleImageMaskToMediaView:imageView isOutgoing:self.appliesMediaViewMaskAsOutgoing clusterType:self.clusterType];
         self.cachedImageView = imageView;
+        
     }
     
     return self.cachedImageView;
