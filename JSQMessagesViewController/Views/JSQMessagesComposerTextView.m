@@ -55,7 +55,7 @@
     self.scrollIndicatorInsets = UIEdgeInsetsMake(cornerRadius, 0.0f, cornerRadius, 0.0f);
     
     self.textContainerInset = UIEdgeInsetsMake(4.0f, 2.0f, 4.0f, 2.0f);
-    self.contentInset = UIEdgeInsetsMake(1.0f, 0.0f, 1.0f, 0.0f);
+    self.contentInset = UIEdgeInsetsMake(14.0f, -4.0f, 1.0f, 0.0f);
     
     
     self.scrollEnabled = YES;
@@ -80,11 +80,21 @@
     _placeHolder = nil;
     _placeHolderTextColor = [UIColor lightGrayColor];
     
+    
 
     
     self.backgroundColor = [UIColor whiteColor];
     
     [self jsq_addTextViewNotificationObservers];
+    
+    //
+}
+
+- (CGRect)caretRectForPosition:(UITextPosition *)position {
+    CGRect originalRect = [super caretRectForPosition:position];
+    originalRect.size.height = 24.0;
+    originalRect.size.width = 4.0;
+    return originalRect;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer
@@ -102,19 +112,6 @@
     [self jsq_configureTextView];
     //[self addObserver:self forKeyPath:@"contentSize" options:(NSKeyValueObservingOptionNew) context:NULL];
 
-}
-
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    UITextView *tv = object;
-    //Center vertical alignment
-    //CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height * [tv zoomScale])/2.0;
-    //topCorrect = ( topCorrect < 0.0 ? 0.0 : topCorrect );
-    //tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect};
-    
-    //Bottom vertical alignment
-    CGFloat topCorrect = ([tv bounds].size.height - [tv contentSize].height);
-    topCorrect = (topCorrect <0.0 ? 0.0 : topCorrect);
-    tv.contentOffset = (CGPoint){.x = 0, .y = -topCorrect + 10};
 }
 
 - (void)dealloc
@@ -159,6 +156,7 @@
 {
     [super setText:text];
     [self setNeedsDisplay];
+    
 }
 
 - (void)setAttributedText:(NSAttributedString *)attributedText
@@ -181,6 +179,9 @@
 
 #pragma mark - Drawing
 
+
+
+
 - (void)drawRect:(CGRect)rect
 {
     [super drawRect:rect];
@@ -188,10 +189,13 @@
     if ([self.text length] == 0 && self.placeHolder) {
         [self.placeHolderTextColor set];
         
-        [self.placeHolder drawInRect:CGRectInset(rect, 5.0f, 5.0f)
+        rect.size.height += 10;
+        
+        [self.placeHolder drawInRect:CGRectInset(rect, 4 , 19.0f)
                       withAttributes:[self jsq_placeholderTextAttributes]];
     }
 }
+
 
 #pragma mark - Notifications
 
