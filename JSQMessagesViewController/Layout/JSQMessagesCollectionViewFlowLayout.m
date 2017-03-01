@@ -91,7 +91,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 - (void)jsq_configureFlowLayout
 {
     self.scrollDirection = UICollectionViewScrollDirectionVertical;
-    self.sectionInset = UIEdgeInsetsMake(10.0f, 4.0f, 10.0f, 4.0f);
+    self.sectionInset = UIEdgeInsetsMake(10.0f, 4.0f, 20.0f, 4.0f);
     self.minimumLineSpacing = 3.0f;//1/[UIScreen mainScreen].scale;
     
     _bubbleImageAssetWidth = [UIImage jsq_bubbleCompactImage].size.width;
