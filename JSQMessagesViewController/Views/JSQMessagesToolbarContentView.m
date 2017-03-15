@@ -90,8 +90,7 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
     self.leftBarButtonContainerView.backgroundColor = backgroundColor;
     self.rightBarButtonContainerView.backgroundColor = backgroundColor;
     
-    
-    self.rightBarButtonContainerView.backgroundColor = [UIColor purpleColor];
+    //self.rightBarButtonContainerView.backgroundColor = [UIColor purpleColor];
 }
 
 - (void)setLeftBarButtonItem:(UIButton *)leftBarButtonItem
@@ -260,6 +259,10 @@ const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingDefault = 8.0f;
     _firstRightBarButtonItemWidthConstraint.constant = shouldHide ? 0 : _defaultRightBarButtonItemWidth;
     [self layoutIfNeeded];
     self.rightBarButtonItemWidth = _rightBarButtonItem.frame.size.width + _lastRightBarButtonItemWidthConstraint.constant;
+}
+
+-(void)hideOverrideSendButton:(BOOL)shouldHide {
+    self.overrideSendButton.hidden = shouldHide;
 }
 
 @end

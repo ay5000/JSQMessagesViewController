@@ -56,6 +56,18 @@
                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
+                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="klr-pq-vBG" userLabel="Send Button">
+                    <rect key="frame" x="263" y="6" width="51" height="41"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="41" id="EBI-Mk-TfD"/>
+                        <constraint firstAttribute="width" constant="51" id="tVY-pZ-3JI"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <state key="normal" title="Send">
+                        <color key="titleColor" red="0.031372549020000001" green="0.69411764710000001" blue="0.59607843140000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -65,6 +77,8 @@
                 <constraint firstAttribute="bottom" secondItem="dm4-NT-mvr" secondAttribute="bottom" constant="7" id="CCb-V7-yek"/>
                 <constraint firstAttribute="bottom" secondItem="Myo-1S-Vg1" secondAttribute="bottom" constant="11" id="EaS-Oq-Qp5"/>
                 <constraint firstItem="LEq-G7-jGt" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="3" id="LAU-fo-GJJ"/>
+                <constraint firstAttribute="bottom" secondItem="klr-pq-vBG" secondAttribute="bottom" constant="13" id="NXM-8m-DLM"/>
+                <constraint firstAttribute="trailing" secondItem="klr-pq-vBG" secondAttribute="trailing" constant="6" id="XfB-WZ-Keh"/>
                 <constraint firstAttribute="trailing" secondItem="ucd-zx-OmN" secondAttribute="trailing" id="cfU-rl-MFM"/>
                 <constraint firstAttribute="trailing" secondItem="Myo-1S-Vg1" secondAttribute="trailing" constant="8" id="ds6-61-GNv"/>
                 <constraint firstItem="ucd-zx-OmN" firstAttribute="top" secondItem="1" secondAttribute="top" id="n4m-TV-jLQ"/>
@@ -76,6 +90,7 @@
             <connections>
                 <outlet property="leftBarButtonContainerView" destination="LEq-G7-jGt" id="F0V-4N-1Mo"/>
                 <outlet property="leftHorizontalSpacingConstraint" destination="LAU-fo-GJJ" id="X2c-BI-0Q4"/>
+                <outlet property="overrideSendButton" destination="klr-pq-vBG" id="t3a-3K-Nge"/>
                 <outlet property="rightBarButtonContainerView" destination="Myo-1S-Vg1" id="0SR-cw-EkD"/>
                 <outlet property="rightBarButtonContainerViewWidthConstraint" destination="yde-S9-dHe" id="WGu-df-M3L"/>
                 <outlet property="rightHorizontalSpacingConstraint" destination="ds6-61-GNv" id="ZQh-8M-QFs"/>

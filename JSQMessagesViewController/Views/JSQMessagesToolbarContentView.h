@@ -112,6 +112,7 @@ FOUNDATION_EXPORT const CGFloat kJSQMessagesToolbarContentViewHorizontalSpacingD
 - (void)shouldHideLastRightBarButtonItem:(BOOL)shouldHide; // Oana new change
 - (void)shouldHideFirstRightBarButtonItem:(BOOL)shouldHide; // Oana new change
 
+@property (weak, nonatomic) IBOutlet UIButton *overrideSendButton;
 
 
 #pragma mark - Class methods
