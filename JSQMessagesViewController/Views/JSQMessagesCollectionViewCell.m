@@ -62,6 +62,8 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
 
 @property (weak, nonatomic, readwrite) UITapGestureRecognizer *tapGestureRecognizer;
 
+@property (assign, nonatomic) BOOL gestureRecognizerInHackMode;
+
 - (void)jsq_handleTapGesture:(UITapGestureRecognizer *)tap;
 
 - (void)jsq_updateConstraint:(NSLayoutConstraint *)constraint withConstant:(CGFloat)constant;
@@ -131,11 +133,15 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
     
     self.cellBottomLabel.font = [UIFont systemFontOfSize:11.0f];
     self.cellBottomLabel.textColor = [UIColor lightGrayColor];
+
+    self.gestureRecognizerInHackMode = NO;
+}
+
+-(void)updateGestureRecognizer {
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jsq_handleTapGesture:)];
-    [self addGestureRecognizer:tap];
+    [self.messageBubbleImageView addGestureRecognizer:tap];
     self.tapGestureRecognizer = tap;
-
 }
 
 - (void)dealloc
@@ -391,11 +397,21 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
     
     CGPoint touchPt = [touch locationInView:self];
     
-    if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
-        return CGRectContainsPoint(self.messageBubbleContainerView.frame, touchPt);
+    if(self.gestureRecognizerInHackMode) {
+        if (CGRectContainsPoint(self.messageBubbleContainerView.frame, touchPt)) {
+            [self.delegate messagesCollectionViewCellDidTapMessageBubble:self atPosition:touchPt]; // Oana changed
+        }
+    } else {
+        if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
+            return CGRectContainsPoint(self.messageBubbleContainerView.frame, touchPt);
+        }
+        
     }
-    
     return YES;
+}
+
+-(void)setGestureRecognizerModeToHackMode:(BOOL)hackMode {
+    self.gestureRecognizerInHackMode = hackMode;
 }
 
 @end
