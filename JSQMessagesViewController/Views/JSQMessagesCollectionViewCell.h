@@ -207,6 +207,4 @@
  */
 + (void)registerMenuAction:(SEL)action;
 
--(void)setGestureRecognizerModeToHackMode:(BOOL)hackMode;
-
 @end

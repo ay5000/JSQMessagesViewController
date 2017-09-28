@@ -134,15 +134,13 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
     self.cellBottomLabel.font = [UIFont systemFontOfSize:11.0f];
     self.cellBottomLabel.textColor = [UIColor lightGrayColor];
 
-    self.gestureRecognizerInHackMode = NO;
-}
-
--(void)updateGestureRecognizer {
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(jsq_handleTapGesture:)];
-    [self.messageBubbleImageView addGestureRecognizer:tap];
+    [self addGestureRecognizer:tap];
     self.tapGestureRecognizer = tap;
+    self.tapGestureRecognizer.delegate = self;
 }
+
 
 - (void)dealloc
 {
@@ -158,6 +156,7 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
     
     _avatarImageView = nil;
     
+    _tapGestureRecognizer.delegate = nil;
     [_tapGestureRecognizer removeTarget:nil action:NULL];
     _tapGestureRecognizer = nil;
 }
@@ -397,21 +396,15 @@ static NSMutableSet *jsqMessagesCollectionViewCellActions = nil;
     
     CGPoint touchPt = [touch locationInView:self];
     
-    if(self.gestureRecognizerInHackMode) {
-        if (CGRectContainsPoint(self.messageBubbleContainerView.frame, touchPt)) {
-            [self.delegate messagesCollectionViewCellDidTapMessageBubble:self atPosition:touchPt]; // Oana changed
-        }
-    } else {
-        if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
-            return CGRectContainsPoint(self.messageBubbleContainerView.frame, touchPt);
-        }
-        
+    if ([gestureRecognizer isKindOfClass:[UILongPressGestureRecognizer class]]) {
+        return CGRectContainsPoint(self.messageBubbleContainerView.frame, touchPt);
     }
+    
     return YES;
 }
 
--(void)setGestureRecognizerModeToHackMode:(BOOL)hackMode {
-    self.gestureRecognizerInHackMode = hackMode;
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    return YES;
 }
 
 @end
