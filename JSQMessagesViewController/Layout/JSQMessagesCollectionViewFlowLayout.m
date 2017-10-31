@@ -568,7 +568,10 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         CGFloat maximumTextWidth = self.itemWidth - avatarSize.width - self.messageBubbleLeftRightMargin - horizontalInsetsTotal;
         
         UIFont *textFont = [self.collectionView.dataSource customTextFontForItemAtIndexPath:indexPath]; // Oana change
-        
+        // Annie's change
+        if ([messageItem isTextMessage]) {
+            maximumTextWidth = ([[UIScreen mainScreen] bounds].size.width / 4) * 3;
+        }
         CGRect stringRect = [[messageItem text] boundingRectWithSize:CGSizeMake(maximumTextWidth, CGFLOAT_MAX)
                                                              options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
                                                           attributes:@{ NSFontAttributeName : textFont ? textFont : self.messageBubbleFont} // Oana change
@@ -596,10 +599,15 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         } else {
             finalSize = CGSizeMake(finalWidth, stringSize.height + verticalInsets);
         }
-        
-        
+        // Annie's change
+        if ([messageItem isTextMessage]) {
+            if (finalWidth >= maximumTextWidth) {
+                finalSize = CGSizeMake(maximumTextWidth, stringSize.height + verticalInsets);
+            } else {
+                finalSize = CGSizeMake(finalWidth, stringSize.height + verticalInsets);
+            }
+        }
     }
-    
     [self.messageBubbleCache setObject:[NSValue valueWithCGSize:finalSize] forKey:@([messageItem messageHash])];
     
     return finalSize;

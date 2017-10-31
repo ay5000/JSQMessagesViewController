@@ -86,6 +86,12 @@
  */
 - (BOOL)isCenteredMessage;
 
+// Annie's Change
+/**
+ * Returns yes if the message is a text message
+ */
+- (BOOL)isTextMessage;
+
 /**
  *  This method is used to determine if the message data item contains text or media.
  *  If this method returns `YES`, an instance of `JSQMessagesViewController` will ignore 
