@@ -569,7 +569,8 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         
         UIFont *textFont = [self.collectionView.dataSource customTextFontForItemAtIndexPath:indexPath]; // Oana change
         // Annie's change
-        if ([messageItem isTextMessage]) {
+        BOOL isIPAD = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
+        if ([messageItem isTextMessage] && isIPAD) {
             maximumTextWidth = ([[UIScreen mainScreen] bounds].size.width / 4) * 3;
         }
         CGRect stringRect = [[messageItem text] boundingRectWithSize:CGSizeMake(maximumTextWidth, CGFLOAT_MAX)
@@ -600,7 +601,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
             finalSize = CGSizeMake(finalWidth, stringSize.height + verticalInsets);
         }
         // Annie's change
-        if ([messageItem isTextMessage]) {
+        if ([messageItem isTextMessage] && isIPAD) {
             if (finalWidth >= maximumTextWidth) {
                 finalSize = CGSizeMake(maximumTextWidth, stringSize.height + verticalInsets);
             } else {
