@@ -538,23 +538,6 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     if ([messageItem isMediaMessage]) {
         finalSize = [[messageItem media] mediaViewDisplaySize];
     }  else {
-        // Oana change
-        if (messageItem.isBlurredMessage) {
-            CGSize blurredSize = [self.collectionView.dataSource sizeOfBlurredCell];
-            [self.messageBubbleCache setObject:[NSValue valueWithCGSize:blurredSize] forKey:indexPath];
-            
-            return blurredSize;
-        }
-        
-        if (messageItem.isAudioMessage) {
-            CGSize blurredSize = [self.collectionView.dataSource sizeOfAudioMessageCell];
-            [self.messageBubbleCache setObject:[NSValue valueWithCGSize:blurredSize] forKey:indexPath];
-            
-            return blurredSize;
-        }
-        
-        //////
-        
         CGSize avatarSize = [self jsq_avatarSizeForIndexPath:indexPath];
         
         UIEdgeInsets textInsets = [self getInsetsForIndexPath:indexPath];
@@ -571,7 +554,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         // Annie's change
         BOOL isIPAD = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
         if ([messageItem isTextMessage] && isIPAD) {
-            maximumTextWidth = ([[UIScreen mainScreen] bounds].size.width / 4) * 3;
+            maximumTextWidth = (([[UIScreen mainScreen] bounds].size.width / 4) * 3) - horizontalInsetsTotal;
         }
         CGRect stringRect = [[messageItem text] boundingRectWithSize:CGSizeMake(maximumTextWidth, CGFLOAT_MAX)
                                                              options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
@@ -599,14 +582,6 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
             finalSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 20,stringSize.height + verticalInsets);
         } else {
             finalSize = CGSizeMake(finalWidth, stringSize.height + verticalInsets);
-        }
-        // Annie's change
-        if ([messageItem isTextMessage] && isIPAD) {
-            if (finalWidth >= maximumTextWidth) {
-                finalSize = CGSizeMake(maximumTextWidth, stringSize.height + verticalInsets);
-            } else {
-                finalSize = CGSizeMake(finalWidth, stringSize.height + verticalInsets);
-            }
         }
     }
     [self.messageBubbleCache setObject:[NSValue valueWithCGSize:finalSize] forKey:@([messageItem messageHash])];
