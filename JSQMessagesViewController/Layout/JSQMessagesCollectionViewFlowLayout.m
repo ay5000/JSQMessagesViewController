@@ -538,6 +538,13 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     if ([messageItem isMediaMessage]) {
         finalSize = [[messageItem media] mediaViewDisplaySize];
     }  else {
+
+        if (messageItem.isAudioMessage) {
+            CGSize audioMessageSize = [self.collectionView.dataSource sizeOfAudioMessageCell];
+            [self.messageBubbleCache setObject:[NSValue valueWithCGSize:audioMessageSize] forKey:indexPath];
+            return audioMessageSize;
+        }
+        
         CGSize avatarSize = [self jsq_avatarSizeForIndexPath:indexPath];
         
         UIEdgeInsets textInsets = [self getInsetsForIndexPath:indexPath];
