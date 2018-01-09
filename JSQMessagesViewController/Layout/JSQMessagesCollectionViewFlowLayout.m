@@ -102,19 +102,21 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     
     _messageBubbleFont = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     _messageBubbleLeftRightMargin = 5.0f;  //Oana change;
-    
-    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
-        _messageBubbleLeftRightMargin = 50.0f;
-    }
-    
+
     _messageBubbleTextViewFrameInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 6.0f);
     _messageBubbleTextViewTextContainerInsets = UIEdgeInsetsMake(7.0f, 14.0f, 7.0f, 14.0f);
-    _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, 23.0f, 0.0f, 14.0f);
     _messageBubbleTextViewTextContainerInsetsLiveVideo = UIEdgeInsetsMake(46.0f, 14.0f, 7.0f, 14.0f);
-    
     _messageBubbleTextViewTextContainerInsetsWelcome = UIEdgeInsetsMake(100.0f, 14.0f, 7.0f, 14.0f);
+    _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, 23.0f, 0.0f, 14.0f);
+    // Annie's change
+    BOOL isIPAD = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
+    if (isIPAD) {
+        _messageBubbleLeftRightMargin = 50.0f;
 
-    
+        CGFloat maximumInset = [[UIScreen mainScreen]bounds].size.width / 3;
+        _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, maximumInset, 0.0f, maximumInset);
+    }
+
     CGSize defaultAvatarSize = CGSizeMake(kJSQMessagesCollectionViewAvatarSizeDefault, kJSQMessagesCollectionViewAvatarSizeDefault);
     _incomingAvatarViewSize = defaultAvatarSize;
     _outgoingAvatarViewSize = defaultAvatarSize;
@@ -285,6 +287,18 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 {
     [self jsq_resetLayout];
     [self invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
+
+    BOOL isIPAD = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
+    if (isIPAD) {
+        UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
+        CGFloat maximumInset = 0;
+        if (deviceOrientation == UIDeviceOrientationPortrait || deviceOrientation == UIDeviceOrientationPortraitUpsideDown) {
+            maximumInset = [[UIScreen mainScreen]bounds].size.height / 3;
+        } else if (deviceOrientation == UIDeviceOrientationLandscapeLeft || deviceOrientation == UIDeviceOrientationLandscapeRight) {
+            maximumInset = [[UIScreen mainScreen]bounds].size.height / 3;
+        }
+        _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, maximumInset, 0.0f, maximumInset);
+    }
 }
 
 #pragma mark - Collection view flow layout
