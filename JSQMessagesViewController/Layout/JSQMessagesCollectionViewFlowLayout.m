@@ -114,7 +114,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         _messageBubbleLeftRightMargin = 50.0f;
 
         CGFloat maximumInset = [[UIScreen mainScreen]bounds].size.width / 3;
-        _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, maximumInset, 0.0f, maximumInset);
+        _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, maximumInset, 10.0f, maximumInset);
     }
 
     CGSize defaultAvatarSize = CGSizeMake(kJSQMessagesCollectionViewAvatarSizeDefault, kJSQMessagesCollectionViewAvatarSizeDefault);
@@ -297,7 +297,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         } else if (deviceOrientation == UIDeviceOrientationLandscapeLeft || deviceOrientation == UIDeviceOrientationLandscapeRight) {
             maximumInset = [[UIScreen mainScreen]bounds].size.height / 3;
         }
-        _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, maximumInset, 0.0f, maximumInset);
+        _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, maximumInset, 10.0f, maximumInset);
     }
 }
 
@@ -576,6 +576,9 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         BOOL isIPAD = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
         if ([messageItem isTextMessage] && isIPAD) {
             maximumTextWidth = (([[UIScreen mainScreen] bounds].size.width / 4) * 3) - horizontalInsetsTotal;
+        }
+        if ([messageItem isCenteredMessage] && isIPAD) {
+            maximumTextWidth = [[UIScreen mainScreen] bounds].size.width / 3;
         }
         CGRect stringRect = [[messageItem text] boundingRectWithSize:CGSizeMake(maximumTextWidth, CGFLOAT_MAX)
                                                              options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
