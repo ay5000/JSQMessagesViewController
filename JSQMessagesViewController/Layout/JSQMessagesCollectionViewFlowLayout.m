@@ -540,15 +540,16 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 - (CGSize)messageBubbleSizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     id<JSQMessageData> messageItem = [self.collectionView.dataSource collectionView:self.collectionView messageDataForItemAtIndexPath:indexPath];
-    
+
     // Oanaa change - commented
-//    NSValue *cachedSize = [self.messageBubbleCache objectForKey:@([messageItem messageHash])];
-//    if (cachedSize != nil) {
-//        return [cachedSize CGSizeValue];
-//    }
-    
+    //    NSValue *cachedSize = [self.messageBubbleCache objectForKey:@([messageItem messageHash])];
+    //    if (cachedSize != nil) {
+    //        return [cachedSize CGSizeValue];
+    //    }
+
     CGSize finalSize = CGSizeZero;
-    
+    BOOL isIPAD = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
+
     if ([messageItem isMediaMessage]) {
         finalSize = [[messageItem media] mediaViewDisplaySize];
     }  else {
@@ -558,62 +559,62 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
             [self.messageBubbleCache setObject:[NSValue valueWithCGSize:audioMessageSize] forKey:indexPath];
             return audioMessageSize;
         }
-        
+
         CGSize avatarSize = [self jsq_avatarSizeForIndexPath:indexPath];
-        
         UIEdgeInsets textInsets = [self getInsetsForIndexPath:indexPath];
-        
+
         //  from the cell xibs, there is a 2 point space between avatar and bubble
         CGFloat spacingBetweenAvatarAndBubble = 2.0f;
         CGFloat horizontalContainerInsets = textInsets.left + textInsets.right;
         CGFloat horizontalFrameInsets = self.messageBubbleTextViewFrameInsets.left + self.messageBubbleTextViewFrameInsets.right;
-        
+
         CGFloat horizontalInsetsTotal = horizontalContainerInsets + horizontalFrameInsets + spacingBetweenAvatarAndBubble;
         CGFloat maximumTextWidth = self.itemWidth - avatarSize.width - self.messageBubbleLeftRightMargin - horizontalInsetsTotal;
-        
+
         UIFont *textFont = [self.collectionView.dataSource customTextFontForItemAtIndexPath:indexPath]; // Oana change
         // Annie's change
-        BOOL isIPAD = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
         if ([messageItem isTextMessage] && isIPAD) {
             maximumTextWidth = (([[UIScreen mainScreen] bounds].size.width / 4) * 3) - horizontalInsetsTotal;
-        }
-        if ([messageItem isCenteredMessage] && isIPAD) {
+        } else if ([messageItem isCenteredMessage] && isIPAD) {
             maximumTextWidth = [[UIScreen mainScreen] bounds].size.width / 3;
         }
+
         CGRect stringRect = [[messageItem text] boundingRectWithSize:CGSizeMake(maximumTextWidth, CGFLOAT_MAX)
                                                              options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
                                                           attributes:@{ NSFontAttributeName : textFont ? textFont : self.messageBubbleFont} // Oana change
                                                              context:nil];
-        
+
         CGSize stringSize = CGRectIntegral(stringRect).size;
-        
+
         CGFloat verticalContainerInsets = textInsets.top + textInsets.bottom;
         CGFloat verticalFrameInsets = self.messageBubbleTextViewFrameInsets.top + self.messageBubbleTextViewFrameInsets.bottom;
-        
+
         //  add extra 2 points of space, because `boundingRectWithSize:` is slightly off
         //  not sure why. magix. (shrug) if you know, submit a PR
         CGFloat verticalInsets = verticalContainerInsets + verticalFrameInsets + 2.0f; //ay change - added back in
-        
+
         //  same as above, an extra 2 points of magix
         CGFloat finalWidth = MAX(stringSize.width + horizontalInsetsTotal, self.bubbleImageAssetWidth) + 2.0f;
-        
+
         // Oana change
         if (messageItem.hasMessageButton && finalWidth < MESSAGES_CONTENT_BUTTON_MIN_WIDTH) {
             finalWidth = MESSAGES_CONTENT_BUTTON_MIN_WIDTH;
         }
-        
+
         if([messageItem isCenteredMessage]) {
-            finalSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 20,stringSize.height + verticalInsets);
+            if (isIPAD) { 
+                finalSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 10, stringSize.height + verticalInsets);
+            } else {
+                finalSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 20, stringSize.height + verticalInsets);
+            }
         } else {
             finalSize = CGSizeMake(finalWidth, stringSize.height + verticalInsets);
         }
     }
     [self.messageBubbleCache setObject:[NSValue valueWithCGSize:finalSize] forKey:@([messageItem messageHash])];
-    
+
     return finalSize;
 }
-
-
 
 - (CGSize)sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
