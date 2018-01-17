@@ -55,6 +55,7 @@
 @property (nonatomic, assign) BOOL isLiveVideoMessage;
 @property (nonatomic, assign) BOOL isOutgoingMessage;
 @property (nonatomic, assign) BOOL isWelcomeMessage;
+@property (nonatomic, assign) BOOL isTextMessage; // Annie's change
 
 // Oana change
 /**
