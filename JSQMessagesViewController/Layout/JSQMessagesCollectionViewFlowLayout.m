@@ -59,7 +59,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 - (void)jsq_configureFlowLayout;
 
 - (void)jsq_didReceiveApplicationMemoryWarningNotification:(NSNotification *)notification;
-- (void)jsq_didReceiveDeviceOrientationDidChangeNotification:(NSNotification *)notification;
+- (void)jsq_didReceiveStatusBarOrientationNotification:(NSNotification *)notification;
 
 - (void)jsq_resetLayout;
 - (void)jsq_resetDynamicAnimator;
@@ -112,7 +112,6 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     BOOL isIPAD = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
     if (isIPAD) {
         _messageBubbleLeftRightMargin = 50.0f;
-
         CGFloat maximumInset = [[UIScreen mainScreen]bounds].size.width / 3;
         _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, maximumInset, 10.0f, maximumInset);
     }
@@ -132,8 +131,8 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(jsq_didReceiveDeviceOrientationDidChangeNotification:)
-                                                 name:UIDeviceOrientationDidChangeNotification
+                                             selector:@selector(jsq_didReceiveStatusBarOrientationNotification:)
+                                                 name:UIApplicationDidChangeStatusBarOrientationNotification
                                                object:nil];
 }
 
@@ -283,19 +282,19 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     [self jsq_resetLayout];
 }
 
-- (void)jsq_didReceiveDeviceOrientationDidChangeNotification:(NSNotification *)notification
+- (void)jsq_didReceiveStatusBarOrientationNotification:(NSNotification *)notification
 {
     [self jsq_resetLayout];
     [self invalidateLayoutWithContext:[JSQMessagesCollectionViewFlowLayoutInvalidationContext context]];
 
     BOOL isIPAD = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
     if (isIPAD) {
-        UIDeviceOrientation deviceOrientation = [[UIDevice currentDevice] orientation];
+        UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         CGFloat maximumInset = 0;
-        if (deviceOrientation == UIDeviceOrientationPortrait || deviceOrientation == UIDeviceOrientationPortraitUpsideDown) {
-            maximumInset = [[UIScreen mainScreen]bounds].size.height / 3;
-        } else if (deviceOrientation == UIDeviceOrientationLandscapeLeft || deviceOrientation == UIDeviceOrientationLandscapeRight) {
-            maximumInset = [[UIScreen mainScreen]bounds].size.height / 3;
+        if (orientation == UIDeviceOrientationPortrait || orientation == UIDeviceOrientationPortraitUpsideDown) {
+            maximumInset = [[UIScreen mainScreen]bounds].size.width / 3;
+        } else if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
+            maximumInset = [[UIScreen mainScreen]bounds].size.width / 3;
         }
         _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, maximumInset, 10.0f, maximumInset);
     }
