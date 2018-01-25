@@ -112,7 +112,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
     BOOL isIPAD = UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad;
     if (isIPAD) {
         _messageBubbleLeftRightMargin = 50.0f;
-        CGFloat maximumInset = [[UIScreen mainScreen]bounds].size.width / 3;
+        CGFloat maximumInset = [[UIScreen mainScreen]bounds].size.width / 4;
         _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, maximumInset, 10.0f, maximumInset);
     }
 
@@ -292,9 +292,9 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         UIDeviceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
         CGFloat maximumInset = 0;
         if (orientation == UIDeviceOrientationPortrait || orientation == UIDeviceOrientationPortraitUpsideDown) {
-            maximumInset = [[UIScreen mainScreen]bounds].size.width / 3;
+            maximumInset = [[UIScreen mainScreen]bounds].size.width / 4;
         } else if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight) {
-            maximumInset = [[UIScreen mainScreen]bounds].size.width / 3;
+            maximumInset = [[UIScreen mainScreen]bounds].size.width / 4;
         }
         _messageBubbleTextViewTextContainerInsetsSystem = UIEdgeInsetsMake(2.0f, maximumInset, 10.0f, maximumInset);
     }
@@ -575,7 +575,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
         if ([messageItem isTextMessage] && isIPAD) {
             maximumTextWidth = (([[UIScreen mainScreen] bounds].size.width / 4) * 3) - horizontalInsetsTotal;
         } else if ([messageItem isCenteredMessage] && isIPAD) {
-            maximumTextWidth = [[UIScreen mainScreen] bounds].size.width / 3;
+            maximumTextWidth = [[UIScreen mainScreen] bounds].size.width / 2;
         }
 
         CGRect stringRect = [[messageItem text] boundingRectWithSize:CGSizeMake(maximumTextWidth, CGFLOAT_MAX)
@@ -602,7 +602,7 @@ const CGFloat kJSQMessagesCollectionViewAvatarSizeDefault = 30.0f;
 
         if([messageItem isCenteredMessage]) {
             if (isIPAD) { 
-                finalSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 10, stringSize.height + verticalInsets);
+                finalSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width, stringSize.height + verticalInsets);
             } else {
                 finalSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width - 20, stringSize.height + verticalInsets);
             }
